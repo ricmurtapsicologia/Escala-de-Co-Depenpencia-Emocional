@@ -668,5 +668,62 @@
         document.getElementById('result').classList.remove('hidden');
     }
 </script>
+        <div class="container">
+        <p>Por favor, preencha o formulário abaixo:</p>
+        <form onsubmit="submitForm(event)">
+            <label for="nome_completo">Nome completo:</label><br>
+            <input type="text" id="nome_completo" name="nome_completo" required><br><br>
+
+            <label for="idade">Idade:</label><br>
+            <input type="number" id="idade" name="idade" required><br><br>
+
+            <label for="data_teste">Data de realização do teste:</label><br>
+            <input type="date" id="data_teste" name="data_teste" required><br><br>
+
+            <label for="escore_dependencia">Escore total de dependência emocional:</label><br>
+            <input type="number" id="escore_dependencia" name="escore_dependencia" required><br><br>
+
+            <label for="classificacao_dependencia">Classificação de intensidade de dependência emocional:</label><br>
+            <input type="text" id="classificacao_dependencia" name="classificacao_dependencia" required><br><br>
+
+            <label for="escore_codependencia">Escore total de codependência emocional:</label><br>
+            <input type="number" id="escore_codependencia" name="escore_codependencia" required><br><br>
+
+            <label for="classificacao_codependencia">Classificação de intensidade de codependência emocional:</label><br>
+            <input type="text" id="classificacao_codependencia" name="classificacao_codependencia" required><br><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = new FormData(form);
+            const object = {};
+            data.forEach((value, key) => {
+                object[key] = value;
+            });
+            const json = JSON.stringify(object);
+
+            fetch('https://script.google.com/macros/s/AKfycbzVbWD09a-daH8KahAIDp9sTTyfjyZYwHPd6BeMRL5hNz1GCY_xcEbgmLVOLsNL5Evk/exec', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: json,
+            }).then(response => {
+                if (response.ok) {
+                    alert('Formulário enviado com sucesso!');
+                    form.reset();
+                } else {
+                    alert('Houve um erro ao enviar o formulário.');
+                }
+            });
+        }
+    </script>
+
 </body>
 </html>
