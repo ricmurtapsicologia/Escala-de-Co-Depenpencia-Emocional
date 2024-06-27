@@ -271,7 +271,7 @@
                     </select>
                 </div>
                 <div class="question">
-                    <label>17. Eu mudo meus gostos e preferências para agradar aos outros.</label>
+                                        <label>17. Eu mudo meus gostos e preferências para agradar aos outros.</label>
                     <select name="q17">
                         <option value="1">Discordo Totalmente</option>
                         <option value="2">Discordo</option>
@@ -313,19 +313,6 @@
             </div>
             <div class="question-section">
                 <h2>Codependência Emocional</h2>
-                <div class="question">
-                    <label>21. Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.</label>
-                    <select name="q21">
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>22.
-<h2>Codependência Emocional</h2>
                 <div class="question">
                     <label>21. Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.</label>
                     <select name="q21">
@@ -541,7 +528,7 @@
             <button type="submit">ENVIAR</button>
         </form>
         <div id="result" class="hidden result-section">
-            <h2>RESULTADOS</h2>
+             <h2>RESULTADOS</h2>
             <div class="result-item" id="dependenciaResultado"></div>
             <div class="result-item" id="codependenciaResultado"></div>
         </div>
@@ -601,7 +588,42 @@
                 resultText = 'Normal: Baixa intensidade de traços dependentes ou codependentes.';
             } else {
                 if (type === 'Dependência Emocional') {
-                                       if (score <= 59) {
+                    if (score <= 59) {
+                        resultText = `Leve: Presença de alguns traços de Dependência Emocional, mas não predominantes.<br>` +
+                            'Origens: Comportamentos aprendidos na infância, cuidadores inconsistentes ou críticos.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Necessidade de aprovação, dificuldade em decisões independentes, medo de rejeição.<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else if (score <= 79) {
+                        resultText = `Moderada: Presença significativa de traços de Dependência Emocional.<br>` +
+                            'Origens: Relações familiares disfuncionais, traumas.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Ansiedade, medo de abandono, comportamento de "agradar".<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else {
+                        resultText = `Alta: Presença elevada de traços de Dependência Emocional, indicando necessidade de intervenção.<br>` +
+                            'Origens: Histórico prolongado de dependência emocional.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Dependência severa, baixa autoestima, isolamento.<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    }
+                } else if (type === 'Codependência Emocional') {
+                    if (score <= 59) {
                         resultText = `Leve: Presença de alguns traços de Codependência Emocional, mas não predominantes.<br>` +
                             'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
                             'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
@@ -649,6 +671,14 @@
             event.preventDefault();
             const formData = new FormData(document.getElementById('scaleForm'));
             const data = Object.fromEntries(formData.entries());
+
+            const depScore = depGauge.config.value;
+            const codepScore = codepGauge.config.value;
+
+            data['escore_dependencia'] = depScore;
+            data['classificacao_dependencia'] = document.getElementById('dependenciaResultado').innerText;
+            data['escore_codependencia'] = codepScore;
+            data['classificacao_codependencia'] = document.getElementById('codependenciaResultado').innerText;
             
             const response = await fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec', {
                 method: 'POST',
