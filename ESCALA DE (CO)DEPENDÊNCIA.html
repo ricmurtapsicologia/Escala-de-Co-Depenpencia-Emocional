@@ -528,7 +528,7 @@
             <button type="submit">ENVIAR</button>
         </form>
         <div id="result" class="hidden result-section">
-             <h2>RESULTADOS</h2>
+            <h2>RESULTADOS</h2>
             <div class="result-item" id="dependenciaResultado"></div>
             <div class="result-item" id="codependenciaResultado"></div>
         </div>
@@ -672,14 +672,6 @@
             const formData = new FormData(document.getElementById('scaleForm'));
             const data = Object.fromEntries(formData.entries());
 
-            const depScore = depGauge.config.value;
-            const codepScore = codepGauge.config.value;
-
-            data['escore_dependencia'] = depScore;
-            data['classificacao_dependencia'] = document.getElementById('dependenciaResultado').innerText;
-            data['escore_codependencia'] = codepScore;
-            data['classificacao_codependencia'] = document.getElementById('codependenciaResultado').innerText;
-            
             const response = await fetch('https://script.google.com/macros/s/AKfycbyeiVv_ZEayT3iKvFXMnCmmDaxWEiimy6kstZCz95bsQuh01dXt6AJwSRlAXGOZ9qqw/exec', {
                 method: 'POST',
                 mode: 'cors',
