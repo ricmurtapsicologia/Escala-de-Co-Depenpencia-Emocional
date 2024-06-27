@@ -102,7 +102,7 @@
             Discordo Totalmente - Discordo - Neutro - Concordo - Concordo Totalmente</p>
             <p>Sua honestidade é crucial para garantir que os resultados reflitam verdadeiramente suas experiências e sentimentos. Não há respostas certas ou erradas – apenas suas respostas são importantes. Os resultados serão utilizados para ajudar a entender melhor seus padrões emocionais e comportamentais e para orientar possíveis intervenções terapêuticas.</p>
         </div>
-     <form id="scaleForm" method="POST" action="https://script.google.com/macros/s/AKfycbx8mMiJWtkhL_tXsj9to_TDElacwP0VE8jvHfmyLg/dev" onsubmit="submitForm(event)">
+     <form id="scaleForm" method="POST" action="https://script.google.com/macros/s/AKfycbx8mMiJWtkhL_tXsj9to_TDElacwP0VE8jvHfmyLg" onsubmit="submitForm(event)">
             <div class="patient-info">
                 <input type="text" id="fullName" name="fullName" placeholder="Nome completo" required>
                 <input type="text" id="age" name="age" placeholder="Idade" required>
@@ -672,7 +672,7 @@
             const formData = new FormData(document.getElementById('scaleForm'));
             const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch('https://script.google.com/macros/s/AKfycbx8mMiJWtkhL_tXsj9to_TDElacwP0VE8jvHfmyLg/dev', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbx8mMiJWtkhL_tXsj9to_TDElacwP0VE8jvHfmyLg', {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
