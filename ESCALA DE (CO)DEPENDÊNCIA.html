@@ -99,7 +99,8 @@
         <div class="instructions">
             <p>Esta escala foi desenvolvida para ajudar a identificar a presença e a intensidade de dependência emocional e codependência emocional em seus relacionamentos. Por favor, leia cada afirmação com atenção e marque a resposta que melhor descreve sua experiência.</p>
             <p><strong>Utilize a escala a seguir para responder cada afirmação:</strong><br>
-            Discordo Totalmente - Discordo - Neutro - Concordo - Concordo Totalmente</p>
+           <form id="scaleForm" method="POST" action="https://script.google.com/macros/s/AKfycbxfC90Fb2-VOxblmbvDYInoV2uSn8HbRyN7VHEWUeOXcICI8E9bDQ2q_hX1GAt5uJg/exec" onsubmit="submitForm(event)">
+ Discordo Totalmente - Discordo - Neutro - Concordo - Concordo Totalmente</p>
             <p>Sua honestidade é crucial para garantir que os resultados reflitam verdadeiramente suas experiências e sentimentos. Não há respostas certas ou erradas – apenas suas respostas são importantes. Os resultados serão utilizados para ajudar a entender melhor seus padrões emocionais e comportamentais e para orientar possíveis intervenções terapêuticas.</p>
         </div>
      <form id="scaleForm" method="POST" action="https://script.google.com/macros/s/AKfycbxfC90Fb2-VOxblmbvDYInoV2uSn8HbRyN7VHEWUeOXcICI8E9bDQ2q_hX1GAt5uJg" onsubmit="submitForm(event)">
@@ -673,13 +674,13 @@
             const data = Object.fromEntries(formData.entries());
 
             const response = await fetch('https://script.google.com/macros/s/AKfycbx8mMiJWtkhL_tXsj9to_TDElacwP0VE8jvHfmyLg/exec', {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+});
 
             if (response.ok) {
                 alert('Os dados foram enviados com sucesso!');
