@@ -96,6 +96,57 @@
         <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
     </header>
     <main>
+        <!-- Placeholder for form contents -->
+        <!-- Gauge containers for visual feedback -->
+        <div class="gauge-container">
+            <div style="text-align: center;">
+                <div id="depGauge"></div>
+                <div class="gauge-desc">Dependência Emocional</div>
+            </div>
+            <div style="text-align: center;">
+                <div id="codepGauge"></div>
+                <div class="gauge-desc">Codependência Emocional</div>
+            </div>
+        </div>
+        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
+    </main>
+    <script>
+        let depGauge, codepGauge;
+        window.onload = function() {
+            depGauge = new JustGage({
+                id: "depGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "Dependência Emocional",
+                label: "pontos",
+                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+            });
+            codepGauge = new JustGage({
+                id: "codepGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "Codependência Emocional",
+                label: "pontos",
+                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+            });
+        };
+
+        function sendResultsToWhatsApp() {
+            const depScore = depGauge.config.value;
+            const codepScore = codepGauge.config.value;
+            const whatsappNumber = "5535984640729";
+            const message = `Olá, os resultados dos testes são: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+<body>
+    <header>
+        <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
+    </header>
+    <main>
         <div class="instructions">
             <p>Esta escala foi desenvolvida para ajudar a identificar a presença e a intensidade de dependência emocional e codependência emocional em seus relacionamentos. Por favor, leia cada afirmação com atenção e marque a resposta que melhor descreve sua experiência.</p>
             <p><strong>Utilize a escala a seguir para responder cada afirmação:</strong><br>
