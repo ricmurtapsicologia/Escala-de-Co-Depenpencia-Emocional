@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação de Dependência Emocional e Codependência Emocional</title>
-    <meta name="description" content="Ferramenta online para avaliação de dependência emocional e codependência emocional, oferecendo insights para o desenvolvimento pessoal e intervenções terapêuticas.">
+    <title>Escala de Dependência Emocional e Codependência Emocional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
@@ -24,7 +23,7 @@
             width: 100%;
         }
         main {
-            width: 100%;
+            width: 80%;
             max-width: 800px;
             background-color: white;
             margin: auto;
@@ -32,17 +31,18 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
         }
-        .gauge-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 40px; /* Moved to the bottom */
-            flex-wrap: wrap;
+        .question-section {
+            text-align: left;
+            margin-bottom: 20px;
         }
-        .gauge-desc {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
+        .question {
+            margin: 10px 0;
+            padding: 10px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
         }
         button {
             background-color: #4CAF50;
@@ -52,270 +52,45 @@
             cursor: pointer;
             margin-top: 20px;
             border-radius: 5px;
-            width: 90%;
-            max-width: 300px;
         }
         button:hover {
             background-color: #45a049;
         }
-        @media (max-width: 600px) {
-            main {
-                width: 95%;
-            }
+        .gauge-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .gauge-desc {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
+        }
+        .result-section {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        input, select {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .patient-info {
+            text-align: left;
+            margin-bottom: 20px;
         }
         .instructions {
-            font-size: 16px;
             text-align: justify;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
-<body>
-    <header>
-        <h1>Avaliação de Dependência Emocional e Codependência Emocional</h1>
-    </header>
-    <main>
-        <div class="instructions">
-            Esta escala foi desenvolvida para ajudar a identificar a presença e a intensidade de dependência emocional e codependência emocional em seus relacionamentos. Por favor, leia cada afirmação com atenção e marque a resposta que melhor descreve sua experiência.
-        </div>
-        <!-- Placeholder for dynamic form content should be here -->
-
-        <!-- Gauge containers moved to the bottom -->
-        <div class="gauge-container">
-            <div style="text-align: center; width: 100%; max-width: 380px;">
-                <div id="depGauge"></div>
-                <div class="gauge-desc">Dependência Emocional</div>
-            </div>
-            <div style="text-align: center; width: 100%; max-width: 380px;">
-                <div id="codepGauge"></div>
-                <div class="gauge-desc">Codependência Emocional</div>
-            </div>
-        </div>
-        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
-    </main>
-    <script>
-        let depGauge, codepGauge;
-        window.onload = function() {
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Dependência Emocional"
-            });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Codependência Emocional"
-            });
-        };
-
-        function sendResultsToWhatsApp() {
-            const depScore = depGauge.config.value;
-            const codepScore = codepGauge.config.value;
-            const whatsappNumber = "5535984640729";
-            const message = `Olá, este foi meu resultado e gostaria de saber mais sobre ele: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-    </script>
-</body>
-</html>
-
-    <header>
-        <h1>Avaliação de Dependência Emocional e Codependência Emocional</h1>
-    </header>
-    <main>
-        <div class="gauge-container">
-            <div style="text-align: center; width: 100%; max-width: 380px;">
-                <div id="depGauge"></div>
-                <div class="gauge-desc">Dependência Emocional</div>
-            </div>
-            <div style="text-align: center; width: 100%; max-width: 380px;">
-                <div id="codepGauge"></div>
-                <div class="gauge-desc">Codependência Emocional</div>
-            </div>
-        </div>
-        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
-    </main>
-    <script>
-        let depGauge, codepGauge;
-        window.onload = function() {
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Dependência Emocional"
-            });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Codependência Emocional"
-            });
-        };
-
-        function sendResultsToWhatsApp() {
-            const depScore = depGauge.config.value;
-            const codepScore = codepGauge.config.value;
-            const whatsappNumber = "5535984640729";
-            const message = `Olá, aqui estão os resultados dos testes: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-    </script>
-</body>
-</html>
-    <header>
-        <h1>Avaliação de Dependência e Codependência Emocional</h1>
-    </header>
-    <main>
-        <div class="gauge-container">
-            <div style="text-align: center;">
-                <div id="depGauge"></div>
-                <div class="gauge-desc">Dependência Emocional</div>
-            </div>
-            <div style="text-align: center;">
-                <div id="codepGauge"></div>
-                <div class="gauge-desc">Codependência Emocional</div>
-            </div>
-        </div>
-        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
-    </main>
-    <script>
-        let depGauge, codepGauge;
-        window.onload = function() {
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 65,  // Exemplo de valor inicial
-                min: 0,
-                max: 100,
-                title: "Dependência Emocional"
-            });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 70,  // Exemplo de valor inicial
-                min: 0,
-                max: 100,
-                title: "Codependência Emocional"
-            });
-        };
-
-        function sendResultsToWhatsApp() {
-            const depScore = depGauge.config.value; // Obter o valor atual do gauge de dependência emocional
-            const codepScore = codepGauge.config.value; // Obter o valor atual do gauge de codependência emocional
-            const whatsappNumber = "35984640729";
-            const message = `Olá, aqui estão os resultados dos testes: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank'); // Abre o WhatsApp Web ou app com a mensagem pronta para enviar
-        }
-    </script>
-</body>
-</html>
-
-<body>
-    <header>
-        <h1>Avaliação de Dependência e Codependência Emocional</h1>
-    </header>
-    <main>
-        <div class="gauge-container">
-            <div style="text-align: center;">
-                <div id="depGauge"></div>
-                <div class="gauge-desc">Dependência Emocional</div>
-            </div>
-            <div style="text-align: center;">
-                <div id="codepGauge"></div>
-                <div class="gauge-desc">Codependência Emocional</div>
-            </div>
-        </div>
-        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
-    </main>
-    <script>
-        let depGauge, codepGauge;
-        window.onload = function() {
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 65,  // Exemplo de valor inicial
-                min: 0,
-                max: 100,
-                title: "Dependência Emocional"
-            });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 70,  // Exemplo de valor inicial
-                min: 0,
-                max: 100,
-                title: "Codependência Emocional"
-            });
-        };
-
-        function sendResultsToWhatsApp() {
-            const depScore = depGauge.config.value; // Obter o valor atual do gauge de dependência emocional
-            const codepScore = codepGauge.config.value; // Obter o valor atual do gauge de codependência emocional
-            const whatsappNumber = "35984640729";
-            const message = `Olá, aqui estão os resultados dos testes: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank'); // Abre o WhatsApp Web ou app com a mensagem pronta para enviar
-        }
-    </script>
-</body>
-</html>
-
-<body>
-    <header>
-        <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
-    </header>
-    <main>
-        <!-- Placeholder for form contents -->
-        <!-- Gauge containers for visual feedback -->
-        <div class="gauge-container">
-            <div style="text-align: center;">
-                <div id="depGauge"></div>
-                <div class="gauge-desc">Dependência Emocional</div>
-            </div>
-            <div style="text-align: center;">
-                <div id="codepGauge"></div>
-                <div class="gauge-desc">Codependência Emocional</div>
-            </div>
-        </div>
-        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
-    </main>
-    <script>
-        let depGauge, codepGauge;
-        window.onload = function() {
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Dependência Emocional",
-                label: "pontos",
-                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-            });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "Codependência Emocional",
-                label: "pontos",
-                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-            });
-        };
-
-        function sendResultsToWhatsApp() {
-            const depScore = depGauge.config.value;
-            const codepScore = codepGauge.config.value;
-            const whatsappNumber = "5535984640729";
-            const message = `Olá, os resultados dos testes são: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-    </script>
 <body>
     <header>
         <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
@@ -815,7 +590,7 @@
             } else {
                 if (type === 'Dependência Emocional') {
                     if (score <= 59) {
-                        resultText = `Leve: Presença de alguns traços de Dependência Emocional, mas não predominantes.<br>` +
+                        resultText = Leve: Presença de alguns traços de Dependência Emocional, mas não predominantes.<br> +
                             'Origens: Comportamentos aprendidos na infância, cuidadores inconsistentes ou críticos.<br>' +
                             'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
                             'Características: Necessidade de aprovação, dificuldade em decisões independentes, medo de rejeição.<br>' +
@@ -826,7 +601,7 @@
                             '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
                             '- Ativação Comportamental: Engaje-se em atividades significativas.';
                } else if (score <= 79) {
-                        resultText = `Moderada: Presença significativa de traços de Dependência Emocional.<br>` +
+                        resultText = Moderada: Presença significativa de traços de Dependência Emocional.<br> +
                             'Origens: Relações familiares disfuncionais, traumas.<br>' +
                             'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
                             'Características: Ansiedade, medo de abandono, comportamento de "agradar".<br>' +
@@ -837,7 +612,7 @@
                             '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
                             '- Ativação Comportamental: Engaje-se em atividades significativas.';
                     } else {
-                        resultText = `Alta: Presença elevada de traços de Dependência Emocional, indicando necessidade de intervenção.<br>` +
+                        resultText = Alta: Presença elevada de traços de Dependência Emocional, indicando necessidade de intervenção.<br> +
                             'Origens: Histórico prolongado de dependência emocional.<br>' +
                             'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
                             'Características: Dependência severa, baixa autoestima, isolamento.<br>' +
@@ -850,7 +625,7 @@
                     }
                 } else if (type === 'Codependência Emocional') {
                     if (score <= 59) {
-                        resultText = `Leve: Presença de alguns traços de Codependência Emocional, mas não predominantes.<br>` +
+                        resultText = Leve: Presença de alguns traços de Codependência Emocional, mas não predominantes.<br> +
                             'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
                             'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
                             'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
@@ -861,7 +636,7 @@
                             '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
                             '- Ativação Comportamental: Engaje-se em atividades significativas.';
                     } else if (score <= 79) {
-                        resultText = `Moderada: Presença significativa de traços de Codependência Emocional.<br>` +
+                        resultText = Moderada: Presença significativa de traços de Codependência Emocional.<br> +
                             'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
                             'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
                             'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
@@ -872,7 +647,7 @@
                             '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
                             '- Ativação Comportamental: Engaje-se em atividades significativas.';
                     } else {
-                        resultText = `Alta: Presença elevada de traços de Codependência Emocional, indicando necessidade de intervenção.<br>` +
+                        resultText = Alta: Presença elevada de traços de Codependência Emocional, indicando necessidade de intervenção.<br> +
                             'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
                             'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
                             'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
@@ -885,7 +660,7 @@
                     }
                 }
             }
-            return `<strong>${type}</strong> - ${resultText}`;
+            return <strong>${type}</strong> - ${resultText};
         }
 
         function calculateScore() {
