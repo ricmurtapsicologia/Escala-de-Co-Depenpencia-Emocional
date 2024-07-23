@@ -35,7 +35,7 @@
         .gauge-container {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
+            margin-top: 40px; /* Moved to the bottom */
             flex-wrap: wrap;
         }
         .gauge-desc {
@@ -52,20 +52,78 @@
             cursor: pointer;
             margin-top: 20px;
             border-radius: 5px;
-            width: 90%;  /* Aumenta a acessibilidade em dispositivos móveis */
-            max-width: 300px; /* Limita o tamanho máximo do botão */
+            width: 90%;
+            max-width: 300px;
         }
         button:hover {
             background-color: #45a049;
         }
         @media (max-width: 600px) {
             main {
-                width: 95%;  /* Aumenta a largura em dispositivos móveis para melhor visualização */
+                width: 95%;
             }
+        }
+        .instructions {
+            font-size: 16px;
+            text-align: justify;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Avaliação de Dependência Emocional e Codependência Emocional</h1>
+    </header>
+    <main>
+        <div class="instructions">
+            Esta escala foi desenvolvida para ajudar a identificar a presença e a intensidade de dependência emocional e codependência emocional em seus relacionamentos. Por favor, leia cada afirmação com atenção e marque a resposta que melhor descreve sua experiência.
+        </div>
+        <!-- Placeholder for dynamic form content should be here -->
+
+        <!-- Gauge containers moved to the bottom -->
+        <div class="gauge-container">
+            <div style="text-align: center; width: 100%; max-width: 380px;">
+                <div id="depGauge"></div>
+                <div class="gauge-desc">Dependência Emocional</div>
+            </div>
+            <div style="text-align: center; width: 100%; max-width: 380px;">
+                <div id="codepGauge"></div>
+                <div class="gauge-desc">Codependência Emocional</div>
+            </div>
+        </div>
+        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
+    </main>
+    <script>
+        let depGauge, codepGauge;
+        window.onload = function() {
+            depGauge = new JustGage({
+                id: "depGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "Dependência Emocional"
+            });
+            codepGauge = new JustGage({
+                id: "codepGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "Codependência Emocional"
+            });
+        };
+
+        function sendResultsToWhatsApp() {
+            const depScore = depGauge.config.value;
+            const codepScore = codepGauge.config.value;
+            const whatsappNumber = "5535984640729";
+            const message = `Olá, este foi meu resultado e gostaria de saber mais sobre ele: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
+
     <header>
         <h1>Avaliação de Dependência Emocional e Codependência Emocional</h1>
     </header>
