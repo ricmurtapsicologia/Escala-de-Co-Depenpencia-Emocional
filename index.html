@@ -1,13 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escala de Dependência Emocional</title>
+    <title>Escala de Dependência Emocional e Codependência Emocional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            width: 100%;
+        }
+        main {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .question-section {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin: 10px 0;
+            padding: 10px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .gauge-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .gauge-desc {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
+        }
+        .result-section {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        input, select {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .patient-info {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .instructions {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Escala de Dependência Emocional</h1>
-    <p>Bem-vindo à página da Escala de Dependência Emocional.</p>
-    <a href="ESCALA%20DE%20(CO)DEPEND%C3%8ANCIA.html">Clique aqui para ver a escala</a>
-</body>
-</html>
+    <header>
+        <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
+    </header>
