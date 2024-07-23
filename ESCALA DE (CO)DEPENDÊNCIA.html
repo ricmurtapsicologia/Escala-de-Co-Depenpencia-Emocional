@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escala de Dependência Emocional e Codependência Emocional</title>
+    <title>Avaliação de Dependência Emocional e Codependência Emocional</title>
+    <meta name="description" content="Ferramenta online para avaliação de dependência emocional e codependência emocional, oferecendo insights para o desenvolvimento pessoal e intervenções terapêuticas.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
@@ -31,18 +32,16 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             border-radius: 10px;
         }
-        .question-section {
-            text-align: left;
-            margin-bottom: 20px;
+        .gauge-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
         }
-        .question {
-            margin: 10px 0;
-            padding: 10px;
-        }
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+        .gauge-desc {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+            font-weight: bold;
         }
         button {
             background-color: #4CAF50;
@@ -56,41 +55,56 @@
         button:hover {
             background-color: #45a049;
         }
-        .gauge-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .gauge-desc {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
-        }
-        .result-section {
-            text-align: left;
-            margin-top: 20px;
-        }
-        .result-item {
-            margin-bottom: 10px;
-        }
-        input, select {
-            padding: 10px;
-            margin-top: 5px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .patient-info {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .instructions {
-            text-align: justify;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
+<body>
+    <header>
+        <h1>Avaliação de Dependência e Codependência Emocional</h1>
+    </header>
+    <main>
+        <div class="gauge-container">
+            <div style="text-align: center;">
+                <div id="depGauge"></div>
+                <div class="gauge-desc">Dependência Emocional</div>
+            </div>
+            <div style="text-align: center;">
+                <div id="codepGauge"></div>
+                <div class="gauge-desc">Codependência Emocional</div>
+            </div>
+        </div>
+        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
+    </main>
+    <script>
+        let depGauge, codepGauge;
+        window.onload = function() {
+            depGauge = new JustGage({
+                id: "depGauge",
+                value: 65,  // Exemplo de valor inicial
+                min: 0,
+                max: 100,
+                title: "Dependência Emocional"
+            });
+            codepGauge = new JustGage({
+                id: "codepGauge",
+                value: 70,  // Exemplo de valor inicial
+                min: 0,
+                max: 100,
+                title: "Codependência Emocional"
+            });
+        };
+
+        function sendResultsToWhatsApp() {
+            const depScore = depGauge.config.value; // Obter o valor atual do gauge de dependência emocional
+            const codepScore = codepGauge.config.value; // Obter o valor atual do gauge de codependência emocional
+            const whatsappNumber = "35984640729";
+            const message = `Olá, aqui estão os resultados dos testes: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank'); // Abre o WhatsApp Web ou app com a mensagem pronta para enviar
+        }
+    </script>
+</body>
+</html>
+
 <body>
     <header>
         <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
