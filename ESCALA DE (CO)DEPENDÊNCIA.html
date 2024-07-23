@@ -107,6 +107,54 @@
 
 <body>
     <header>
+        <h1>Avaliação de Dependência e Codependência Emocional</h1>
+    </header>
+    <main>
+        <div class="gauge-container">
+            <div style="text-align: center;">
+                <div id="depGauge"></div>
+                <div class="gauge-desc">Dependência Emocional</div>
+            </div>
+            <div style="text-align: center;">
+                <div id="codepGauge"></div>
+                <div class="gauge-desc">Codependência Emocional</div>
+            </div>
+        </div>
+        <button onclick="sendResultsToWhatsApp()">Enviar Resultados para WhatsApp</button>
+    </main>
+    <script>
+        let depGauge, codepGauge;
+        window.onload = function() {
+            depGauge = new JustGage({
+                id: "depGauge",
+                value: 65,  // Exemplo de valor inicial
+                min: 0,
+                max: 100,
+                title: "Dependência Emocional"
+            });
+            codepGauge = new JustGage({
+                id: "codepGauge",
+                value: 70,  // Exemplo de valor inicial
+                min: 0,
+                max: 100,
+                title: "Codependência Emocional"
+            });
+        };
+
+        function sendResultsToWhatsApp() {
+            const depScore = depGauge.config.value; // Obter o valor atual do gauge de dependência emocional
+            const codepScore = codepGauge.config.value; // Obter o valor atual do gauge de codependência emocional
+            const whatsappNumber = "35984640729";
+            const message = `Olá, aqui estão os resultados dos testes: Dependência Emocional: ${depScore}, Codependência Emocional: ${codepScore}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank'); // Abre o WhatsApp Web ou app com a mensagem pronta para enviar
+        }
+    </script>
+</body>
+</html>
+
+<body>
+    <header>
         <h1>Escala de Dependência Emocional e Codependência Emocional</h1>
     </header>
     <main>
