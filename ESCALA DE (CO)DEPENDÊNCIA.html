@@ -8,87 +8,155 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
+     body {
+        font-family: Arial, sans-serif;
+        background-image: url('https://i.pinimg.com/originals/33/9d/0c/339d0cc2f05bbb719debe6a5efb414dd.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: linear-gradient(135deg, #2E8B57, #3CB371);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        font-size: 32px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 15px 15px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    header h1 {
+        margin: 0;
+        font-weight: 700;
+    }
+
+    main {
+        width: 95%;
+        max-width: 900px;
+        background-color: rgba(255, 255, 255, 0.95);
+        margin: 20px auto;
+        padding: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+    }
+
+    .instructions {
+        text-align: justify;
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .patient-info {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .patient-info input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: rgba(249, 249, 249, 0.9);
+    }
+
+    .question-section {
+        margin-bottom: 20px;
+    }
+
+    .question-section h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #2E8B57;
+    }
+
+    .question {
+        margin: 10px 0;
+        padding: 12px;
+        background-color: rgba(238, 249, 240, 0.9);
+        border-left: 4px solid #5CB85C;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: rgba(249, 249, 249, 0.9);
+    }
+
+    button {
+        background: linear-gradient(135deg, #2E8B57, #3CB371);
+        color: white;
+        padding: 12px;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+        background-color: #276746;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
         header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            width: 100%;
+            font-size: 24px;
         }
+        
         main {
-            width: 80%;
-            max-width: 800px;
-            background-color: white;
-            margin: auto;
+            width: 90%;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 10px;
         }
-        .question-section {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .question {
-            margin: 10px 0;
-            padding: 10px;
-        }
-        select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .gauge-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .gauge-desc {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #555;
-            font-weight: bold;
-        }
-        .result-section {
-            text-align: left;
-            margin-top: 20px;
-        }
-        .result-item {
-            margin-bottom: 10px;
-        }
-        input, select {
-            padding: 10px;
-            margin-top: 5px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .patient-info {
-            text-align: left;
-            margin-bottom: 20px;
-        }
+
         .instructions {
-            text-align: justify;
-            margin-bottom: 20px;
+            font-size: 14px;
         }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header {
+            font-size: 20px;
+            padding: 20px;
+        }
+        
+        main {
+            padding: 15px;
+        }
+
+        .instructions {
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -111,6 +179,7 @@
                 <input type="date" id="date" placeholder="Data de realização do teste">
             </div>
             <div class="question-section">
+                <h2>Dependência Emocional</h2>
                 <h2>Dependência Emocional</h2>
                <div class="question">
     <label>1. Eu sinto que preciso da aprovação dos outros para me sentir bem comigo mesmo.</label>
@@ -515,159 +584,165 @@
         <option value="5">Concordo Totalmente</option>
     </select>
 </div>
-           </div>
-<div class="gauge-container">
-    <div style="text-align: center;">
-        <div id="depGauge"></div>
-        <div class="gauge-desc">DEPENDÊNCIA EMOCIONAL</div>
-    </div>
-    <div style="text-align: center;">
-        <div id="codepGauge"></div>
-        <div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
-    </div>
-</div>
-<button type="button" onclick="calculateScore()">ENVIAR</button>
-</form>
-<div id="result" class="hidden result-section">
-    <h2>RESULTADOS</h2>
-    <div class="result-item" id="dependenciaResultado"></div>
-    <div class="result-item" id="codependenciaResultado"></div>
-</div>
-</main>
-<script>
-    let depGauge, codepGauge;
-    window.onload = function() {
-        depGauge = new JustGage({
-            id: "depGauge",
-            value: 0,
-            min: 0,
-            max: 100,
-            title: "DEPENDÊNCIA EMOCIONAL",
-            label: "pontos",
-            levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-        });
-        codepGauge = new JustGage({
-            id: "codepGauge",
-            value: 0,
-            min: 0,
-            max: 100,
-            title: "CODEPENDÊNCIA EMOCIONAL",
-            label: "pontos",
-            levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-        });
-    };
+          </div>
+            <div class="gauge-container">
+                <div style="text-align: center;">
+                    <div id="depGauge"></div>
+                    <div class="gauge-desc">DEPENDÊNCIA EMOCIONAL</div>
+                </div>
+                <div style="text-align: center;">
+                    <div id="codepGauge"></div>
+                    <div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
+                </div>
+            </div>
+            <button type="button" onclick="calculateScore()">CALCULAR</button>
+        </form>
+        <div id="result" class="hidden result-section">
+            <h2>RESULTADOS</h2>
+            <div class="result-item" id="dependenciaResultado"></div>
+            <div class="result-item" id="codependenciaResultado"></div>
+            <div id="whatsappLink" style="margin-top: 20px; text-align: center;"></div>
+        </div>
+    </main>
+    <script>
+        let depGauge, codepGauge;
+        window.onload = function() {
+            depGauge = new JustGage({
+                id: "depGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "DEPENDÊNCIA EMOCIONAL",
+                label: "pontos",
+                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+            });
+            codepGauge = new JustGage({
+                id: "codepGauge",
+                value: 0,
+                min: 0,
+                max: 100,
+                title: "CODEPENDÊNCIA EMOCIONAL",
+                label: "pontos",
+                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+            });
+        };
 
-    function updateGauge() {
-        let totalDep = 0, totalCodep = 0;
-        const formData = new FormData(document.getElementById('scaleForm'));
-        formData.forEach((value, key) => {
-            if (key.startsWith('q')) {
-                const val = parseInt(value);
-                if (key.substring(1) <= 20) {
-                    totalDep += val;
-                } else {
-                    totalCodep += val;
+        function updateGauge() {
+            let totalDep = 0, totalCodep = 0;
+            const formData = new FormData(document.getElementById('scaleForm'));
+            formData.forEach((value, key) => {
+                if (key.startsWith('q')) {
+                    const val = parseInt(value);
+                    if (key.substring(1) <= 20) {
+                        totalDep += val;
+                    } else {
+                        totalCodep += val;
+                    }
                 }
-            }
-        });
+            });
 
-        depGauge.refresh(totalDep);
-        codepGauge.refresh(totalCodep);
-        displayResults(totalDep, totalCodep);
-    }
-
-    function displayResults(depScore, codepScore) {
-        const depResult = document.getElementById('dependenciaResultado');
-        const codepResult = document.getElementById('codependenciaResultado');
-        depResult.innerHTML = getResultDescription(depScore, 'Dependência Emocional');
-        codepResult.innerHTML = getResultDescription(codepScore, 'Codependência Emocional');
-    }
-
-    function getResultDescription(score, type) {
-        let resultText = "";
-        if (score <= 39) {
-            resultText = 'Normal: Baixa intensidade de traços dependentes ou codependentes.';
-        } else {
-            if (type === 'Dependência Emocional') {
-                if (score <= 59) {
-                    resultText = `Leve: Presença de alguns traços de Dependência Emocional, mas não predominantes.<br>` +
-                        'Origens: Comportamentos aprendidos na infância, cuidadores inconsistentes ou críticos.<br>' +
-                        'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
-                        'Características: Necessidade de aprovação, dificuldade em decisões independentes, medo de rejeição.<br>' +
-                        'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
-                        '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                } else if (score <= 79) {
-                    resultText = `Moderada: Presença significativa de traços de Dependência Emocional.<br>` +
-                        'Origens: Relações familiares disfuncionais, traumas.<br>' +
-                        'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
-                        'Características: Ansiedade, medo de abandono, comportamento de "agradar".<br>' +
-                        'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
-                        '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                } else {
-                    resultText = `Alta: Presença elevada de traços de Dependência Emocional, indicando necessidade de intervenção.<br>` +
-                        'Origens: Histórico prolongado de dependência emocional.<br>' +
-                        'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
-                        'Características: Dependência severa, baixa autoestima, isolamento.<br>' +
-                        'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
-                        '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                }
-            } else if (type === 'Codependência Emocional') {
-                if (score <= 59) {
-                    resultText = `Leve: Presença de alguns traços de Codependência Emocional, mas não predominantes.<br>` +
-                        'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
-                        'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
-                        'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
-                        'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
-                        '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                } else if (score <= 79) {
-                    resultText = `Moderada: Presença significativa de traços de Codependência Emocional.<br>` +
-                        'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
-                        'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
-                        'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
-                        'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
-                        '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                } else {
-                    resultText = `Alta: Presença elevada de traços de Codependência Emocional, indicando necessidade de intervenção.<br>` +
-                        'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
-                        'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
-                        'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
-                        'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
-                        'Dicas Terapêuticas:<br>' +
-                        '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
-                        '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
-                        '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
-                        '- Ativação Comportamental: Engaje-se em atividades significativas.';
-                }
-            }
+            depGauge.refresh(totalDep);
+            codepGauge.refresh(totalCodep);
+            displayResults(totalDep, totalCodep);
         }
-        return `<strong>${type}</strong> - ${resultText}`;
-    }
 
-    function calculateScore() {
-        updateGauge();
-        document.getElementById('result').classList.remove('hidden');
-    }
-</script>
+        function displayResults(depScore, codepScore) {
+            const depResult = document.getElementById('dependenciaResultado');
+            const codepResult = document.getElementById('codependenciaResultado');
+            depResult.innerHTML = getResultDescription(depScore, 'Dependência Emocional');
+            codepResult.innerHTML = getResultDescription(codepScore, 'Codependência Emocional');
+
+            const whatsappLink = document.getElementById('whatsappLink');
+            const message = `Olá! Concluí a avaliação e meu escore de Dependência Emocional é ${depScore} e o meu escore de Codependência Emocional é ${codepScore}.`;
+            const whatsappUrl = `https://wa.me/5535984640729?text=${encodeURIComponent(message)}`;
+
+            whatsappLink.innerHTML = `<a href="${whatsappUrl}" target="_blank"><button type="button">Enviar pelo WhatsApp</button></a>`;
+        }
+
+        function getResultDescription(score, type) {
+            let resultText = "";
+            if (score <= 39) {
+                resultText = 'Normal: Baixa intensidade de traços dependentes ou codependentes.';
+            } else {
+                if (type === 'Dependência Emocional') {
+                    if (score <= 59) {
+                        resultText = `Leve: Presença de alguns traços de Dependência Emocional, mas não predominantes.<br>` +
+                            'Origens: Comportamentos aprendidos na infância, cuidadores inconsistentes ou críticos.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Necessidade de aprovação, dificuldade em decisões independentes, medo de rejeição.<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else if (score <= 79) {
+                        resultText = `Moderada: Presença significativa de traços de Dependência Emocional.<br>` +
+                            'Origens: Relações familiares disfuncionais, traumas.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Ansiedade, medo de abandono, comportamento de "agradar".<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else {
+                        resultText = `Alta: Presença elevada de traços de Dependência Emocional, indicando necessidade de intervenção.<br>` +
+                            'Origens: Histórico prolongado de dependência emocional.<br>' +
+                            'Esquemas: Abandono/Instabilidade, Defectividade/Vergonha, Dependência/Incompetência, Subjugação.<br>' +
+                            'Características: Dependência severa, baixa autoestima, isolamento.<br>' +
+                            'Impactos: Relações desequilibradas, ansiedade, ciúmes, possessividade.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites pessoais.<br>' +
+                            '- Desenvolvimento de Soft Skills: Resiliência, autoconfiança.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    }
+                } else if (type === 'Codependência Emocional') {
+                    if (score <= 59) {
+                        resultText = `Leve: Presença de alguns traços de Codependência Emocional, mas não predominantes.<br>` +
+                            'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
+                            'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
+                            'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
+                            'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
+                            '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else if (score <= 79) {
+                        resultText = `Moderada: Presença significativa de traços de Codependência Emocional.<br>` +
+                            'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
+                            'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
+                            'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
+                            'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
+                            '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    } else {
+                        resultText = `Alta: Presença elevada de traços de Codependência Emocional, indicando necessidade de intervenção.<br>` +
+                            'Origens: Cuidadores que sobrecarregam com responsabilidades emocionais, familiar vulnerável.<br>' +
+                            'Esquemas: Auto-sacrifício, Subjugação, Busca de Aprovação/Atenção, Emaranhamento/Envolvimento Excessivo.<br>' +
+                            'Características: Colocar as necessidades dos outros à frente, sentir culpa ao priorizar necessidades próprias.<br>' +
+                            'Impactos: Relações desequilibradas, desgaste emocional.<br>' +
+                            'Dicas Terapêuticas:<br>' +
+                            '- Treinamento de Habilidades Sociais: Assertividade, comunicação eficaz.<br>' +
+                            '- Estabelecimento de Limites: Defina e mantenha limites claros.<br>' +
+                            '- Desenvolvimento de Soft Skills: Autonomia, resiliência.<br>' +
+                            '- Ativação Comportamental: Engaje-se em atividades significativas.';
+                    }
+                }
+            }
+            return `<strong>${type}</strong> - ${resultText}`;
+        }
+
+        function calculateScore() {
+            updateGauge();
+            document.getElementById('result').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
-
