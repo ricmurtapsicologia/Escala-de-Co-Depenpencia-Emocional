@@ -599,8 +599,7 @@
 						<div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
 					</div>
 				</div>
-				<!-- ATUALIZAÇÃO NO BOTÃO PARA CHAMAR A FUNÇÃO ENVIAR -->
-				<button type="button" onclick="enviarDados()">CALCULAR E ENVIAR</button>
+			<button type="button" onclick="enviarDados()">CALCULAR E ENVIAR</button>
 		</form>
 		<div id="result" class="hidden result-section">
 			<h2>RESULTADOS</h2>
@@ -610,7 +609,6 @@
 		</div>
 	</main>
 
-	<!-- SCRIPT ADICIONADO PARA ENVIAR OS DADOS AO GOOGLE APPS SCRIPT -->
 	<script>
 		let depGauge, codepGauge;
 		window.onload = function() {
@@ -634,12 +632,12 @@
 		    });
 		};
 
-		function updateGauge() {
+		function calcularGauges() {
 		    let totalDep = 0, totalCodep = 0;
 		    const formData = new FormData(document.getElementById('scaleForm'));
 		    formData.forEach((value, key) => {
+		        const val = parseInt(value);
 		        if (key.startsWith('q')) {
-		            const val = parseInt(value);
 		            if (key.substring(1) <= 20) {
 		                totalDep += val;
 		            } else {
@@ -653,38 +651,31 @@
 		    displayResults(totalDep, totalCodep);
 		}
 
-		// FUNÇÃO PARA ENVIAR DADOS AO GOOGLE APPS SCRIPT
-		<script>
-  function enviarDados() {
-    const formData = new FormData(document.getElementById('scaleForm'));
+		function enviarDados() {
+		    calcularGauges();  // Calcula e atualiza os gauges antes de enviar os dados
 
-    const data = {
-      nome: formData.get('fullName'),
-      data: formData.get('date'),
-      dependencia: depGauge.config.value,
-      codependencia: codepGauge.config.value
-    };
+		    const formData = new FormData(document.getElementById('scaleForm'));
+		    const data = {
+		        nome: formData.get('fullName'),
+		        data: formData.get('date'),
+		        dependencia: depGauge.config.value,
+		        codependencia: codepGauge.config.value
+		    };
 
 		    fetch("https://script.google.com/macros/s/AKfycbxpasdzawOKp9gMwQ9ZXZvQUNMwf6Bm5J1NiB28j8YLubok-tT0J0ym1nMIxxdACpA/exec", {
-		       method: 'POST',
-      body: new URLSearchParams(data)
-    })
-    .then(response => response.text())
-    .then(data => {
-      console.log(data); // Exibe a resposta do Google Apps Script
-      alert("Dados registrados com sucesso!");
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-    });
-  }
-</script>
-
-		    updateGauge();
-		    document.getElementById('result').classList.remove('hidden');
+		        method: 'POST',
+		        body: new URLSearchParams(data)
+		    })
+		    .then(response => response.text())
+		    .then(data => {
+		        console.log(data);
+		        alert("Dados registrados com sucesso!");
+		    })
+		    .catch(error => {
+		        console.error('Erro:', error);
+		    });
 		}
 
-		// Níveis de Resultados
 		function getResultDescription(score, type) {
 		    let resultText = "";
 		    if (score <= 39) {
