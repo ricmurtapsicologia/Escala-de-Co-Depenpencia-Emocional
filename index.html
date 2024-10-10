@@ -654,28 +654,31 @@
 		}
 
 		// FUNÇÃO PARA ENVIAR DADOS AO GOOGLE APPS SCRIPT
-		function enviarDados() {
-		    const formData = new FormData(document.getElementById('scaleForm'));
+		<script>
+  function enviarDados() {
+    const formData = new FormData(document.getElementById('scaleForm'));
 
-		    const data = {
-		        nome: formData.get('fullName'),
-		        data: formData.get('date'),
-		        dependencia: depGauge.config.value,
-		        codependencia: codepGauge.config.value
-		    };
+    const data = {
+      nome: formData.get('fullName'),
+      data: formData.get('date'),
+      dependencia: depGauge.config.value,
+      codependencia: codepGauge.config.value
+    };
 
 		    fetch("https://script.google.com/macros/s/AKfycbxpasdzawOKp9gMwQ9ZXZvQUNMwf6Bm5J1NiB28j8YLubok-tT0J0ym1nMIxxdACpA/exec", {
-		        method: 'POST',
-		        body: new URLSearchParams(data)
-		    })
-		    .then(response => response.text())
-		    .then(data => {
-		        console.log(data); // Exibe a resposta do Google Apps Script
-		        alert("Dados registrados com sucesso!");
-		    })
-		    .catch(error => {
-		        console.error('Erro:', error);
-		    });
+		       method: 'POST',
+      body: new URLSearchParams(data)
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data); // Exibe a resposta do Google Apps Script
+      alert("Dados registrados com sucesso!");
+    })
+    .catch(error => {
+      console.error('Erro:', error);
+    });
+  }
+</script>
 
 		    updateGauge();
 		    document.getElementById('result').classList.remove('hidden');
