@@ -1,706 +1,835 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Escala de Dependência Emocional e Codependência Emocional</title>
-	<meta property="og:title" content="Escala de Dependência Emocional e Codependência Emocional" />
-	<meta property="og:description" content="Avalie sua dependência emocional e codependência emocional com esta escala detalhada." />
-	<meta property="og:image" content="https://i.pinimg.com/originals/33/9d/0c/339d0cc2f05bbb719debe6a5efb414dd.jpg" />
-	<meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Co-Depen-ncia-Emocional/" />
-	<meta property="og:type" content="website" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
+	<meta property="og:title" content="Escala de Rastreio de Necessidades Emocionais">
+	<meta property="og:description" content="Rastreie suas necessidades emocionais e descubra pontos críticos para o seu equilíbrio emocional..">
+	<meta property="og:image" content="https://i.pinimg.com/originals/4c/36/60/4c36602eccb8230a72b6c60b7a4bc2fe.jpg">
+	<meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Necessidades-Emocionais/">
+	<title>Escala de Necessidades Emocionais</title>
 	<style>
 		body {
-		   font-family: Arial, sans-serif;
-		   background-image: url('https://i.pinimg.com/originals/33/9d/0c/339d0cc2f05bbb719debe6a5efb414dd.jpg');
-		   background-size: cover;
-		   background-position: center;
-		   background-repeat: no-repeat;
-		   background-attachment: fixed;
-		   color: #333;
-		   margin: 0;
-		   padding: 0;
-		    }
-		
-		    header {
-		    background: rgba(0, 0, 0, 0.5); /* Usar uma cor de fundo transparente e escura para destacar o texto */
-		    color: white; /* O texto continua branco para garantir boa visibilidade */
-		    padding: 30px;
-		    text-align: center;
-		    font-size: 32px;
-		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-		    border-radius: 0 0 15px 15px;
-		    position: relative;
-		    overflow: hidden;
+		    font-family: Arial, sans-serif;
+		    background: url('https://i.pinimg.com/originals/4c/36/60/4c36602eccb8230a72b6c60b7a4bc2fe.jpg') no-repeat center center fixed;
+		    background-size: cover;
+		    color: white;
+		    margin: 0;
+		    padding: 0;
 		}
 		
-		    header h1 {
-		   margin: 0;
-		   font-weight: 700;
+		header {
+		    background-color: rgba(0, 0, 0, 0.7);
+		    padding: 20px;
+		    text-align: center;
+		    color: white;
+		}
+		
+		main {
+		    width: 90%;
+		    max-width: 800px;
+		    background-color: rgba(255, 255, 255, 0.9);
+		    margin: 20px auto;
+		    padding: 20px;
+		    color: black;
+		    border-radius: 12px;
+		    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+		}
+		
+		.form-section input[type="text"],
+		.form-section input[type="date"] {
+		    width: 100%;
+		    padding: 10px;
+		    margin-bottom: 10px;
+		    border-radius: 5px;
+		    border: 1px solid #ccc;
+		}
+		
+		label {
+		    margin-bottom: 10px;
+		    display: block;
+		    font-size: 18px;
+		}
+		
+		select {
+		    width: 100%;
+		    padding: 10px;
+		    margin-top: 5px;
+		    border-radius: 5px;
+		    border: 1px solid #ccc;
+		}
+		
+		button {
+		    background: #4CAF50;
+		    color: white;
+		    padding: 15px;
+		    border: none;
+		    cursor: pointer;
+		    width: 100%;
+		    margin-top: 20px;
+		    border-radius: 5px;
+		    font-size: 18px;
+		    transition: background-color 0.3s ease, transform 0.2s ease;
+		}
+		
+		button:hover {
+		    background-color: #388E3C;
+		    transform: translateY(-3px);
+		}
+		
+		/* Estilos para termômetros */
+		.thermometer-container {
+		    display: flex;
+		    flex-direction: column;
+		    justify-content: center;
+		    margin-top: 30px;
+		}
+		
+		.thermometer-row {
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    margin: 10px 0;
+		}
+		
+		.thermometer {
+		    width: 50%;
+		    height: 20px;
+		    background-color: #ccc;
+		    border-radius: 10px;
+		    overflow: hidden;
+		    margin-left: 20px;
+		}
+		
+		.thermometer .fill {
+		    height: 100%;
+		    width: 0;
+		    background-color: red;
+		    transition: width 0.5s ease;
+		}
+		
+		.legend {
+		    font-size: 16px;
+		    font-weight: bold;
+		    width: 40%;
+		}
+		
+		.explanation {
+		    font-size: 14px;
+		    color: red;
+		    display: none;
+		}
+		
+		.result {
+		    text-align: center;
+		    font-size: 18px;
+		    margin-top: 20px;
+		}
+		
+		footer {
+		    text-align: center;
+		    margin-top: 40px;
+		    font-size: 14px;
+		    color: white;
+		}
+		
+		@media (max-width: 768px) {
+		    .thermometer-row {
+		        flex-direction: column;
+		        align-items: flex-start;
 		    }
 		
-		    main {
-		   width: 95%;
-		   max-width: 900px;
-		   background-color: rgba(255, 255, 255, 0.95);
-		   margin: 20px auto;
-		   padding: 30px;
-		   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-		   border-radius: 12px;
-		   backdrop-filter: blur(10px);
+		    .thermometer {
+		        width: 100%;
+		        margin-left: 0;
 		    }
 		
-		    .instructions {
-		   text-align: justify;
-		   margin-bottom: 20px;
-		   font-size: 16px;
-		   color: #555;
+		    .legend {
+		        margin-bottom: 10px;
 		    }
-		
-		    .patient-info {
-		   text-align: left;
-		   margin-bottom: 20px;
-		    }
-		
-		    .patient-info input {
-		   width: 100%;
-		   padding: 12px;
-		   margin-top: 10px;
-		   border: 1px solid #ccc;
-		   border-radius: 5px;
-		   font-size: 16px;
-		   background-color: rgba(249, 249, 249, 0.9);
-		    }
-		
-		    .question-section {
-		   margin-bottom: 20px;
-		    }
-		
-		    .question-section h2 {
-		   font-size: 24px;
-		   margin-bottom: 15px;
-		   color: #2E8B57;
-		    }
-		
-		    .question {
-		   margin: 10px 0;
-		   padding: 12px;
-		   background-color: rgba(238, 249, 240, 0.9);
-		   border-left: 4px solid #5CB85C;
-		   border-radius: 8px;
-		   font-size: 16px;
-		    }
-		
-		    select {
-		   width: 100%;
-		   padding: 12px;
-		   margin-top: 10px;
-		   border: 1px solid #ccc;
-		   border-radius: 5px;
-		   font-size: 16px;
-		   background-color: rgba(249, 249, 249, 0.9);
-		    }
-		
-		    button {
-		   background: linear-gradient(135deg, #2E8B57, #3CB371);
-		   color: white;
-		   padding: 12px;
-		   border: none;
-		   cursor: pointer;
-		   margin-top: 20px;
-		   border-radius: 8px;
-		   width: 100%;
-		   font-size: 18px;
-		   transition: background-color 0.3s ease, transform 0.2s ease;
-		    }
-		
-		    button:hover {
-		   background-color: #276746;
-		   transform: translateY(-3px);
-		   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-		    }
-		
-		    @media (max-width: 768px) {
-		   header {
-		       font-size: 24px;
-		   }
-		   
-		   main {
-		       width: 90%;
-		       padding: 20px;
-		   }
-		
-		   .instructions {
-		       font-size: 14px;
-		   }
-		
-		   button {
-		       padding: 10px;
-		       font-size: 16px;
-		   }
-		    }
-		
-		    @media (max-width: 480px) {
-		   header {
-		       font-size: 20px;
-		       padding: 20px;
-		   }
-		   
-		   main {
-		       padding: 15px;
-		   }
-		
-		   .instructions {
-		       font-size: 14px;
-		   }
-		
-		   button {
-		       padding: 10px;
-		       font-size: 16px;
-		   }
-		    }
+		}
 	</style>
 </head>
 
 <body>
 	<header>
-		<h1>Escala de Dependência Emocional e Codependência Emocional</h1>
+		<h1>Escala de Rastreio de Necessidades Emocionais</h1>
 	</header>
 	<main>
-		<div class="instructions">
-			<p>Esta escala foi desenvolvida para ajudar a identificar a presença e a intensidade de dependência emocional e codependência emocional em seus relacionamentos. Por favor, leia cada afirmação com atenção e marque a resposta que melhor descreve sua experiência.</p>
-			<p><strong>Utilize a escala a seguir para responder cada afirmação:</strong><br> Discordo Totalmente - Discordo - Neutro - Concordo - Concordo Totalmente</p>
-			<p>Sua honestidade é crucial para garantir que os resultados reflitam verdadeiramente suas experiências e sentimentos. Não há respostas certas ou erradas – apenas suas respostas são importantes. Os resultados serão utilizados para ajudar a entender melhor seus padrões emocionais e comportamentais e para orientar possíveis intervenções terapêuticas.</p>
-		</div>
-		<form id="scaleForm">
-			<div class="patient-info">
-				<input type="text" id="fullName" placeholder="Nome completo">
-				<input type="email" id="email" placeholder="E-mail">
-				<input type="text" id="phoneNumber" placeholder="Telefone">
-				<input type="text" id="age" placeholder="Idade">
-				<input type="date" id="date" placeholder="Data de realização do teste">
+		<form id="emotionScale">
+			<div class="form-section">
+				<label for="name">Nome completo:</label>
+				<input type="text" id="name" name="name" required>
+				<label for="age">Idade:</label>
+				<input type="text" id="age" name="age" required>
+				<label for="date">Data:</label>
+				<input type="date" id="date" name="date" required>
 			</div>
-			<div class="question-section">
-				<h2>Dependência Emocional</h2>
+			<!-- Campos da escala (exemplo para uma questão) -->
+			<div class="question">
 				<div class="question">
-					<label>1. Eu sinto que preciso da aprovação dos outros para me sentir bem comigo mesmo.</label>
-					<select name="q1">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>1. Eu sinto que as pessoas ao meu redor estão presentes quando eu mais preciso.</label>
+					<select name="q1" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>2. Eu me sinto ansioso(a) quando estou sozinho(a).</label>
-					<select name="q2">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>2. Muitas vezes tenho medo de que algo ruim aconteça, mesmo sem razão aparente.</label>
+					<select name="q2" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>3. Eu evito tomar decisões importantes sem consultar alguém em quem confio.</label>
-					<select name="q3">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>3. Meu ambiente de vida me proporciona segurança e estabilidade.</label>
+					<select name="q3" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>4. Eu me preocupo excessivamente em agradar os outros.</label>
-					<select name="q4">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>4. Frequentemente sinto que estou em risco ou vulnerável.</label>
+					<select name="q4" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>5. Eu sinto que não consigo viver sem meu parceiro(a).</label>
-					<select name="q5">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>5. Sinto que sou valorizado e amado pelas pessoas mais próximas.</label>
+					<select name="q5" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>6. Eu mudo meus planos frequentemente para acomodar os desejos dos outros.</label>
-					<select name="q6">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>6. Tenho dificuldade em me conectar emocionalmente com as pessoas.</label>
+					<select name="q6" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>7. Eu me sinto inseguro(a) quando estou longe das pessoas que amo.</label>
-					<select name="q7">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>7. As pessoas com quem me importo demonstram que gostam de mim.</label>
+					<select name="q7" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>8. Eu frequentemente busco reafirmação de que sou amado(a).</label>
-					<select name="q8">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>8. Frequentemente me sinto emocionalmente distante ou isolado dos outros.</label>
+					<select name="q8" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>9. Eu me sinto incapaz de ser feliz sem estar em um relacionamento.</label>
-					<select name="q9">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>9. Minhas realizações são frequentemente reconhecidas por quem me rodeia.</label>
+					<select name="q9" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>10. Eu tenho medo constante de ser rejeitado(a) ou abandonado(a).</label>
-					<select name="q10">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>10. Preciso da aprovação constante de outros para me sentir bem.</label>
+					<select name="q10" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>11. Eu fico preocupado(a) se alguém que amo não responde rapidamente às minhas mensagens.</label>
-					<select name="q11">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>11. Sinto que sou valorizado pelos meus esforços e realizações.</label>
+					<select name="q11" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>12. Eu me sinto vulnerável sem o apoio de alguém próximo.</label>
-					<select name="q12">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>12. Mesmo quando faço algo importante, sinto que os outros não percebem.</label>
+					<select name="q12" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>13. Eu evito atividades sociais se meu parceiro(a) não pode ir.</label>
-					<select name="q13">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>13. Sinto que tenho controle sobre as decisões importantes da minha vida.</label>
+					<select name="q13" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>14. Eu me sinto perdido(a) sem orientação de pessoas importantes para mim.</label>
-					<select name="q14">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>14. Muitas vezes sinto que dependo dos outros para tomar decisões importantes.</label>
+					<select name="q14" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>15. Eu preciso de reafirmação constante para me sentir seguro(a) sobre minhas decisões.</label>
-					<select name="q15">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>15. Tenho autonomia para escolher meu próprio caminho.</label>
+					<select name="q15" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>16. Eu me sinto incompleto(a) quando não estou em um relacionamento amoroso.</label>
-					<select name="q16">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>16. Costumo seguir as decisões dos outros, mesmo quando discordo.</label>
+					<select name="q16" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>17. Eu mudo meus gostos e preferências para agradar aos outros.</label>
-					<select name="q17">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>17. Eu tenho um propósito claro que me guia.</label>
+					<select name="q17" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>18. Eu faço de tudo para evitar ser rejeitado(a).</label>
-					<select name="q18">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>18. Às vezes sinto que minha vida não tem direção ou propósito.</label>
+					<select name="q18" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>19. Eu me preocupo demais com o que os outros pensam de mim.</label>
-					<select name="q19">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>19. Minhas ações diárias têm um sentido e valor para mim.</label>
+					<select name="q19" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
 					</select>
 				</div>
 				<div class="question">
-					<label>20. Eu dependo emocionalmente das opiniões das pessoas próximas a mim.</label>
-					<select name="q20">
-						<option value="1">Discordo Totalmente</option>
-						<option value="2">Discordo</option>
-						<option value="3">Neutro</option>
-						<option value="4">Concordo</option>
-						<option value="5">Concordo Totalmente</option>
+					<label>20. Frequentemente me pergunto se estou realmente seguindo o caminho certo na vida.</label>
+					<select name="q20" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
 					</select>
 				</div>
-				<div class="question-section">
-					<h2>Codependência Emocional</h2>
-					<div class="question">
-						<label>21. Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.</label>
-						<select name="q21">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>22. Eu tenho dificuldade em dizer "não" quando alguém pede minha ajuda.</label>
-						<select name="q22">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>23. Eu coloco as necessidades dos outros antes das minhas.</label>
-						<select name="q23">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>24. Eu sinto que sou responsável pela felicidade dos outros.</label>
-						<select name="q24">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>25. Eu frequentemente me envolvo em relacionamentos com pessoas que têm problemas sérios (por exemplo, abuso de substâncias).</label>
-						<select name="q25">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>26. Eu me sinto ansioso(a) se não estou no controle das situações.</label>
-						<select name="q26">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>27. Eu evito conflitos ao assumir responsabilidades que não são minhas.</label>
-						<select name="q27">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>28. Eu negligencio minhas próprias necessidades em favor dos outros.</label>
-						<select name="q28">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>29. Eu sinto que minha identidade está fortemente ligada ao meu papel de cuidador(a).</label>
-						<select name="q29">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>30. Eu tenho dificuldade em estabelecer limites claros com os outros.</label>
-						<select name="q30">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>31. Eu sinto culpa quando priorizo minhas próprias necessidades.</label>
-						<select name="q31">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>32. Eu me sinto responsável pelos sentimentos das pessoas ao meu redor.</label>
-						<select name="q32">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>33. Eu evito pedir ajuda mesmo quando preciso.</label>
-						<select name="q33">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>34. Eu me preocupo constantemente com os problemas dos outros.</label>
-						<select name="q34">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>35. Eu assumo a responsabilidade por resolver os problemas dos outros.</label>
-						<select name="q35">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>36. Eu sinto que preciso estar sempre disponível para os outros.</label>
-						<select name="q36">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>37. Eu tenho medo de que os outros se sintam abandonados se eu não estiver presente.</label>
-						<select name="q37">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>38. Eu evito expressar meus próprios sentimentos para não sobrecarregar os outros.</label>
-						<select name="q38">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>39. Eu me sinto obrigado(a) a ajudar os outros, mesmo quando estou sobrecarregado(a).</label>
-						<select name="q39">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
-					<div class="question">
-						<label>40. Eu me preocupo mais com os problemas dos outros do que com os meus próprios.</label>
-						<select name="q40">
-							<option value="1">Discordo Totalmente</option>
-							<option value="2">Discordo</option>
-							<option value="3">Neutro</option>
-							<option value="4">Concordo</option>
-							<option value="5">Concordo Totalmente</option>
-						</select>
-					</div>
+				<div class="question">
+					<label>21. Tenho pessoas em quem confio para compartilhar meus problemas.</label>
+					<select name="q21" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
 				</div>
-				<div class="gauge-container">
-					<div style="text-align: center;">
-						<div id="depGauge"></div>
-						<div class="gauge-desc">DEPENDÊNCIA EMOCIONAL</div>
-					</div>
-					<div style="text-align: center;">
-						<div id="codepGauge"></div>
-						<div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
-					</div>
+				<div class="question">
+					<label>22. Quando estou angustiado, sinto que não tenho ninguém para falar.</label>
+					<select name="q22" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
 				</div>
-			<button type="button" onclick="enviarDados()">CALCULAR E ENVIAR</button>
+				<div class="question">
+					<label>23. Minhas opiniões e sentimentos são ouvidos e compreendidos pelos outros.</label>
+					<select name="q23" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>24. Muitas vezes sinto que não sou compreendido pelos outros.</label>
+					<select name="q24" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>25. Posso expressar minhas opiniões e sentimentos sem medo.</label>
+					<select name="q25" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>26. Costumo me segurar para não expressar minhas verdadeiras opiniões.</label>
+					<select name="q26" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>27. Sinto-me à vontade para ser quem eu sou em qualquer ambiente.</label>
+					<select name="q27" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>28. Tenho receio de me abrir e falar o que penso.</label>
+					<select name="q28" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>29. Tenho acesso a experiências novas e desafiadoras regularmente.</label>
+					<select name="q29" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>30. Às vezes me sinto entediado com a rotina da minha vida.</label>
+					<select name="q30" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>31. Eu busco ativamente novos aprendizados e experiências.</label>
+					<select name="q31" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>32. Costumo evitar mudanças, mesmo quando elas podem ser positivas.</label>
+					<select name="q32" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>33. Tenho oportunidades frequentes de crescimento pessoal e profissional.</label>
+					<select name="q33" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>34. Muitas vezes sinto que minha vida está estagnada.</label>
+					<select name="q34" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>35. Estou sempre buscando melhorar minhas habilidades e conhecimentos.</label>
+					<select name="q35" required="">
+						<option value="">Selecione...</option>
+						<option value="1">Nunca</option>
+						<option value="2">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="4">Frequentemente</option>
+						<option value="5">Sempre</option>
+					</select>
+				</div>
+				<div class="question">
+					<label>36. Tenho dificuldade em progredir em minha vida ou carreira.</label>
+					<select name="q36" required="">
+						<option value="">Selecione...</option>
+						<option value="5">Nunca</option>
+						<option value="4">Raramente</option>
+						<option value="3">Ocasionalmente</option>
+						<option value="2">Frequentemente</option>
+						<option value="1">Sempre</option>
+					</select>
+				</div>
+				</option>
+				</select>
+				<button type="submit">Processar Dados</button>
 		</form>
-		<div id="result" class="hidden result-section">
-			<h2>RESULTADOS</h2>
-			<div class="result-item" id="dependenciaResultado"></div>
-			<div class="result-item" id="codependenciaResultado"></div>
-			<div id="whatsappLink" style="margin-top: 20px; text-align: center;"></div>
+		<!-- Termômetros -->
+		<div class="thermometer-container" id="thermometers">
+			<!-- Termômetro 1 -->
+			<div class="thermometer-row">
+				<div class="legend">Segurança e Estabilidade</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer1"></div>
+				</div>
+				<div class="explanation" id="explanation1">
+					<strong>Significado clínico:</strong> Pontuação baixa em segurança emocional pode indicar: <ul>
+						<li><strong>Comportamental:</strong> Evitação de situações sociais, tendência ao isolamento.</li>
+						<li><strong>Emocional:</strong> Sensação constante de vulnerabilidade e medo.</li>
+						<li><strong>Cognitivo:</strong> Pensamentos recorrentes de ameaça ou insegurança.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode gerar dificuldades em assumir responsabilidades e confiar nos colegas. Na vida afetiva, pode criar barreiras na intimidade e confiança mútua.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 2 -->
+			<div class="thermometer-row">
+				<div class="legend">Afeto e Conexão</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer2"></div>
+				</div>
+				<div class="explanation" id="explanation2">
+					<strong>Significado clínico:</strong> Pontuação baixa pode sugerir: <ul>
+						<li><strong>Comportamental:</strong> Dificuldade em formar e manter vínculos afetivos, baixa expressão de afeto.</li>
+						<li><strong>Emocional:</strong> Sentimentos de solidão e desconexão emocional.</li>
+						<li><strong>Cognitivo:</strong> Percepção de ser rejeitado ou não amado pelas pessoas ao redor.</li>
+						<li><strong>Impacto nas relações:</strong> No ambiente de trabalho, pode levar ao distanciamento dos colegas, afetando a colaboração. Na vida afetiva, pode resultar em relacionamentos superficiais e falta de envolvimento emocional.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 3 -->
+			<div class="thermometer-row">
+				<div class="legend">Validação</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer3"></div>
+				</div>
+				<div class="explanation" id="explanation3">
+					<strong>Significado clínico:</strong> Pontuação baixa pode indicar: <ul>
+						<li><strong>Comportamental:</strong> Busca constante por aprovação externa, dificuldade em reconhecer valor próprio.</li>
+						<li><strong>Emocional:</strong> Sentimentos de inadequação e baixa autoestima.</li>
+						<li><strong>Cognitivo:</strong> Foco exagerado em falhas e críticas externas.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode resultar em falta de confiança nas próprias habilidades. Nas relações afetivas, pode levar a dependência emocional e necessidade constante de validação.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 4 -->
+			<div class="thermometer-row">
+				<div class="legend">Autonomia</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer4"></div>
+				</div>
+				<div class="explanation" id="explanation4">
+					<strong>Significado clínico:</strong> Pontuação baixa pode sugerir: <ul>
+						<li><strong>Comportamental:</strong> Dificuldade em tomar decisões, tendência a delegar escolhas a terceiros.</li>
+						<li><strong>Emocional:</strong> Sentimento de impotência ou falta de controle sobre a própria vida.</li>
+						<li><strong>Cognitivo:</strong> Pensamentos de dependência ou falta de capacidade para lidar com responsabilidades.</li>
+						<li><strong>Impacto nas relações:</strong> No ambiente de trabalho, pode levar à dependência de superiores ou colegas para decisões. Na vida afetiva, pode gerar passividade e falta de iniciativa nos relacionamentos.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 5 -->
+			<div class="thermometer-row">
+				<div class="legend">Propósito e Direção</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer5"></div>
+				</div>
+				<div class="explanation" id="explanation5">
+					<strong>Significado clínico:</strong> Pontuação baixa pode indicar: <ul>
+						<li><strong>Comportamental:</strong> Falta de metas claras, dispersão nas atividades diárias.</li>
+						<li><strong>Emocional:</strong> Sentimentos de desmotivação e falta de sentido na vida.</li>
+						<li><strong>Cognitivo:</strong> Dificuldade em estabelecer objetivos de longo prazo.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode resultar em falta de proatividade e estagnação. Nas relações pessoais, pode causar dificuldades na construção de um futuro comum com o parceiro.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 6 -->
+			<div class="thermometer-row">
+				<div class="legend">Apoio e Suporte</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer6"></div>
+				</div>
+				<div class="explanation" id="explanation6">
+					<strong>Significado clínico:</strong> Pontuação baixa pode sugerir: <ul>
+						<li><strong>Comportamental:</strong> Relutância em pedir ajuda, isolamento em momentos de dificuldade.</li>
+						<li><strong>Emocional:</strong> Sentimento de abandono ou de que não pode contar com ninguém.</li>
+						<li><strong>Cognitivo:</strong> Crença de que precisa enfrentar tudo sozinho, falta de confiança em redes de apoio.</li>
+						<li><strong>Impacto nas relações:</strong> No ambiente de trabalho, pode resultar em dificuldade para colaborar. Na vida afetiva, pode criar um distanciamento emocional e falta de apoio mútuo.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 7 -->
+			<div class="thermometer-row">
+				<div class="legend">Expressão e Comunicação</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer7"></div>
+				</div>
+				<div class="explanation" id="explanation7">
+					<strong>Significado clínico:</strong> Pontuação baixa pode sugerir: <ul>
+						<li><strong>Comportamental:</strong> Dificuldade em se expressar, tendência a suprimir opiniões e emoções.</li>
+						<li><strong>Emocional:</strong> Frustração por não ser ouvido ou compreendido.</li>
+						<li><strong>Cognitivo:</strong> Pensamentos de inadequação ao se comunicar, medo de rejeição.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode levar à falta de assertividade e conflitos mal resolvidos. Nas relações afetivas, pode resultar em falta de diálogo e sentimentos reprimidos.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 8 -->
+			<div class="thermometer-row">
+				<div class="legend">Novidade e Desafios</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer8"></div>
+				</div>
+				<div class="explanation" id="explanation8">
+					<strong>Significado clínico:</strong> Pontuação baixa pode indicar: <ul>
+						<li><strong>Comportamental:</strong> Resistencia à mudança, apego à rotina e zonas de conforto.</li>
+						<li><strong>Emocional:</strong> Medo de fracassar em novas experiências, falta de excitação pela vida.</li>
+						<li><strong>Cognitivo:</strong> Pensamentos fixos e falta de flexibilidade cognitiva.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode limitar o crescimento profissional. Nas relações afetivas, pode criar monotonia e falta de dinamismo no relacionamento.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Termômetro 9 -->
+			<div class="thermometer-row">
+				<div class="legend">Crescimento e Desenvolvimento</div>
+				<div class="thermometer">
+					<div class="fill" id="thermometer9"></div>
+				</div>
+				<div class="explanation" id="explanation9">
+					<strong>Significado clínico:</strong> Pontuação baixa pode sugerir: <ul>
+						<li><strong>Comportamental:</strong> Estagnação em projetos pessoais ou profissionais, falta de busca por novos conhecimentos.</li>
+						<li><strong>Emocional:</strong> Frustração com o progresso pessoal ou sensação de estagnação.</li>
+						<li><strong>Cognitivo:</strong> Crença de que não há oportunidades para crescimento ou melhora.</li>
+						<li><strong>Impacto nas relações:</strong> No trabalho, pode causar desmotivação e baixa produtividade. Na vida afetiva, pode resultar em falta de projetos comuns e crescimento conjunto no relacionamento.</li>
+					</ul>
+				</div>
+			</div>
 		</div>
+		<!-- Botão de WhatsApp -->
+		<button id="whatsappButton" style="display:none;" onclick="sendWhatsApp()">Enviar via WhatsApp</button>
+		<div class="result" id="result"></div>
 	</main>
-
+	<footer style="background-color: transparent; padding: 30px; text-align: center; font-family: 'Arial', sans-serif;">
+		<div style="max-width: 800px; margin: auto; padding-top: 20px;">
+			<p style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #FFFFFF; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);"> Richelmy Murta </p>
+			<p style="font-size: 16px; margin-bottom: 15px; color: #FFFFFF; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);"> Psicólogo Clínico </p>
+			<p style="font-size: 14px; color: #FFFFFF; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);"> Todos os direitos reservados © 2025. </p>
+		</div>
+	</footer>
 	<script>
-		let depGauge, codepGauge;
-		window.onload = function() {
-		    depGauge = new JustGage({
-		        id: "depGauge",
-		        value: 0,
-		        min: 0,
-		        max: 100,
-		        title: "DEPENDÊNCIA EMOCIONAL",
-		        label: "pontos",
-		        levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-		    });
-		    codepGauge = new JustGage({
-		        id: "codepGauge",
-		        value: 0,
-		        min: 0,
-		        max: 100,
-		        title: "CODEPENDÊNCIA EMOCIONAL",
-		        label: "pontos",
-		        levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-		    });
-		};
-
-		function calcularGauges() {
-		    let totalDep = 0, totalCodep = 0;
-		    const formData = new FormData(document.getElementById('scaleForm'));
-		    formData.forEach((value, key) => {
-		        const val = parseInt(value);
-		        if (key.startsWith('q')) {
-		            if (key.substring(1) <= 20) {
-		                totalDep += val;
-		            } else {
-		                totalCodep += val;
-		            }
-		        }
-		    });
+		document.getElementById('emotionScale').addEventListener('submit', function (event) {
+		    event.preventDefault();
 		
-		    depGauge.refresh(totalDep);
-		    codepGauge.refresh(totalCodep);
-		    displayResults(totalDep, totalCodep);
-		}
-
-		function enviarDados() {
-		    calcularGauges();  // Calcula e atualiza os gauges antes de enviar os dados
-
-		    const formData = new FormData(document.getElementById('scaleForm'));
-		    const data = {
-		        nome: formData.get('fullName'),
-		        data: formData.get('date'),
-		        dependencia: depGauge.config.value,
-		        codependencia: codepGauge.config.value
+		    const scores = {
+		        security: 0,
+		        connection: 0,
+		        validation: 0,
+		        autonomy: 0,
+		        purpose: 0,
+		        support: 0,
+		        expression: 0,
+		        novelty: 0,
+		        growth: 0
 		    };
-
-		    fetch("https://script.google.com/macros/s/AKfycbxpasdzawOKp9gMwQ9ZXZvQUNMwf6Bm5J1NiB28j8YLubok-tT0J0ym1nMIxxdACpA/exec", {
-		        method: 'POST',
-		        body: new URLSearchParams(data)
-		    })
-		    .then(response => response.text())
-		    .then(data => {
-		        console.log(data);
-		        alert("Dados registrados com sucesso!");
-		    })
-		    .catch(error => {
-		        console.error('Erro:', error);
-		    });
-		}
-
-		function getResultDescription(score, type) {
-		    let resultText = "";
-		    if (score <= 39) {
-		        resultText = `Normal: Baixa intensidade de ${type.toLowerCase()}.`;
-		    } else if (score <= 59) {
-		        resultText = `Leve: Presença de alguns traços de ${type}, com possíveis impactos leves na qualidade de vida.`;
-		    } else if (score <= 79) {
-		        resultText = `Moderada: Presença de ${type} significativa, com impactos moderados nas relações e bem-estar.`;
-		    } else {
-		        resultText = `Alta: Presença elevada de ${type}, com impactos significativos, indicando a necessidade de intervenção terapêutica.`;
+		
+		    const invertedQuestions = {
+		        q2: true, q4: true, q6: true, q8: true, q10: true, q12: true, q14: true,
+		        q16: true, q18: true, q20: true, q22: true, q24: true, q26: true, q28: true,
+		        q30: true, q32: true, q34: true, q36: true
+		    };
+		
+		    const answers = new FormData(event.target);
+		
+		    // Calcular as pontuações ajustando as perguntas invertidas
+		    for (let [key, value] of answers.entries()) {
+		        let score = parseInt(value);
+		        if (invertedQuestions[key]) {
+		            score = 6 - score;
+		        }
+		
+		        // Categorizando as perguntas para diferentes necessidades
+		        if (["q1", "q2", "q3", "q4"].includes(key)) {
+		            scores.security += score;
+		        } else if (["q5", "q6", "q7", "q8"].includes(key)) {
+		            scores.connection += score;
+		        } else if (["q9", "q10", "q11", "q12"].includes(key)) {
+		            scores.validation += score;
+		        } else if (["q13", "q14", "q15", "q16"].includes(key)) {
+		            scores.autonomy += score;
+		        } else if (["q17", "q18", "q19", "q20"].includes(key)) {
+		            scores.purpose += score;
+		        } else if (["q21", "q22", "q23", "q24"].includes(key)) {
+		            scores.support += score;
+		        } else if (["q25", "q26", "q27", "q28"].includes(key)) {
+		            scores.expression += score;
+		        } else if (["q29", "q30", "q31", "q32"].includes(key)) {
+		            scores.novelty += score;
+		        } else if (["q33", "q34", "q35", "q36"].includes(key)) {
+		            scores.growth += score;
+		        }
 		    }
-		    return `<strong>${type}</strong> - ${resultText}`;
+		
+		    // Atualizar termômetros
+		    updateThermometer("thermometer1", scores.security, 'explanation1');
+		    updateThermometer("thermometer2", scores.connection, 'explanation2');
+		    updateThermometer("thermometer3", scores.validation, 'explanation3');
+		    updateThermometer("thermometer4", scores.autonomy, 'explanation4');
+		    updateThermometer("thermometer5", scores.purpose, 'explanation5');
+		    updateThermometer("thermometer6", scores.support, 'explanation6');
+		    updateThermometer("thermometer7", scores.expression, 'explanation7');
+		    updateThermometer("thermometer8", scores.novelty, 'explanation8');
+		    updateThermometer("thermometer9", scores.growth, 'explanation9');
+		
+		    // Exibir botão de WhatsApp
+		    document.getElementById("whatsappButton").style.display = "inline-block";
+		});
+		
+		function updateThermometer(id, value, explanationId) {
+		    const elem = document.getElementById(id);
+		    const percentage = (value / 20) * 100;
+		    let color = "red";
+		
+		    if (value >= 16) {
+		        color = "green";
+		    } else if (value >= 10) {
+		        color = "yellow";
+		    }
+		
+		    elem.style.width = percentage + "%";
+		    elem.style.backgroundColor = color;
+		
+		    // Mostrar explicação para escores baixos
+		    if (value < 10) {
+		        document.getElementById(explanationId).style.display = 'block';
+		    } else {
+		        document.getElementById(explanationId).style.display = 'none';
+		    }
 		}
-
-		function displayResults(depScore, codepScore) {
-		    const depResult = document.getElementById('dependenciaResultado');
-		    const codepResult = document.getElementById('codependenciaResultado');
-		    depResult.innerHTML = getResultDescription(depScore, 'Dependência Emocional');
-		    codepResult.innerHTML = getResultDescription(codepScore, 'Codependência Emocional');
-
-		    const whatsappLink = document.getElementById('whatsappLink');
-		    const message = `Olá! Concluí a avaliação e meu escore de Dependência Emocional é ${depScore} e o meu escore de Codependência Emocional é ${codepScore}.`;
-		    const whatsappUrl = `https://wa.me/5535984640729?text=${encodeURIComponent(message)}`;
-
-		    whatsappLink.innerHTML = `<a href="${whatsappUrl}" target="_blank"><button type="button">Enviar pelo WhatsApp</button></a>`;
+		
+		function sendWhatsApp() {
+		    const name = document.getElementById('name').value;
+		    const age = document.getElementById('age').value;
+		    const date = document.getElementById('date').value;
+		    const message = `Nome: ${name}\nIdade: ${age}\nData: ${date}\nResultados das Necessidades:`;
+		
+		    // Adicionar os resultados
+		    const results = `
+		        Segurança e Estabilidade: ${document.getElementById('thermometer1').style.width}
+		        Afeto e Conexão: ${document.getElementById('thermometer2').style.width}
+		        Validação: ${document.getElementById('thermometer3').style.width}
+		        Autonomia: ${document.getElementById('thermometer4').style.width}
+		        Propósito e Direção: ${document.getElementById('thermometer5').style.width}
+		        Apoio e Suporte: ${document.getElementById('thermometer6').style.width}
+		        Expressão e Comunicação: ${document.getElementById('thermometer7').style.width}
+		        Novidade e Desafios: ${document.getElementById('thermometer8').style.width}
+		        Crescimento e Desenvolvimento: ${document.getElementById('thermometer9').style.width}
+		    `;
+		
+		    const whatsappMessage = encodeURIComponent(message + results);
+		    const whatsappUrl = `https://wa.me/5535984640729?text=${whatsappMessage}`; // Número corrigido para formato internacional
+		
+		    window.open(whatsappUrl, '_blank');
 		}
 	</script>
 </body>
