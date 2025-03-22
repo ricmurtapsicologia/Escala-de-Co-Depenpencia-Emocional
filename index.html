@@ -725,7 +725,7 @@
 		    if (key.startsWith('q')) {
 		      const val = parseInt(value);
 		      // Se o número da questão (extraído de key) for menor ou igual a 20, soma para Dependência; caso contrário para Codependência
-		      if (key.substring(1) <= 20) totalDep += val;
+		      if (parseInt(key.substring(1)) <= 20) totalDep += val;
 		      else totalCodep += val;
 		    }
 		  });
