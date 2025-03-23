@@ -9,7 +9,7 @@
 	<meta name="keywords" content="dependência emocional, codependência emocional, avaliação psicológica, LGPD, psicometria, saúde mental" />
 	<meta property="og:title" content="Escala de Codependência e Dependência Emocional" />
 	<meta property="og:description" content="Avalie seus padrões emocionais e receba orientações para melhorar seus relacionamentos." />
-	<meta property="og:image" content="https://i.pinimg.com/736x/14/50/7f/14507f2940f14f9006c8319d760e6b7b.jpg" />
+	<meta property="og:image" content="https://i.pinimg.com/736x/65/a3/07/65a307061047eff7193890fee5568e95.jpg" />
 	<meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/" />
 	<meta property="og:type" content="website" />
 	<title>Escala de Codependência e Dependência Emocional</title>
@@ -54,6 +54,7 @@
 		  color: #fff;
 		  z-index: 1000;
 		  transition: opacity 1s ease;
+		  text-align: center;
 		}
 		#splash.hidden {
 		  opacity: 0;
@@ -217,15 +218,21 @@
 		  main { padding: 15px; }
 		  .instructions { font-size: 14px; }
 		  button { padding: 10px; font-size: 16px; }
+		  /* Ajuste específico para a splash screen em telas pequenas */
+		  #splash {
+		    padding: 20px;
+		    text-align: center;
+		  }
 		}
+		
 	</style>
 </head>
 
 <body>
 	<!-- Splash Screen -->
 	<div id="splash">
-		<h1>Bem-vindo à Escala de Codependência e Dependência Emocional</h1>
-		<p>Avalie seus padrões emocionais de forma prática e confiável</p>
+		<h1>Bem-vindo(a) à Escala de Codependência e Dependência Emocional</h1>
+		<p>Descubra seus padrões; desperte e transforme sua vida agora.</p>
 	</div>
 	<header>
 		<h1>Escala de Codependência e Dependência Emocional</h1>
@@ -960,11 +967,20 @@
 		
 		  const patientName = document.getElementById('fullName').value.trim();
 		  const testDate = document.getElementById('date').value;
-		  const message = `Olá! Concluí a avaliação e meu escore de Dependência Emocional é ${depScore} e o meu escore de Codependência Emocional é ${codepScore}.`;
-		  const whatsappUrl = `https://wa.me/5535984640729?text=${encodeURIComponent(message)}`;
 		  
+		  // Obtém o texto simples dos resultados, removendo as tags HTML
+		  const depText = stripHTML(getResultDescription(depScore, 'Dependência Emocional'));
+		  const codepText = stripHTML(getResultDescription(codepScore, 'Codependência Emocional'));
+		  
+		  const message = `Olá! Meu nome é ${patientName || "Não informado"}. Realizei a avaliação em ${testDate || "data não informada"}. 
+		Meu resultado de Dependência Emocional é ${depScore} pontos. ${depText}
+		  
+		Meu resultado de Codependência Emocional é ${codepScore} pontos. ${codepText}`;
+		  
+		  const whatsappUrl = `https://wa.me/5535984640729?text=${encodeURIComponent(message)}`;
 		  document.getElementById('whatsappLink').innerHTML = `<a href="${whatsappUrl}" target="_blank"><button type="button">Compartilhar via WhatsApp</button></a>`;
 		};
+		
 		
 		// Função auxiliar para remover tags HTML (se necessário)
 		const stripHTML = html => {
