@@ -1,4 +1,4 @@
-name: Sanitizar superfície pública v3
+name: Sanitizar superfície pública v3.1
 on:
   workflow_dispatch:
   push:
@@ -22,10 +22,9 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
           before = s
-
           HERO = 'https://images.unsplash.com/photo-1767353361931-ae25e858a925?auto=format&fit=crop&fm=jpg&q=82&w=3000'
 
-          # Neutral public metadata: no disorder/construct label in browser title or social preview.
+          # Neutral metadata and a unique thematic high-resolution hero source.
           s = re.sub(r'<meta name="description"[^>]*>', '<meta name="description" content="Rastreio clínico sobre autonomia, limites, cuidado e equilíbrio nas relações. As respostas serão integradas à avaliação pelo psicólogo responsável.">', s, count=1, flags=re.I)
           s = re.sub(r'<meta name="keywords"[^>]*>\s*', '', s, count=1, flags=re.I)
           s = re.sub(r'<meta property="og:title"[^>]*>', '<meta property="og:title" content="Autonomia, limites e cuidado nas relações">', s, count=1, flags=re.I)
@@ -33,47 +32,73 @@ jobs:
           s = re.sub(r'<meta property="og:image"[^>]*>', f'<meta property="og:image" content="{HERO}">', s, count=1, flags=re.I)
           s = re.sub(r'<title>.*?</title>', '<title>Autonomia, limites e cuidado nas relações</title>', s, count=1, flags=re.S|re.I)
 
-          # Remove libraries used only by the invalid patient-side gauge/scoring UI.
+          # Remove libraries and artifacts used only by the invalid legacy score/result UI.
           s = re.sub(r'\s*<!--\s*Biblioteca JustGage.*?-->\s*', '\n', s, count=1, flags=re.I)
           s = re.sub(r'\s*<link[^>]+justgage[^>]*>\s*', '\n', s, flags=re.I)
           s = re.sub(r'\s*<script[^>]+raphael[^>]*></script>\s*', '\n', s, flags=re.I)
           s = re.sub(r'\s*<script[^>]+justgage[^>]*></script>\s*', '\n', s, flags=re.I)
           s = re.sub(r'\s*<!--\s*Favicon:.*?-->\s*<link\s+rel="icon"[^>]*>\s*', '\n', s, count=1, flags=re.I)
 
-          # Remove residual splash CSS/markup/logic, if any.
+          # No splash and no duplicate legacy onboarding/hero.
           s = re.sub(r'\s*/\*\s*Splash Screen\s*\*/\s*#splash\s*\{.*?\}\s*#splash\.hidden\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
           s = re.sub(r'\s*/\*\s*Ajuste específico para a splash screen em telas pequenas\s*\*/\s*#splash\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
           s = re.sub(r'\s*<!--\s*Splash Screen\s*-->\s*<div\s+id=["\']splash["\']>.*?</div>\s*', '\n', s, flags=re.S|re.I)
-
-          # Central runtime owns onboarding; remove any duplicate legacy block.
           s = re.sub(r'\s*<!--\s*Introdução orientativa.*?-->\s*<section\s+class=["\']instructions["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
+          s = re.sub(r'\s*<header>.*?</header>\s*', '\n', s, count=1, flags=re.S|re.I)
 
-          # Neutral visible headings. Item wording and response options remain untouched.
-          s = s.replace('<h1>Escala de Codependência e Dependência Emocional</h1>', '<h1>Autonomia, limites e cuidado nas relações</h1>')
-          s = s.replace('<p>Uma ferramenta para compreender e melhorar seus relacionamentos</p>', '<p>Um questionário clínico sobre padrões relacionais do cotidiano</p>')
+          # Public section labels remain neutral; exact item wording is untouched.
           s = s.replace('<!-- Seção de Dependência Emocional (Perguntas 1 a 20) -->', '<!-- Bloco A (Perguntas 1 a 20) -->')
           s = s.replace('<h2>Dependência Emocional</h2>', '<h2>Autonomia e segurança nos vínculos</h2>')
           s = s.replace('<!-- Seção de Codependência Emocional (Perguntas 21 a 40) -->', '<!-- Bloco B (Perguntas 21 a 40) -->')
           s = s.replace('<h2>Codependência Emocional</h2>', '<h2>Limites, cuidado e reciprocidade</h2>')
 
-          # Add one unique high-resolution thematic hero source. The canonical runtime copies it into the branded hero.
           if 'data-rm-hero-source="codependencia-v1"' not in s:
               s = s.replace('<main>', '<main>\n\t<img data-rm-hero-source="codependencia-v1" src="' + HERO + '" alt="Duas mãos conectadas por um fio fino, representando vínculo, autonomia e limites" hidden>', 1)
 
-          # Remove legacy gauge/result CSS rules, including responsive fragments.
-          for cls in ['gauge-container', 'gauge-desc', 'result-section', 'result-item']:
-              s = re.sub(r'\s*\.' + re.escape(cls) + r'(?:\s*>\s*div)?\s*\{[^{}]*\}\s*', '\n', s, flags=re.S|re.I)
-          s = re.sub(r'\s*/\*\s*Seção de Resultados\s*\*/\s*', '\n', s, flags=re.I)
+          # Remove unused presentation CSS that belonged to splash/onboarding/legacy results.
+          selectors = [
+              r'header', r'header\s+h1', r'header\s+p', r'\.instructions', r'\.instructions\s+p',
+              r'\.instructions\s+\.lgpd', r'\.gauge-container', r'\.gauge-container\s*>\s*div',
+              r'\.gauge-desc', r'\.result-section', r'\.result-section\s+h2', r'\.result-item'
+          ]
+          for selector in selectors:
+              s = re.sub(r'\s*' + selector + r'\s*\{[^{}]*\}\s*', '\n', s, flags=re.S|re.I)
+          s = re.sub(r'\s*/\*\s*(?:Header|Seção de Resultados|Informações sobre LGPD integradas à introdução)\s*\*/\s*', '\n', s, flags=re.I)
 
-          # Remove all patient-side result UI and replace it with a single governed submit action.
+          # Canonical palette/tokens for the remaining questionnaire-specific fallback styling.
+          replacements = {
+              "font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;": "font-family: var(--rm-font, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);",
+              'background-color: #f0f4f8;': 'background-color: var(--rm-canvas, #edf4f3);',
+              'color: #333;': 'color: var(--rm-ink, #17333a);',
+              'max-width: 960px;': 'max-width: var(--rm-content, 1040px);',
+              'background-color: #fff;': 'background-color: var(--rm-surface, #fff);',
+              'color: #2E8B57;': 'color: var(--rm-primary, #176d68);',
+              'background-color: #eef9f0;': 'background-color: var(--rm-primary-soft, #e4f2f0);',
+              'border-left: 4px solid #5CB85C;': 'border-left: 4px solid var(--rm-primary, #176d68);',
+              'border: 1px solid #ccc;': 'border: 1px solid var(--rm-line, #d7e4e2);',
+              'background-color: #fafafa;': 'background-color: var(--rm-surface, #fff);',
+              'background: linear-gradient(135deg, #2E8B57, #3CB371);': 'background: var(--rm-primary, #176d68);',
+              'background-color: #276746;': 'background-color: var(--rm-primary-strong, #105753);',
+              'background: #0b3d91;': 'background: var(--rm-ink, #17333a);'
+          }
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+          s = re.sub(r'\s*opacity:\s*0;\s*', '\n', s, count=1, flags=re.I)
+          s = re.sub(r'\s*animation:\s*fadeIn[^;]*;\s*', '\n', s, count=1, flags=re.I)
+          s = re.sub(r'\s*@keyframes\s+fadeIn\s*\{.*?\}\s*', '\n', s, count=1, flags=re.S|re.I)
+          s = re.sub(r'\s*header\s+h1\s*\{[^{}]*\}\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*\.instructions\s*\{[^{}]*\}\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*\.gauge-container\s*\{[^{}]*\}\s*', '\n', s, flags=re.I)
+
+          # Remove legacy result UI and retain one submission affordance controlled by the canonical fail-safe.
           s = re.sub(r'\s*<!--\s*Velocímetros\s*-->\s*<section\s+class=["\']gauge-container["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
           s = re.sub(r'\s*<!--\s*Botão para calcular\s*-->\s*<button[^>]*onclick=["\']calculateScore\(\)["\'][^>]*>.*?</button>\s*', '\n', s, count=1, flags=re.S|re.I)
           s = re.sub(r'\s*</form>\s*<!--\s*Seção de resultados\s*-->\s*<section\s+id=["\']result["\'][^>]*>.*?</section>', '\n\t\t\t<button type="submit" id="screening-submit">Concluir rastreio</button>\n\t\t</form>', s, count=1, flags=re.S|re.I)
+          if 'id="screening-submit"' not in s:
+              s = s.replace('</form>', '\t\t\t<button type="submit" id="screening-submit">Concluir rastreio</button>\n\t\t</form>', 1)
 
-          # Remove the entire legacy scoring/interpreting/sharing module. The central runtime remains separate.
+          # No patient-side scoring, interpretation, result sharing or WhatsApp.
           s = re.sub(r'\s*<!--\s*JavaScript moderno ES6\+\s*-->\s*<script\s+type=["\']module["\']>.*?</script>\s*', '\n', s, count=1, flags=re.S|re.I)
-
-          # Remove any remaining WhatsApp or legacy-result fragments that are not questionnaire content.
           s = re.sub(r'\s*<div\s+id=["\']whatsappLink["\'][^>]*></div>\s*', '\n', s, flags=re.I)
           s = re.sub(r'\s*const\s+whatsappUrl\s*=\s*`https://wa\.me/[^`]+`;\s*', '\n', s, flags=re.S|re.I)
           s = re.sub(r'\s*document\.getElementById\(["\']whatsappLink["\']\)\.innerHTML\s*=\s*`[^`]*`;\s*', '\n', s, flags=re.S|re.I)
@@ -97,19 +122,19 @@ jobs:
               assert block, f'Missing q{i}'
               values = re.findall(r'<option\s+value=["\']([1-5])["\']', block.group(1), re.I)
               assert values == ['1','2','3','4','5'], f'Option contract mismatch q{i}: {values}'
-          assert 'screening-uniformity-v1.js' in s, 'Central screening runtime loader missing'
+          assert 'screening-uniformity-v1.js' in s, 'Central runtime loader missing'
           assert 'type="submit" id="screening-submit"' in s, 'Governed submit action missing'
           assert 'data-rm-hero-source="codependencia-v1"' in s, 'Unique hero source missing'
+          assert 'var(--rm-primary' in s and 'var(--rm-canvas' in s, 'Canonical color tokens not applied to questionnaire fallback CSS'
           banned = [
-              r'id=["\']splash', r'JustGage', r'justgage', r'raphael', r'depGauge', r'codepGauge',
-              r'calculateScore', r'getResultDescription', r'displayResults', r'score\s*<=',
-              r'Resultados da Avaliação', r'wa\.me', r'whatsappLink', r'WhatsApp',
-              r'<title>[^<]*(?:Codepend|Dependência)', r'<h1>[^<]*(?:Codepend|Dependência)',
-              r'<h2>[^<]*(?:Codepend|Dependência)'
+              r'<header\b', r'id=["\']splash', r'JustGage', r'justgage', r'raphael', r'depGauge', r'codepGauge',
+              r'calculateScore', r'getResultDescription', r'displayResults', r'score\s*<=', r'\.result-section',
+              r'Resultados da Avaliação', r'wa\.me', r'whatsappLink', r'WhatsApp', r'\.gauge-container',
+              r'<title>[^<]*(?:Codepend|Dependência)', r'<h1>[^<]*(?:Codepend|Dependência)', r'<h2>[^<]*(?:Codepend|Dependência)'
           ]
           for pattern in banned:
               assert not re.search(pattern, s, re.I), f'Banned public residue: {pattern}'
-          print('CODEPENDENCIA_PUBLIC_SOURCE_40_40_PASS')
+          print('CODEPENDENCIA_PUBLIC_SOURCE_40_40_BRAND_PASS')
           PY
 
       - name: Commit sanitization
@@ -122,5 +147,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'Sanitiza frontend da Codependência sem alterar itens'
+          git commit -m 'Consolida branding e remove resíduos legados da Codependência'
           git push
