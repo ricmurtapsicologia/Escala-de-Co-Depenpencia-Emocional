@@ -1,0 +1,129 @@
+name: Codependência — E2E live v1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - '.github/workflows/e2e-live-v1.yml'
+      - 'contracts/**'
+  schedule:
+    - cron: '17 7 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  live-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Wait for the published neutral page
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/'
+          for attempt in 1 2 3 4 5 6 7 8; do
+            if curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "$url?cert=${GITHUB_SHA}-${attempt}" -o /tmp/codependencia.html; then
+              if grep -Fq '<title>Autonomia, limites e cuidado nas relações</title>' /tmp/codependencia.html \
+                && grep -Fq 'data-rm-hero-source="codependencia-v1"' /tmp/codependencia.html \
+                && ! grep -Eqi 'JustGage|calculateScore|wa\.me|whatsappLink|id=["'"']splash' /tmp/codependencia.html; then
+                echo 'Published sanitized page confirmed.'
+                exit 0
+              fi
+            fi
+            sleep $((attempt * 5))
+          done
+          echo 'Published page did not converge to the sanitized source.' >&2
+          exit 1
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Run desktop and mobile safety matrix
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const { chromium } = require('playwright');
+          const url = 'https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/';
+          const viewports = [
+            {name:'desktop', width:1440, height:1000},
+            {name:'mobile', width:390, height:844}
+          ];
+          (async()=>{
+            const browser = await chromium.launch({headless:true});
+            const failures=[];
+            for(const vp of viewports){
+              const page=await browser.newPage({viewport:{width:vp.width,height:vp.height}});
+              const pageErrors=[];
+              page.on('pageerror',e=>pageErrors.push(String(e.message||e)));
+              try{
+                const response=await page.goto(`${url}?e2e=${Date.now()}-${vp.name}`,{waitUntil:'networkidle',timeout:60000});
+                if(!response || response.status()>=400) throw new Error(`HTTP_${response?.status()}`);
+                await page.waitForSelector('.rm-screening-shell',{state:'visible',timeout:20000});
+                await page.waitForSelector('.rm-identity',{state:'visible',timeout:20000});
+
+                const title=await page.title();
+                if(title!=='Autonomia, limites e cuidado nas relações') throw new Error(`TITLE:${title}`);
+                const shellTitle=(await page.locator('#rm-screening-title').textContent()||'').trim();
+                if(shellTitle!=='Autonomia, limites e cuidado nas relações') throw new Error(`SHELL_TITLE:${shellTitle}`);
+
+                const hero=page.locator('.rm-screening-visual img');
+                if(await hero.count()!==1 || !(await hero.isVisible())) throw new Error('HERO_NOT_VISIBLE');
+                const heroSrc=await hero.getAttribute('src');
+                if(!String(heroSrc).includes('photo-1767353361931-ae25e858a925')) throw new Error(`HERO_SOURCE:${heroSrc}`);
+
+                const qCount=await page.locator('select[name^="q"]').count();
+                if(qCount!==40) throw new Error(`QUESTION_COUNT:${qCount}`);
+                for(let i=1;i<=40;i++){
+                  const q=page.locator(`select[name="q${i}"]`);
+                  if(await q.count()!==1) throw new Error(`QUESTION_KEY:q${i}`);
+                  const values=await q.locator('option').evaluateAll(opts=>opts.map(o=>o.value));
+                  if(JSON.stringify(values)!==JSON.stringify(['1','2','3','4','5'])) throw new Error(`OPTIONS:q${i}:${values.join(',')}`);
+                }
+
+                if(await page.locator('header').count()) throw new Error('LEGACY_HEADER_PRESENT');
+                if(await page.locator('#splash,.splash,.gauge-container,.result-section').count()) throw new Error('LEGACY_SURFACE_PRESENT');
+                if(await page.locator('a[href*="wa.me"],a[href*="whatsapp" i]').count()) throw new Error('WHATSAPP_PRESENT');
+                if(await page.getByText(/Normal:|Leve|Moderada|Alta|Resultados da Avaliação/i).count()) throw new Error('PATIENT_INTERPRETATION_PRESENT');
+
+                const onboarding=page.locator('.rm-onboarding li');
+                if(await onboarding.count()!==3) throw new Error(`ONBOARDING_STEPS:${await onboarding.count()}`);
+                const identityLabels=await page.locator('.rm-identity .rm-field span').allTextContents();
+                for(const required of ['Nome completo','Data de nascimento','Data de aplicação do rastreio']){
+                  if(!identityLabels.includes(required)) throw new Error(`IDENTITY_MISSING:${required}`);
+                }
+
+                const button=page.locator('#screening-submit');
+                if(await button.count()!==1 || !(await button.isVisible())) throw new Error('SUBMIT_ACTION_MISSING');
+                await button.click();
+                const hold=page.locator('.rm-unavailable');
+                await hold.waitFor({state:'visible',timeout:5000});
+                const holdText=(await hold.textContent()||'');
+                if(!holdText.includes('Envio temporariamente indisponível')) throw new Error('FAIL_SAFE_COPY_MISSING');
+                if(await page.locator('.rm-completion:visible').count()) throw new Error('FALSE_SUCCESS_VISIBLE');
+
+                const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+                if(overflow>2) throw new Error(`HORIZONTAL_OVERFLOW:${overflow}`);
+                if(pageErrors.length) throw new Error(`PAGEERROR:${pageErrors.join(' | ')}`);
+                console.log(`PASS ${vp.name}`);
+              }catch(error){
+                failures.push({viewport:vp.name,error:String(error.message||error),pageErrors});
+                console.error(`FAIL ${vp.name}`,error);
+              }finally{
+                await page.close();
+              }
+            }
+            await browser.close();
+            console.log(JSON.stringify({cases:viewports.length,passed:viewports.length-failures.length,failed:failures.length,failures},null,2));
+            if(failures.length) process.exit(1);
+          })();
+          NODE
