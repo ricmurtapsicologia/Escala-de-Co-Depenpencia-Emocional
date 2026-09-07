@@ -1,4 +1,4 @@
-name: Sanitizar superfície pública v2
+name: Sanitizar superfície pública v3
 on:
   workflow_dispatch:
   push:
@@ -12,41 +12,115 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Remove splash, legacy onboarding and WhatsApp result channel
+      - name: Sanitize patient-facing source
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
-          p=Path('index.html')
-          s=p.read_text(encoding='utf-8')
-          before=s
 
-          s=re.sub(r'\s*/\*\s*Splash Screen\s*\*/\s*#splash\s*\{.*?\}\s*#splash\.hidden\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
-          s=re.sub(r'\s*/\*\s*Ajuste específico para a splash screen em telas pequenas\s*\*/\s*#splash\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
-          s=re.sub(r'\s*<!--\s*Splash Screen\s*-->\s*<div\s+id=["\']splash["\']>.*?</div>\s*', '\n', s, flags=re.S|re.I)
-          s=re.sub(r"\s*window\.addEventListener\(['\"]load['\"],\s*\(\)\s*=>\s*\{\s*//[^\n]*splash[^\n]*\n\s*setTimeout\(\(\)\s*=>\s*\{\s*const\s+splash\s*=\s*document\.getElementById\(['\"]splash['\"]\);\s*if\s*\(splash\)\s*\{\s*splash\.classList\.add\(['\"]hidden['\"]\);\s*setTimeout\(\(\)\s*=>\s*splash\.style\.display\s*=\s*['\"]none['\"],\s*1000\);\s*\}\s*\},\s*2000\);\s*\}\);\s*", '\n', s, flags=re.S|re.I)
-          s=re.sub(r'\s*<!--\s*Introdução orientativa.*?-->\s*<section\s+class=["\']instructions["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
-          s=re.sub(r'\s*<div\s+id=["\']whatsappLink["\'][^>]*></div>\s*', '\n', s, flags=re.I)
-          s=re.sub(r'\s*const\s+whatsappUrl\s*=\s*`https://wa\.me/[^`]+`;\s*', '\n', s, flags=re.S|re.I)
-          s=re.sub(r"\s*document\.getElementById\(['\"]whatsappLink['\"]\)\.innerHTML\s*=\s*`[^`]*`;\s*", '\n', s, flags=re.S|re.I)
-          s=s.replace('incluindo mensagem completa para WhatsApp','sem compartilhamento público de resultados')
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          before = s
 
-          if s==before:
-              raise SystemExit('SANITIZER_NO_CHANGES')
-          p.write_text(s,encoding='utf-8')
+          HERO = 'https://images.unsplash.com/photo-1767353361931-ae25e858a925?auto=format&fit=crop&fm=jpg&q=82&w=3000'
+
+          # Neutral public metadata: no disorder/construct label in browser title or social preview.
+          s = re.sub(r'<meta name="description"[^>]*>', '<meta name="description" content="Rastreio clínico sobre autonomia, limites, cuidado e equilíbrio nas relações. As respostas serão integradas à avaliação pelo psicólogo responsável.">', s, count=1, flags=re.I)
+          s = re.sub(r'<meta name="keywords"[^>]*>\s*', '', s, count=1, flags=re.I)
+          s = re.sub(r'<meta property="og:title"[^>]*>', '<meta property="og:title" content="Autonomia, limites e cuidado nas relações">', s, count=1, flags=re.I)
+          s = re.sub(r'<meta property="og:description"[^>]*>', '<meta property="og:description" content="Um rastreio clínico para organizar padrões relacionais sem rótulos automáticos.">', s, count=1, flags=re.I)
+          s = re.sub(r'<meta property="og:image"[^>]*>', f'<meta property="og:image" content="{HERO}">', s, count=1, flags=re.I)
+          s = re.sub(r'<title>.*?</title>', '<title>Autonomia, limites e cuidado nas relações</title>', s, count=1, flags=re.S|re.I)
+
+          # Remove libraries used only by the invalid patient-side gauge/scoring UI.
+          s = re.sub(r'\s*<!--\s*Biblioteca JustGage.*?-->\s*', '\n', s, count=1, flags=re.I)
+          s = re.sub(r'\s*<link[^>]+justgage[^>]*>\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*<script[^>]+raphael[^>]*></script>\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*<script[^>]+justgage[^>]*></script>\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*<!--\s*Favicon:.*?-->\s*<link\s+rel="icon"[^>]*>\s*', '\n', s, count=1, flags=re.I)
+
+          # Remove residual splash CSS/markup/logic, if any.
+          s = re.sub(r'\s*/\*\s*Splash Screen\s*\*/\s*#splash\s*\{.*?\}\s*#splash\.hidden\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
+          s = re.sub(r'\s*/\*\s*Ajuste específico para a splash screen em telas pequenas\s*\*/\s*#splash\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
+          s = re.sub(r'\s*<!--\s*Splash Screen\s*-->\s*<div\s+id=["\']splash["\']>.*?</div>\s*', '\n', s, flags=re.S|re.I)
+
+          # Central runtime owns onboarding; remove any duplicate legacy block.
+          s = re.sub(r'\s*<!--\s*Introdução orientativa.*?-->\s*<section\s+class=["\']instructions["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
+
+          # Neutral visible headings. Item wording and response options remain untouched.
+          s = s.replace('<h1>Escala de Codependência e Dependência Emocional</h1>', '<h1>Autonomia, limites e cuidado nas relações</h1>')
+          s = s.replace('<p>Uma ferramenta para compreender e melhorar seus relacionamentos</p>', '<p>Um questionário clínico sobre padrões relacionais do cotidiano</p>')
+          s = s.replace('<!-- Seção de Dependência Emocional (Perguntas 1 a 20) -->', '<!-- Bloco A (Perguntas 1 a 20) -->')
+          s = s.replace('<h2>Dependência Emocional</h2>', '<h2>Autonomia e segurança nos vínculos</h2>')
+          s = s.replace('<!-- Seção de Codependência Emocional (Perguntas 21 a 40) -->', '<!-- Bloco B (Perguntas 21 a 40) -->')
+          s = s.replace('<h2>Codependência Emocional</h2>', '<h2>Limites, cuidado e reciprocidade</h2>')
+
+          # Add one unique high-resolution thematic hero source. The canonical runtime copies it into the branded hero.
+          if 'data-rm-hero-source="codependencia-v1"' not in s:
+              s = s.replace('<main>', '<main>\n\t<img data-rm-hero-source="codependencia-v1" src="' + HERO + '" alt="Duas mãos conectadas por um fio fino, representando vínculo, autonomia e limites" hidden>', 1)
+
+          # Remove legacy gauge/result CSS rules, including responsive fragments.
+          for cls in ['gauge-container', 'gauge-desc', 'result-section', 'result-item']:
+              s = re.sub(r'\s*\.' + re.escape(cls) + r'(?:\s*>\s*div)?\s*\{[^{}]*\}\s*', '\n', s, flags=re.S|re.I)
+          s = re.sub(r'\s*/\*\s*Seção de Resultados\s*\*/\s*', '\n', s, flags=re.I)
+
+          # Remove all patient-side result UI and replace it with a single governed submit action.
+          s = re.sub(r'\s*<!--\s*Velocímetros\s*-->\s*<section\s+class=["\']gauge-container["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
+          s = re.sub(r'\s*<!--\s*Botão para calcular\s*-->\s*<button[^>]*onclick=["\']calculateScore\(\)["\'][^>]*>.*?</button>\s*', '\n', s, count=1, flags=re.S|re.I)
+          s = re.sub(r'\s*</form>\s*<!--\s*Seção de resultados\s*-->\s*<section\s+id=["\']result["\'][^>]*>.*?</section>', '\n\t\t\t<button type="submit" id="screening-submit">Concluir rastreio</button>\n\t\t</form>', s, count=1, flags=re.S|re.I)
+
+          # Remove the entire legacy scoring/interpreting/sharing module. The central runtime remains separate.
+          s = re.sub(r'\s*<!--\s*JavaScript moderno ES6\+\s*-->\s*<script\s+type=["\']module["\']>.*?</script>\s*', '\n', s, count=1, flags=re.S|re.I)
+
+          # Remove any remaining WhatsApp or legacy-result fragments that are not questionnaire content.
+          s = re.sub(r'\s*<div\s+id=["\']whatsappLink["\'][^>]*></div>\s*', '\n', s, flags=re.I)
+          s = re.sub(r'\s*const\s+whatsappUrl\s*=\s*`https://wa\.me/[^`]+`;\s*', '\n', s, flags=re.S|re.I)
+          s = re.sub(r'\s*document\.getElementById\(["\']whatsappLink["\']\)\.innerHTML\s*=\s*`[^`]*`;\s*', '\n', s, flags=re.S|re.I)
+
+          p.write_text(s, encoding='utf-8')
+          print('changed=' + str(s != before).lower())
           PY
-      - name: Assert public-source contract
+
+      - name: Assert canonical patient-source contract
         shell: bash
         run: |
-          ! grep -Eqi 'id=["'"']splash|wa\.me|whatsappLink' index.html
-          grep -q 'screening-uniformity-v1.js' index.html
-          grep -Eq 'name=["'"']q40["'"']' index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s = Path('index.html').read_text(encoding='utf-8')
+          q = re.findall(r'name=["\']q(\d+)["\']', s)
+          assert len(q) == 40, f'Expected exactly 40 question controls, got {len(q)}'
+          assert sorted(map(int, q)) == list(range(1, 41)), 'Question keys are not exactly q1..q40'
+          for i in range(1, 41):
+              block = re.search(rf'<select\s+name=["\']q{i}["\'][^>]*>(.*?)</select>', s, re.S|re.I)
+              assert block, f'Missing q{i}'
+              values = re.findall(r'<option\s+value=["\']([1-5])["\']', block.group(1), re.I)
+              assert values == ['1','2','3','4','5'], f'Option contract mismatch q{i}: {values}'
+          assert 'screening-uniformity-v1.js' in s, 'Central screening runtime loader missing'
+          assert 'type="submit" id="screening-submit"' in s, 'Governed submit action missing'
+          assert 'data-rm-hero-source="codependencia-v1"' in s, 'Unique hero source missing'
+          banned = [
+              r'id=["\']splash', r'JustGage', r'justgage', r'raphael', r'depGauge', r'codepGauge',
+              r'calculateScore', r'getResultDescription', r'displayResults', r'score\s*<=',
+              r'Resultados da Avaliação', r'wa\.me', r'whatsappLink', r'WhatsApp',
+              r'<title>[^<]*(?:Codepend|Dependência)', r'<h1>[^<]*(?:Codepend|Dependência)',
+              r'<h2>[^<]*(?:Codepend|Dependência)'
+          ]
+          for pattern in banned:
+              assert not re.search(pattern, s, re.I), f'Banned public residue: {pattern}'
+          print('CODEPENDENCIA_PUBLIC_SOURCE_40_40_PASS')
+          PY
+
       - name: Commit sanitization
         shell: bash
         run: |
+          if git diff --quiet -- index.html; then
+            echo 'No index changes required.'
+            exit 0
+          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'Remove splash, onboarding legado e resultado via WhatsApp'
+          git commit -m 'Sanitiza frontend da Codependência sem alterar itens'
           git push
