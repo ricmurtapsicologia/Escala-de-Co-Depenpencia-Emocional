@@ -1,0 +1,61 @@
+name: Sanitizar superfície pública v2
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/sanitize-public-screening-v2.yml']
+permissions:
+  contents: write
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove splash, legacy onboarding and WhatsApp result channel
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          before=s
+
+          # Splash CSS desktop and mobile.
+          s=re.sub(r'\s*/\*\s*Splash Screen\s*\*/\s*#splash\s*\{.*?\}\s*#splash\.hidden\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
+          s=re.sub(r'\s*/\*\s*Ajuste específico para a splash screen em telas pequenas\s*\*/\s*#splash\s*\{.*?\}\s*', '\n', s, flags=re.S|re.I)
+
+          # Splash markup.
+          s=re.sub(r'\s*<!--\s*Splash Screen\s*-->\s*<div\s+id=["\']splash["\']>.*?</div>\s*', '\n', s, flags=re.S|re.I)
+
+          # Artificial load delay used only by splash.
+          s=re.sub(r"\s*window\.addEventListener\(['\"]load['\"],\s*\(\)\s*=>\s*\{\s*//[^\n]*splash[^\n]*\n\s*setTimeout\(\(\)\s*=>\s*\{\s*const\s+splash\s*=\s*document\.getElementById\(['\"]splash['\"]\);\s*if\s*\(splash\)\s*\{\s*splash\.classList\.add\(['\"]hidden['\"]\);\s*setTimeout\(\(\)\s*=>\s*splash\.style\.display\s*=\s*['\"]none['\"],\s*1000\);\s*\}\s*\},\s*2000\);\s*\}\);\s*", '\n', s, flags=re.S|re.I)
+
+          # Legacy introductory copy is superseded by the central construct-specific onboarding.
+          s=re.sub(r'\s*<!--\s*Introdução orientativa.*?-->\s*<section\s+class=["\']instructions["\']>.*?</section>\s*', '\n', s, count=1, flags=re.S|re.I)
+
+          # Remove patient-facing WhatsApp result container and generated result URL.
+          s=re.sub(r'\s*<div\s+id=["\']whatsappLink["\'][^>]*></div>\s*', '\n', s, flags=re.I)
+          s=re.sub(r'\s*const\s+whatsappUrl\s*=\s*`https://wa\.me/[^`]+`;\s*', '\n', s, flags=re.S|re.I)
+          s=re.sub(r"\s*document\.getElementById\(['\"]whatsappLink['\"]\)\.innerHTML\s*=\s*`[^`]*`;\s*", '\n', s, flags=re.S|re.I)
+          s=s.replace('incluindo mensagem completa para WhatsApp','sem compartilhamento público de resultados')
+
+          if s==before:
+              raise SystemExit('SANITIZER_NO_CHANGES')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Assert public-source contract
+        shell: bash
+        run: |
+          ! grep -Eqi 'id=["'"']splash|splash[[:space:]]*screen|wa\.me|whatsappLink' index.html
+          grep -q 'screening-uniformity-v1.js' index.html
+          grep -q 'name="q40"' index.html
+      - name: Commit sanitization
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Remove splash, onboarding legado e resultado via WhatsApp'
+          git push
