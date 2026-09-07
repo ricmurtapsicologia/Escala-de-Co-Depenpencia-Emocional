@@ -1,0 +1,45 @@
+name: Build Collector Contract v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-collector-contract-v1.py'
+      - '.github/workflows/build-collector-contract-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build collector contract from certified source
+        run: python scripts/build-collector-contract-v1.py
+      - name: Validate contract
+        run: |
+          python - <<'PY'
+          import json
+          c=json.load(open('contracts/collector-v1.json',encoding='utf-8'))
+          assert c['instrumentId']=='codependencia'
+          assert c['itemCount']==40
+          assert c['identityProfile']=='screening_canonical'
+          assert c['scoringIncluded'] is False
+          assert c['submissionSupported'] is False
+          assert c['deploymentState']=='SPEC_ONLY'
+          assert all([i['required'] and [o['value'] for o in i['options']]==['1','2','3','4','5'] for i in c['items']])
+          print('CODEPENDENCIA_COLLECTOR_CONTRACT_V1_PASS')
+          PY
+      - name: Commit generated contract
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add contracts/collector-v1.json
+          git commit -m "Gera contrato de coletor v1 da Codependência"
+          git push
