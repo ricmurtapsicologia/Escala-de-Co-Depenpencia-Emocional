@@ -40,30 +40,7 @@
 		@keyframes fadeIn {
 		  to { opacity: 1; }
 		}
-		
-		/* Splash Screen */
-		#splash {
-		  position: fixed;
-		  top: 0;
-		  left: 0;
-		  width: 100%;
-		  height: 100%;
-		  background: #0b3d91;
-		  display: flex;
-		  flex-direction: column;
-		  align-items: center;
-		  justify-content: center;
-		  color: #fff;
-		  z-index: 1000;
-		  transition: opacity 1s ease;
-		  text-align: center;
-		}
-		#splash.hidden {
-		  opacity: 0;
-		  pointer-events: none;
-		}
-		
-		/* Header */
+/* Header */
 		header {
 		  background: linear-gradient(135deg, #0b3d91, #1c64f2);
 		  color: #fff;
@@ -220,36 +197,19 @@
 		  main { padding: 15px; }
 		  .instructions { font-size: 14px; }
 		  button { padding: 10px; font-size: 16px; }
-		  /* Ajuste específico para a splash screen em telas pequenas */
-		  #splash {
-		    padding: 20px;
-		    text-align: center;
-		  }
-		}
+}
 		
 	</style>
   <link rel="stylesheet" href="https://ricmurtapsicologia.github.io/plataforma.terapeutica/assets/css/screening-uniformity-v1.css?v=1.0.0">
 </head>
 
 <body>
-	<!-- Splash Screen -->
-	<div id="splash">
-		<h1>Bem-vindo(a) à Escala de Codependência e Dependência Emocional</h1>
-		<p>Descubra seus padrões; desperte e transforme sua vida agora.</p>
-	</div>
-	<header>
+<header>
 		<h1>Escala de Codependência e Dependência Emocional</h1>
 		<p>Uma ferramenta para compreender e melhorar seus relacionamentos</p>
 	</header>
 	<main>
-		<!-- Introdução orientativa com copywriting e informação sobre LGPD -->
-		<section class="instructions">
-			<p>Olá! Seja bem-vindo(a) à nossa avaliação. Esta escala foi cuidadosamente desenvolvida para identificar a presença e a intensidade dos sentimentos de dependência e codependência emocional em seus relacionamentos. Leia atentamente cada afirmação e selecione a opção que melhor reflete a sua experiência.</p>
-			<p><strong>Como responder:</strong> Utilize a seguinte escala – Discordo Totalmente, Discordo, Neutro, Concordo e Concordo Totalmente – para marcar sua resposta a cada afirmação.</p>
-			<p>Sua sinceridade é fundamental para que possamos oferecer uma análise fiel do seu estado emocional. Não há respostas certas ou erradas – o que importa é que os resultados reflitam quem você é hoje. Ao final, você receberá uma interpretação completa, com orientações que um psicólogo clínico recomendaria para auxiliar na promoção do seu bem-estar e equilíbrio emocional.</p>
-			<p class="lgpd">Observação: Seus dados serão tratados em conformidade com a Lei Geral de Proteção de Dados (LGPD), garantindo sua privacidade e segurança.</p>
-		</section>
-		<!-- Formulário de avaliação -->
+<!-- Formulário de avaliação -->
 		<form id="scaleForm">
 			<section class="patient-info">
 				<input type="text" id="fullName" placeholder="Nome completo" required>
@@ -685,8 +645,7 @@
 			<h2>Resultados da Avaliação</h2>
 			<div class="result-item" id="dependenciaResultado"></div>
 			<div class="result-item" id="codependenciaResultado"></div>
-			<div id="whatsappLink" style="margin-top: 20px; text-align: center;"></div>
-		</section>
+</section>
 	</main>
 	<!-- Rodapé limpo e proporcional -->
 	<footer>
@@ -961,7 +920,7 @@
 		  return `<strong>${type}</strong> - ${resultText}`;
 		};
 		
-		// Monta e exibe os resultados, incluindo mensagem completa para WhatsApp
+		// Monta e exibe os resultados, sem compartilhamento público de resultados
 		const displayResults = (depScore, codepScore) => {
 		  const depResult = document.getElementById('dependenciaResultado');
 		  const codepResult = document.getElementById('codependenciaResultado');
@@ -979,10 +938,7 @@
 		Meu resultado de Dependência Emocional é ${depScore} pontos. ${depText}
 		  
 		Meu resultado de Codependência Emocional é ${codepScore} pontos. ${codepText}`;
-		  
-		  const whatsappUrl = `https://wa.me/5535984640729?text=${encodeURIComponent(message)}`;
-		  document.getElementById('whatsappLink').innerHTML = `<a href="${whatsappUrl}" target="_blank"><button type="button">Compartilhar via WhatsApp</button></a>`;
-		};
+};
 		
 		
 		// Função auxiliar para remover tags HTML (se necessário)
