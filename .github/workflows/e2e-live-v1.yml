@@ -1,4 +1,4 @@
-name: Codependência — E2E live v1
+name: Codependência — E2E live v1.1
 
 on:
   workflow_dispatch:
@@ -29,19 +29,29 @@ jobs:
         run: |
           set -euo pipefail
           url='https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/'
+          ok=0
           for attempt in 1 2 3 4 5 6 7 8; do
             if curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "$url?cert=${GITHUB_SHA}-${attempt}" -o /tmp/codependencia.html; then
-              if grep -Fq '<title>Autonomia, limites e cuidado nas relações</title>' /tmp/codependencia.html \
-                && grep -Fq 'data-rm-hero-source="codependencia-v1"' /tmp/codependencia.html \
-                && ! grep -Eqi 'JustGage|calculateScore|wa\.me|whatsappLink|id=["'"']splash' /tmp/codependencia.html; then
+              if python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('/tmp/codependencia.html').read_text(encoding='utf-8', errors='replace')
+          checks=[
+            '<title>Autonomia, limites e cuidado nas relações</title>' in s,
+            'data-rm-hero-source="codependencia-v1"' in s,
+            not re.search(r'JustGage|calculateScore|wa\.me|whatsappLink|id=["\']splash', s, re.I),
+          ]
+          raise SystemExit(0 if all(checks) else 1)
+          PY
+              then
                 echo 'Published sanitized page confirmed.'
-                exit 0
+                ok=1
+                break
               fi
             fi
             sleep $((attempt * 5))
           done
-          echo 'Published page did not converge to the sanitized source.' >&2
-          exit 1
+          test "$ok" -eq 1
 
       - name: Install Playwright Chromium
         run: |
