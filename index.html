@@ -5,21 +5,14 @@
 	<!-- Metadados essenciais e SEO -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Avalie sua dependência e codependência emocional por meio desta escala prática e confiável. Descubra seus padrões emocionais e receba orientações para um equilíbrio psicológico." />
-	<meta name="keywords" content="dependência emocional, codependência emocional, avaliação psicológica, LGPD, psicometria, saúde mental" />
-	<meta property="og:title" content="Escala de Codependência e Dependência Emocional" />
-	<meta property="og:description" content="Avalie seus padrões emocionais e receba orientações para melhorar seus relacionamentos." />
-	<meta property="og:image" content="https://i.pinimg.com/736x/65/a3/07/65a307061047eff7193890fee5568e95.jpg" />
+	<meta name="description" content="Rastreio clínico sobre autonomia, limites, cuidado e equilíbrio nas relações. As respostas serão integradas à avaliação pelo psicólogo responsável.">
+	<meta property="og:title" content="Autonomia, limites e cuidado nas relações">
+	<meta property="og:description" content="Um rastreio clínico para organizar padrões relacionais sem rótulos automáticos.">
+	<meta property="og:image" content="https://images.unsplash.com/photo-1767353361931-ae25e858a925?auto=format&fit=crop&fm=jpg&q=82&w=3000">
 	<meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/" />
 	<meta property="og:type" content="website" />
-	<title>Escala de Codependência e Dependência Emocional</title>
-	<!-- Biblioteca JustGage para os velocímetros -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
-	<!-- Favicon: usando a imagem de pré-visualização do WhatsApp -->
-        <link rel="icon" href="https://i.pinimg.com/736x/65/a3/07/65a307061047eff7193890fee5568e95.jpg">
-	<!-- Estilos CSS modernos e responsivos -->
+	<title>Autonomia, limites e cuidado nas relações</title>
+<!-- Estilos CSS modernos e responsivos -->
 	<style>
 		/* Reset e estilos básicos */
 		*, *::before, *::after {
@@ -140,37 +133,12 @@
 		  transform: translateY(-3px);
 		  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 		}
-		.gauge-container {
-		  display: flex;
-		  justify-content: space-around;
-		  margin: 20px 0;
-		  flex-wrap: wrap;
-		}
-		.gauge-container > div {
-		  text-align: center;
-		  margin: 10px;
-		}
-		.gauge-desc {
-		  margin-top: 10px;
-		  font-weight: bold;
-		}
-		/* Seção de Resultados */
-		.result-section {
-		  background: #e2e8f0;
-		  padding: 1.5rem;
-		  border-radius: 8px;
-		  margin-top: 20px;
-		}
-		.result-section h2 {
+.result-section h2 {
 		  font-size: 1.8rem;
 		  margin-bottom: 1rem;
 		  color: #0b3d91;
 		}
-		.result-item {
-		  margin-bottom: 1rem;
-		  font-size: 16px;
-		}
-		/* Rodapé limpo e proporcional */
+/* Rodapé limpo e proporcional */
 		footer {
 		  background: #0b3d91;
 		  color: #fff;
@@ -190,8 +158,7 @@
 		  main { padding: 20px; }
 		  .instructions { font-size: 14px; }
 		  button { padding: 10px; font-size: 16px; }
-		  .gauge-container { flex-direction: column; align-items: center; }
-		}
+}
 		@media (max-width: 480px) {
 		  header h1 { font-size: 1.8rem; padding: 20px; }
 		  main { padding: 15px; }
@@ -205,10 +172,11 @@
 
 <body>
 <header>
-		<h1>Escala de Codependência e Dependência Emocional</h1>
-		<p>Uma ferramenta para compreender e melhorar seus relacionamentos</p>
+		<h1>Autonomia, limites e cuidado nas relações</h1>
+		<p>Um questionário clínico sobre padrões relacionais do cotidiano</p>
 	</header>
 	<main>
+	<img data-rm-hero-source="codependencia-v1" src="https://images.unsplash.com/photo-1767353361931-ae25e858a925?auto=format&fit=crop&fm=jpg&q=82&w=3000" alt="Duas mãos conectadas por um fio fino, representando vínculo, autonomia e limites" hidden>
 <!-- Formulário de avaliação -->
 		<form id="scaleForm">
 			<section class="patient-info">
@@ -216,9 +184,9 @@
 				<input type="date" id="birthDate" name="birthDate" aria-label="Data de nascimento" required>
 				<input type="date" id="date" placeholder="Data de aplicação do rastreio" aria-label="Data de aplicação do rastreio" required>
 			</section>
-			<!-- Seção de Dependência Emocional (Perguntas 1 a 20) -->
+			<!-- Bloco A (Perguntas 1 a 20) -->
 			<section class="question-section">
-				<h2>Dependência Emocional</h2>
+				<h2>Autonomia e segurança nos vínculos</h2>
 				<div class="question">
 					<label>1. Eu sinto que preciso da aprovação dos outros para me sentir bem comigo mesmo.</label>
 					<select name="q1" required>
@@ -420,9 +388,9 @@
 					</select>
 				</div>
 			</section>
-			<!-- Seção de Codependência Emocional (Perguntas 21 a 40) -->
+			<!-- Bloco B (Perguntas 21 a 40) -->
 			<section class="question-section">
-				<h2>Codependência Emocional</h2>
+				<h2>Limites, cuidado e reciprocidade</h2>
 				<div class="question">
 					<label>21. Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.</label>
 					<select name="q21" required>
@@ -624,335 +592,14 @@
 					</select>
 				</div>
 			</section>
-			<!-- Velocímetros -->
-			<section class="gauge-container">
-				<div>
-					<div id="depGauge"></div>
-					<div class="gauge-desc">DEPENDÊNCIA EMOCIONAL</div>
-				</div>
-				<div>
-					<div id="codepGauge"></div>
-					<div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
-				</div>
-			</section>
-			<!-- Botão para calcular -->
-			<button type="button" onclick="calculateScore()">Calcular Resultados</button>
+			<button type="submit" id="screening-submit">Concluir rastreio</button>
 		</form>
-		<!-- Seção de resultados -->
-		<section id="result" class="result-section">
-			<h2>Resultados da Avaliação</h2>
-			<div class="result-item" id="dependenciaResultado"></div>
-			<div class="result-item" id="codependenciaResultado"></div>
-</section>
 	</main>
 	<!-- Rodapé limpo e proporcional -->
 	<footer>
 		<p>&copy; 2026 - Todos os direitos reservados. Richelmy Murta – Psicólogo Clínico Especialista em Terapia Cognitivo-Comportamental.</p>
 	</footer>
-	<!-- JavaScript moderno ES6+ -->
-	<script type="module">
-		let depGauge, codepGauge;
-		
-		window.addEventListener('load', () => {
-		  // Ocultar o splash após 2 segundos e depois remover da exibição
-		  setTimeout(() => {
-		    const splash = document.getElementById('splash');
-		    if (splash) {
-		      splash.classList.add('hidden');
-		      setTimeout(() => splash.style.display = 'none', 1000);
-		    }
-		  }, 2000);
-		
-		  // Inicialização dos velocímetros (mantendo a lógica de correção)
-		  depGauge = new JustGage({
-		    id: "depGauge",
-		    value: 0,
-		    min: 0,
-		    max: 100,
-		    title: "DEPENDÊNCIA EMOCIONAL",
-		    label: "pontos",
-		    levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-		  });
-		  codepGauge = new JustGage({
-		    id: "codepGauge",
-		    value: 0,
-		    min: 0,
-		    max: 100,
-		    title: "CODEPENDÊNCIA EMOCIONAL",
-		    label: "pontos",
-		    levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-		  });
-		});
-		
-		// Calcula os totais e utiliza a lógica original (soma dos escores) para correção
-		const updateGauge = () => {
-		  let totalDep = 0, totalCodep = 0;
-		  const formData = new FormData(document.getElementById('scaleForm'));
-		  formData.forEach((value, key) => {
-		    if (key.startsWith('q')) {
-		      const val = parseInt(value);
-		      // Se o número da questão (extraído de key) for menor ou igual a 20, soma para Dependência; caso contrário para Codependência
-		      if (parseInt(key.substring(1)) <= 20) totalDep += val;
-		      else totalCodep += val;
-		    }
-		  });
-		  depGauge.refresh(totalDep);
-		  codepGauge.refresh(totalCodep);
-		  displayResults(totalDep, totalCodep);
-		};
-		
-		// Função que interpreta os resultados conforme faixas de pontuação
-		const getResultDescription = (score, type) => {
-		  let resultText = "";
-		
-		  // Faixa "Normal" para qualquer tipo (score <= 39)
-		  if (score <= 39) {
-		    resultText = `
-		      <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		        Normal: Você apresenta poucos sinais relacionados a este tipo de comportamento. 
-		        <br><br>
-		        Isso significa que, no momento, você consegue manter um equilíbrio saudável em seus relacionamentos, 
-		        possuindo boa capacidade de tomar decisões de forma independente e de cuidar de si mesmo(a) 
-		        sem se anular pelos outros. 
-		        <br><br>
-		        Continue fortalecendo sua autoestima e sua autonomia, 
-		        pois isso ajuda a prevenir problemas futuros e a manter uma boa qualidade de vida, 
-		        tanto no campo afetivo quanto profissional.
-		      </div>
-		    `;
-		  } else {
-		    if (type === 'Dependência Emocional') {
-		      /* DEFINIÇÃO DE DEPENDÊNCIA EMOCIONAL */
-		      if (score <= 59) {
-		        // Faixa "Leve" (Dependência Emocional)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            A Dependência Emocional ocorre quando sentimos grande dificuldade em ficar bem 
-		            sem o suporte ou aprovação constante de outra pessoa, geralmente um parceiro(a) ou familiares. 
-		            Isso pode se desenvolver em contextos de infância onde os cuidadores eram inconsistentes 
-		            ou críticos, fazendo com que a pessoa busque validação externa para se sentir segura.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Leve</span>: Você apresenta alguns sinais de Dependência Emocional, 
-		          mas esses traços não são dominantes. Em algumas situações, 
-		          pode haver maior necessidade de aprovação ou dificuldade em tomar decisões sozinho(a).
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Infância com cuidadores instáveis ou críticos, 
-		          aprendizados de que a aprovação dos outros é essencial para se sentir bem. 
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong> 
-		          - Necessidade de aprovação para se sentir seguro(a).<br>
-		          - Medo leve de rejeição ou de desagradar.<br>
-		          - Tendência a buscar conselhos antes de decisões importantes.<br><br>
-		          <strong>Impactos:</strong> Pode haver alguma insegurança em relacionamentos afetivos 
-		          e até mesmo profissionais, porém ainda não em grau severo. 
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Fortalecer a autoestima por meio de atividades que promovam autonomia (ex.: 
-		            cursos, hobbies, terapia).<br>
-		          - Aprender a estabelecer limites saudáveis e comunicar suas necessidades de forma clara.<br>
-		          - Praticar a autoafirmação, valorizando suas próprias opiniões e conquistas.<br>
-		          - Procurar ajuda de um psicólogo, caso perceba aumento dos sintomas.
-		        `;
-		      } else if (score <= 79) {
-		        // Faixa "Moderada" (Dependência Emocional)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            A Dependência Emocional envolve um padrão de grande insegurança e necessidade 
-		            de aprovação contínua de outras pessoas. Com frequência, isso se manifesta em relacionamentos 
-		            afetivos e familiares, podendo levar a comportamentos de “agradar a qualquer custo”.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Moderada</span>: Você apresenta sinais mais significativos de Dependência Emocional, 
-		          como ansiedade intensa em ficar sozinho(a), medo de rejeição ou necessidade frequente 
-		          de confirmação dos outros.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias disfuncionais ou com traumas, 
-		          onde houve pouco incentivo à autonomia. 
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Grande dificuldade em tomar decisões sem aprovação externa.<br>
-		          - Medo constante de desagradar ou ser abandonado(a).<br>
-		          - Relações desequilibradas (ciúmes, possessividade).<br><br>
-		          <strong>Impactos:</strong> Relações afetivas podem se tornar fonte de angústia e insegurança, 
-		          afetando também o desempenho profissional (medo de errar, de não ser aceito(a)). 
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Buscar apoio terapêutico para aprender a se posicionar e a reconhecer seu valor pessoal.<br>
-		          - Desenvolver habilidades de comunicação assertiva e reforçar a autoestima.<br>
-		          - Praticar atividades que promovam independência (ex.: viajar sozinho(a), 
-		            tomar decisões em pequenos projetos).<br>
-		          - Explorar técnicas de regulação emocional, como meditação ou exercícios de respiração.
-		        `;
-		      } else {
-		        // Faixa "Alta" (Dependência Emocional)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            Trata-se de uma condição em que a pessoa depende fortemente da aprovação e do afeto 
-		            de outra(s) pessoa(s), podendo abrir mão de suas próprias necessidades para evitar rejeição.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Alta</span>: Você apresenta sinais intensos de Dependência Emocional, 
-		          o que indica necessidade de intervenção mais estruturada. Pode haver forte insegurança, 
-		          baixa autoestima e até isolamento para evitar críticas.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Histórico prolongado de relacionamentos 
-		          onde você não se sentia valorizado(a) sem a validação do outro, ambientes familiares 
-		          superprotetores ou extremamente críticos.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Necessidade constante de aprovação e medo exagerado de rejeição.<br>
-		          - Sentimentos de vazio quando está sem um relacionamento afetivo.<br>
-		          - Comportamentos de submissão ou anulação pessoal para evitar conflitos.<br><br>
-		          <strong>Impactos:</strong> Relações desequilibradas, ansiedade frequente, ciúmes e possessividade, 
-		          prejuízos em projetos profissionais por insegurança em tomar decisões.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Procurar psicoterapia (por exemplo, terapia cognitivo-comportamental) para desenvolver 
-		            autonomia emocional e autoaceitação.<br>
-		          - Investir em grupos de apoio ou atividades que reforcem seu senso de identidade e valor próprio.<br>
-		          - Aprender técnicas de enfrentamento de ansiedade e fortalecimento de habilidades sociais.<br>
-		          - Evitar relacionamentos abusivos, estabelecendo limites claros e saudáveis.
-		        `;
-		      }
-		    } 
-		    // CODEPENDÊNCIA EMOCIONAL
-		    else if (type === 'Codependência Emocional') {
-		      if (score <= 59) {
-		        // Faixa "Leve" (Codependência)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            É um padrão de comportamento em que a pessoa se dedica intensamente aos problemas e necessidades 
-		            dos outros, negligenciando as próprias. Muitas vezes, essa postura é aprendida em famílias 
-		            onde havia um membro vulnerável (ex.: doente, dependente químico) e a pessoa assumiu 
-		            responsabilidades emocionais excessivas.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Leve</span>: Você apresenta alguns traços de Codependência, mas eles não são dominantes. 
-		          Em algumas situações, pode priorizar as necessidades alheias, sentindo-se culpado(a) 
-		          ao cuidar de si mesmo(a).
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Lares com cuidadores que demandavam muito apoio emocional, 
-		          ensinando a se sacrificar para manter a harmonia familiar.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Dificuldade moderada em dizer “não”.<br>
-		          - Culpa leve ao estabelecer limites ou priorizar suas próprias necessidades.<br>
-		          - Tendência a se sentir responsável pelo bem-estar dos outros.<br><br>
-		          <strong>Impactos:</strong> Pode haver algum desgaste emocional e prejuízos leves 
-		          nos relacionamentos afetivos, embora ainda não intensos.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Praticar a autocompaixão, lembrando-se de que suas necessidades também importam.<br>
-		          - Buscar informações sobre assertividade e exercícios que reforcem seu espaço pessoal.<br>
-		          - Refletir sobre a origem desse padrão e, se necessário, procurar ajuda profissional 
-		            para prevenir agravamentos.
-		        `;
-		      } else if (score <= 79) {
-		        // Faixa "Moderada" (Codependência)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            A Codependência Emocional caracteriza-se por uma dedicação exagerada aos problemas dos outros, 
-		            assumindo responsabilidades que não são suas e sentindo-se culpado(a) quando tenta 
-		            priorizar a si mesmo(a).
-		          </div>
-		          <span style="color: red; font-weight: bold;">Moderada</span>: Você apresenta sinais mais marcantes de Codependência, 
-		          frequentemente se colocando em segundo plano para cuidar dos outros. 
-		          Isso pode resultar em desgaste emocional e dificuldade de impor limites.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias com membro vulnerável (ex.: dependente químico), 
-		          ensinando a “salvar” o outro a qualquer custo.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Sentir-se responsável pelas emoções das pessoas próximas.<br>
-		          - Dificuldade de dizer “não”, mesmo em situações que lhe causam sobrecarga.<br>
-		          - Medo de que os outros se sintam abandonados se você não estiver disponível.<br><br>
-		          <strong>Impactos:</strong> Relações desequilibradas, exaustão mental, potencial queda de produtividade 
-		          no trabalho devido à preocupação constante com os problemas alheios.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Aprender a estabelecer limites claros e a reconhecer suas próprias necessidades 
-		            como legítimas.<br>
-		          - Praticar o autocuidado e a autoafirmação, identificando situações em que você possa 
-		            recusar demandas excessivas.<br>
-		          - Considerar buscar terapia para entender a raiz desse comportamento e desenvolver estratégias 
-		            de equilíbrio emocional.
-		        `;
-		      } else {
-		        // Faixa "Alta" (Codependência)
-		        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            É um estado em que a pessoa se sobrecarrega assumindo os problemas e necessidades dos outros, 
-		            ignorando as próprias, e frequentemente sentindo culpa ou medo de abandono 
-		            quando tenta impor limites.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Alta</span>: Você apresenta sinais muito fortes de Codependência Emocional, 
-		          indicando que pode estar se sacrificando em excesso e experimentando grande desgaste emocional. 
-		          Esse quadro demanda atenção, pois pode levar a sofrimento intenso.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias em que havia grande pressão para cuidar de alguém 
-		          doente ou em situação de vulnerabilidade, ausência de limites claros, sentimento de culpa 
-		          ao pensar em si mesmo(a).
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Sensação de obrigação constante de ajudar, mesmo em detrimento de sua saúde mental.<br>
-		          - Culpa intensa ao priorizar suas necessidades ou dizer “não”.<br>
-		          - Receio de perder afeto se não estiver sempre disponível.<br><br>
-		          <strong>Impactos:</strong> Relações afetivas e profissionais podem se tornar insustentáveis, 
-		          com sensação de exaustão, ansiedade e até problemas de autoestima.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Procurar auxílio psicológico, como terapia cognitivo-comportamental, para reestruturar 
-		            crenças de auto-sacrifício e desenvolver autonomia.<br>
-		          - Exercitar a distinção entre ajudar de forma saudável e assumir problemas que não são seus.<br>
-		          - Praticar o autoconhecimento, identificando limites pessoais e aprendendo a dizer “não” 
-		            quando necessário.<br>
-		          - Buscar grupos de apoio ou leituras que reforcem a importância do autocuidado e do equilíbrio 
-		            emocional.
-		        `;
-		      }
-		    }
-		  }
-		  return `<strong>${type}</strong> - ${resultText}`;
-		};
-		
-		// Monta e exibe os resultados, sem compartilhamento público de resultados
-		const displayResults = (depScore, codepScore) => {
-		  const depResult = document.getElementById('dependenciaResultado');
-		  const codepResult = document.getElementById('codependenciaResultado');
-		  depResult.innerHTML = getResultDescription(depScore, 'Dependência Emocional');
-		  codepResult.innerHTML = getResultDescription(codepScore, 'Codependência Emocional');
-		
-		  const patientName = document.getElementById('fullName').value.trim();
-		  const testDate = document.getElementById('date').value;
-		  
-		  // Obtém o texto simples dos resultados, removendo as tags HTML
-		  const depText = stripHTML(getResultDescription(depScore, 'Dependência Emocional'));
-		  const codepText = stripHTML(getResultDescription(codepScore, 'Codependência Emocional'));
-		  
-		  const message = `Olá! Meu nome é ${patientName || "Não informado"}. Realizei a avaliação em ${testDate || "data não informada"}. 
-		Meu resultado de Dependência Emocional é ${depScore} pontos. ${depText}
-		  
-		Meu resultado de Codependência Emocional é ${codepScore} pontos. ${codepText}`;
-};
-		
-		
-		// Função auxiliar para remover tags HTML (se necessário)
-		const stripHTML = html => {
-		  const div = document.createElement("div");
-		  div.innerHTML = html;
-		  return div.textContent || div.innerText || "";
-		};
-		
-		const calculateScore = () => {
-		  updateGauge();
-		  document.getElementById('result').classList.remove('hidden');
-		};
-		window.calculateScore = calculateScore;
-	</script>
-  <script src="https://ricmurtapsicologia.github.io/plataforma.terapeutica/assets/js/screening-uniformity-v1.js?v=1.0.0" defer></script>
+<script src="https://ricmurtapsicologia.github.io/plataforma.terapeutica/assets/js/screening-uniformity-v1.js?v=1.0.0" defer></script>
 </body>
 
 </html>
