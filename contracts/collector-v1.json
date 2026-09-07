@@ -1,0 +1,1247 @@
+{
+  "schemaVersion": "1.0.0",
+  "instrumentId": "codependencia",
+  "technicalName": "Rastreio de Dependência e Codependência Emocional",
+  "source": {
+    "repository": "ricmurtapsicologia/Escala-de-Co-Depenpencia-Emocional",
+    "path": "index.html",
+    "sha256": "2722f9ab8af180fd84f768314d68acc43d4c3648dcb661b9eab38c5aba91ece7"
+  },
+  "identityProfile": "screening_canonical",
+  "identity": [
+    {
+      "key": "fullName",
+      "label": "Nome completo",
+      "sourceSelector": "#fullName",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "birthDate",
+      "label": "Data de nascimento",
+      "sourceSelector": "#birthDate",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "applicationDate",
+      "label": "Data de aplicação do rastreio",
+      "sourceSelector": "#date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "items": [
+    {
+      "key": "q1",
+      "number": 1,
+      "section": "dependencia_emocional",
+      "label": "Eu sinto que preciso da aprovação dos outros para me sentir bem comigo mesmo.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q2",
+      "number": 2,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto ansioso(a) quando estou sozinho(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q3",
+      "number": 3,
+      "section": "dependencia_emocional",
+      "label": "Eu evito tomar decisões importantes sem consultar alguém em quem confio.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q4",
+      "number": 4,
+      "section": "dependencia_emocional",
+      "label": "Eu me preocupo excessivamente em agradar os outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q5",
+      "number": 5,
+      "section": "dependencia_emocional",
+      "label": "Eu sinto que não consigo viver sem meu parceiro(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q6",
+      "number": 6,
+      "section": "dependencia_emocional",
+      "label": "Eu mudo meus planos frequentemente para acomodar os desejos dos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q7",
+      "number": 7,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto inseguro(a) quando estou longe das pessoas que amo.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q8",
+      "number": 8,
+      "section": "dependencia_emocional",
+      "label": "Eu frequentemente busco reafirmação de que sou amado(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q9",
+      "number": 9,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto incapaz de ser feliz sem estar em um relacionamento.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q10",
+      "number": 10,
+      "section": "dependencia_emocional",
+      "label": "Eu tenho medo constante de ser rejeitado(a) ou abandonado(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q11",
+      "number": 11,
+      "section": "dependencia_emocional",
+      "label": "Eu fico preocupado(a) se alguém que amo não responde rapidamente às minhas mensagens.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q12",
+      "number": 12,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto vulnerável sem o apoio de alguém próximo.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q13",
+      "number": 13,
+      "section": "dependencia_emocional",
+      "label": "Eu evito atividades sociais se meu parceiro(a) não pode ir.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q14",
+      "number": 14,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto perdido(a) sem orientação de pessoas importantes para mim.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q15",
+      "number": 15,
+      "section": "dependencia_emocional",
+      "label": "Eu preciso de reafirmação constante para me sentir seguro(a) sobre minhas decisões.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q16",
+      "number": 16,
+      "section": "dependencia_emocional",
+      "label": "Eu me sinto incompleto(a) quando não estou em um relacionamento amoroso.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q17",
+      "number": 17,
+      "section": "dependencia_emocional",
+      "label": "Eu mudo meus gostos e preferências para agradar aos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q18",
+      "number": 18,
+      "section": "dependencia_emocional",
+      "label": "Eu faço de tudo para evitar ser rejeitado(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q19",
+      "number": 19,
+      "section": "dependencia_emocional",
+      "label": "Eu me preocupo demais com o que os outros pensam de mim.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q20",
+      "number": 20,
+      "section": "dependencia_emocional",
+      "label": "Eu dependo emocionalmente das opiniões das pessoas próximas a mim.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q21",
+      "number": 21,
+      "section": "codependencia",
+      "label": "Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q22",
+      "number": 22,
+      "section": "codependencia",
+      "label": "Eu tenho dificuldade em dizer \"não\" quando alguém pede minha ajuda.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q23",
+      "number": 23,
+      "section": "codependencia",
+      "label": "Eu coloco as necessidades dos outros antes das minhas.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q24",
+      "number": 24,
+      "section": "codependencia",
+      "label": "Eu sinto que sou responsável pela felicidade dos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q25",
+      "number": 25,
+      "section": "codependencia",
+      "label": "Eu frequentemente me envolvo em relacionamentos com pessoas que têm problemas sérios (por exemplo, abuso de substâncias).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q26",
+      "number": 26,
+      "section": "codependencia",
+      "label": "Eu me sinto ansioso(a) se não estou no controle das situações.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q27",
+      "number": 27,
+      "section": "codependencia",
+      "label": "Eu evito conflitos ao assumir responsabilidades que não são minhas.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q28",
+      "number": 28,
+      "section": "codependencia",
+      "label": "Eu negligencio minhas próprias necessidades em favor dos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q29",
+      "number": 29,
+      "section": "codependencia",
+      "label": "Eu sinto que minha identidade está fortemente ligada ao meu papel de cuidador(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q30",
+      "number": 30,
+      "section": "codependencia",
+      "label": "Eu tenho dificuldade em estabelecer limites claros com os outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q31",
+      "number": 31,
+      "section": "codependencia",
+      "label": "Eu sinto culpa quando priorizo minhas próprias necessidades.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q32",
+      "number": 32,
+      "section": "codependencia",
+      "label": "Eu me sinto responsável pelos sentimentos das pessoas ao meu redor.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q33",
+      "number": 33,
+      "section": "codependencia",
+      "label": "Eu evito pedir ajuda mesmo quando preciso.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q34",
+      "number": 34,
+      "section": "codependencia",
+      "label": "Eu me preocupo constantemente com os problemas dos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q35",
+      "number": 35,
+      "section": "codependencia",
+      "label": "Eu assumo a responsabilidade por resolver os problemas dos outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q36",
+      "number": 36,
+      "section": "codependencia",
+      "label": "Eu sinto que preciso estar sempre disponível para os outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q37",
+      "number": 37,
+      "section": "codependencia",
+      "label": "Eu tenho medo de que os outros se sintam abandonados se eu não estiver presente.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q38",
+      "number": 38,
+      "section": "codependencia",
+      "label": "Eu evito expressar meus próprios sentimentos para não sobrecarregar os outros.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q39",
+      "number": 39,
+      "section": "codependencia",
+      "label": "Eu me sinto obrigado(a) a ajudar os outros, mesmo quando estou sobrecarregado(a).",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    },
+    {
+      "key": "q40",
+      "number": 40,
+      "section": "codependencia",
+      "label": "Eu me preocupo mais com os problemas dos outros do que com os meus próprios.",
+      "required": true,
+      "responseType": "single_choice",
+      "options": [
+        {
+          "value": "1",
+          "label": "Discordo Totalmente"
+        },
+        {
+          "value": "2",
+          "label": "Discordo"
+        },
+        {
+          "value": "3",
+          "label": "Neutro"
+        },
+        {
+          "value": "4",
+          "label": "Concordo"
+        },
+        {
+          "value": "5",
+          "label": "Concordo Totalmente"
+        }
+      ]
+    }
+  ],
+  "itemCount": 40,
+  "scoringIncluded": false,
+  "submissionSupported": false,
+  "deploymentState": "SPEC_ONLY",
+  "safety": {
+    "patientFacingScoresAllowed": false,
+    "clinicalResponsesInGitHubAllowed": false,
+    "browserPersistenceAllowed": false,
+    "googleFormsPatientFacingAllowed": false
+  },
+  "activationRule": "A collector may only be enabled after backend deployment, persistence receipt and E2E submission validation."
+}
