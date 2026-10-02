@@ -2,14 +2,6 @@ name: Codependência — E2E live v1.1
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'index.html'
-      - '.github/workflows/e2e-live-v1.yml'
-      - 'contracts/**'
-  schedule:
-    - cron: '17 7 * * *'
 
 permissions:
   contents: read
