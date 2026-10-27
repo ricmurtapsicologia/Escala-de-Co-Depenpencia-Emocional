@@ -22,4 +22,5 @@ jobs:
       - run: npm install --no-save --no-package-lock playwright-core@1.55.1
       - run: |
           which google-chrome
-          CHROMIUM_PATH="$(which google-chrome)" node tests/codependencia-live-smoke.mjs
+          python3 -m http.server 8123 --bind 127.0.0.1 > /tmp/codep-http.log 2>&1 &
+          CODEP_SMOKE_URL="http://127.0.0.1:8123/" CHROMIUM_PATH="$(which google-chrome)" node tests/codependencia-live-smoke.mjs
