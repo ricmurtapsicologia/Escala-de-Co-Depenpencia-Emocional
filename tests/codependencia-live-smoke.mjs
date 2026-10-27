@@ -57,9 +57,9 @@ try {
     const gr=await gpage.goto(formUrl,{waitUntil:'domcontentloaded',timeout:45000});
     await gpage.waitForTimeout(3000);
     const gt=(await gpage.title()).slice(0,120);
-    const text=(await gpage.locator('body').innerText()).slice(0,1500);
-    const usable=gr.status()===200 && (/Autonomia, limites e cuidado|Nome completo|Eu sinto que preciso/.test(text));
-    console.log(JSON.stringify({mode:'google-form-native',http:gr.status(),title:gt,usable,hasName:/Nome completo/.test(text),hasFirstQuestion:/Eu sinto que preciso/.test(text),bodyIntro:text.slice(0,180)}));
+    const text=await gpage.locator('body').innerText();
+    const usable=gr.status()===200 && /Autonomia, limites e cuidado nas relações/.test(text) && /Nome completo/.test(text) && /40\. Eu me preocupo mais com os problemas dos outros/.test(text);
+    console.log(JSON.stringify({mode:'google-form-native',http:gr.status(),title:gt,usable,hasName:/Nome completo/.test(text),hasFirstQuestion:/Eu sinto que preciso/.test(text),hasLastQuestion:/40\\. Eu me preocupo mais/.test(text),bodyIntro:text.slice(0,180)}));
     assert.ok(usable,'Canonical public Google Form must be publicly accessible before offering fallback');
   } finally {await gctx.close()}
   const noJsContext=await browser.newContext({javaScriptEnabled:false});
