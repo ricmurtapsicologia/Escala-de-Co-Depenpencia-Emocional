@@ -1,0 +1,46 @@
+name: Codependencia Lighthouse production
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/codependencia-results-v1.css'
+      - 'assets/codependencia-results-v1.js'
+      - 'assets/codependencia-cats-bridge-v1.js'
+      - '.github/workflows/codependencia-lighthouse.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock lighthouse@12.8.2
+      - name: Audit published page mobile and desktop
+        run: |
+          URL='https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/'
+          ./node_modules/.bin/lighthouse "$URL" --chrome-flags='--headless --no-sandbox --disable-gpu' --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lighthouse-mobile.json --quiet
+          ./node_modules/.bin/lighthouse "$URL" --preset=desktop --chrome-flags='--headless --no-sandbox --disable-gpu' --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lighthouse-desktop.json --quiet
+          node - <<'JS'
+          const fs=require('fs');
+          let failures=[];
+          for(const device of ['mobile','desktop']) {
+            const r=JSON.parse(fs.readFileSync('lighthouse-'+device+'.json'));
+            const scores=Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(100*v.score)]));
+            const metrics=Object.fromEntries(['largest-contentful-paint','cumulative-layout-shift','interaction-to-next-paint'].map(k=>[k,r.audits[k]?.displayValue||'not collected']));
+            console.log('LIGHTHOUSE_'+device.toUpperCase()+'='+JSON.stringify({scores,metrics,finalUrl:r.finalDisplayedUrl}));
+            if(scores.accessibility<85||scores['best-practices']<85||scores.performance<65)failures.push(device);
+          }
+          if(failures.length)process.exitCode=1;
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codependencia-lighthouse-reports
+          path: lighthouse-*.json
+          retention-days: 7
