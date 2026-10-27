@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright-core';
 
-const target='https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/';
+const target=process.env.CODEP_SMOKE_URL||'https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/';
 const browser=await chromium.launch({
   executablePath:process.env.CHROMIUM_PATH||'/usr/bin/google-chrome',
   headless:true,args:['--no-sandbox','--disable-dev-shm-usage']
