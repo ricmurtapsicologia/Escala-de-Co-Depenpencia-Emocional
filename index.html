@@ -143,10 +143,23 @@ html[data-codep-native-ready="true"] #rm-native-google-form {display:block !impo
 <link href="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/screening-uniformity-v1.css?v=5.0.0" rel="stylesheet"/>
 <meta content="escala-codependencia" name="ric-analytics-page"/>
 <meta content="health" name="ric-analytics-privacy"/>
-<script defer="" src="https://ricmurtapsicologia.github.io/RPD/assets/js/ric-analytics.js?v=1.0.0"></script>
+<script>
+/* Estatísticas agregadas preservadas, mas fora do caminho crítico do rastreio. */
+window.addEventListener('load', () => {
+  const loadAnalytics = () => {
+    const s = document.createElement('script');
+    s.src='https://ricmurtapsicologia.github.io/RPD/assets/js/ric-analytics.js?v=1.0.0';
+    s.async=true;
+    document.head.appendChild(s);
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics,{timeout:5000});
+  else setTimeout(loadAnalytics,1500);
+},{once:true});
+</script>
 <meta name="twitter:title" content="Codependência"/>
 <meta name="twitter:image" content="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/heroes/codependencia.jpg?v=5.0.0"/>
 <link rel="stylesheet" href="./assets/codependencia-results-v1.css?v=20261027-2"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23176d68'/%3E%3Cpath d='M17 17h15a10 10 0 0 1 0 20H17V17ZM31 38l15 12' stroke='white' stroke-width='5' fill='none'/%3E%3C/svg%3E"/>
 </head>
 <body>
 <main class="rm-screening-shell">
