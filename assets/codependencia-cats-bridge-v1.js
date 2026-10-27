@@ -175,8 +175,6 @@
   status.textContent='Verificando conexão com o registro clínico...';
   backendReady().then(ok=>{
     if(!ok) { enableNativeFallback(); return; }
-    const note=document.querySelector('#rm-canonical-fallback > p');
-    if(note) note.textContent='Preencha o rastreio abaixo. O registro será confirmado somente após constar na planilha clínica. Se necessário, use o link do Google Forms oficial.';
     document.documentElement.dataset.codepVerifiedCollector='true';
     for(const input of fields) input.addEventListener('change',update);
     form.querySelectorAll('input').forEach(el=>el.addEventListener('input',update));
