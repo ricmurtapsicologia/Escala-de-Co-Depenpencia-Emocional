@@ -121,7 +121,7 @@
     put(transport,'fvv','1');put(transport,'pageHistory','0');put(transport,'submit','Submit');
     document.body.append(iframe,transport);
     // Crucially, iframe.load is NEVER interpreted as Sheets persistence.
-    transport.submit();
+    HTMLFormElement.prototype.submit.call(transport);
     window.setTimeout(()=>transport.remove(),5000);
     window.setTimeout(()=>iframe.remove(),60000);
   }
