@@ -28,6 +28,8 @@
   if (!form || !button || !status || !progress || ENTRIES.questions.length!==40) return;
   function enableNativeFallback() {
     document.documentElement.dataset.codepNativeReady='true';
+    const fallbackHint=document.getElementById('rm-official-fallback-hint');
+    if(fallbackHint) fallbackHint.hidden=false;
     const iframe=document.getElementById('rm-native-google-form');
     if(iframe && iframe.dataset.src && iframe.src!==iframe.dataset.src) {
       iframe.loading='eager';
