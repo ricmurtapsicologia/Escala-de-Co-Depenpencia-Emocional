@@ -29,7 +29,7 @@ check("06 — acionamento POST", '/formResponse' in bridge and 'HTMLFormElement.
 check("07 — backend independente", 'SpreadsheetApp.openById(id)' in backend)
 check("08 — recibo verificado", "data.persisted===true" in bridge and "data.fingerprint===fingerprint" in bridge)
 check("09 — não confirmar pelo iframe", 'iframe.load' in bridge and 'NEVER interpreted' in bridge)
-check("10 — fallback Forms", 'id="rm-canonical-form-link"' in html and 'id="rm-native-google-form"' in html)
+check("10 — fallback Forms", 'id="rm-canonical-form-link"' in html and 'id="rm-native-google-form"' in html and 'id="rm-official-fallback-hint" hidden' in html and 'fallbackHint.hidden=false' in bridge)
 check("11 — falha fechada", "if(!ok) { enableNativeFallback(); return; }" in bridge and "needsReview=true" in bridge)
 check("12 — prevenção de duplicidade", "busy || committed || needsReview" in bridge)
 check("13 — retenção sem storage", not re.search(r'localStorage|sessionStorage|indexedDB|sendBeacon',bridge+results))
@@ -61,7 +61,7 @@ for i in range(1,41):
        ('1','Discordo Totalmente'),('2','Discordo'),('3','Neutro'),
        ('4','Concordo'),('5','Concordo Totalmente')]))
 qa90.extend([
-  ("contingência oficial",checks["10 — fallback Forms"]),
+  ("contingência condicional (sem atalho ativo)",checks["10 — fallback Forms"]),
   ("confirmação independente",checks["08 — recibo verificado"]),
   ("40 itens motor", 'ITEM_COUNT = 40' in results),
   ("domínio de respostas", 'n<1||n>5' in results),
