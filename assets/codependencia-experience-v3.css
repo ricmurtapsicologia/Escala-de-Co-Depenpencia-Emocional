@@ -139,3 +139,39 @@ main.rm-screening-shell {box-sizing:border-box;max-width:1320px!important;width:
 }
 /* Mobile uses the branded first screen itself instead of covering the reading flow. */
 @media(max-width:720px){.rm-splash{display:none!important;}}
+
+/* Patient insight v4: full-width, concrete, clinically cautious reflection. */
+#codep-personal-insights[hidden] {display:none!important;}
+#codep-personal-insights {margin-top:22px;padding:clamp(17px,3vw,32px);
+ background:#f8fbf9;border:1px solid #d3e6e0;border-radius:17px;}
+.rm-insight-eyebrow {font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;
+ color:#3d7971;font-weight:800;margin:0 0 8px;}
+#codep-personal-insights .rm-insight-title {font-size:clamp(1.3rem,2.5vw,1.8rem);
+ letter-spacing:-.02em;line-height:1.3;color:#185954;margin:0 0 9px;}
+.rm-insight-lead,.rm-insight-panel p,.rm-insight-domain p,.rm-insight-steps li {
+ font-size:.97rem;line-height:1.75;color:#315653;text-align:justify;
+ text-justify:inter-word;hyphens:auto;overflow-wrap:break-word;}
+.rm-insight-lead {margin:0 0 20px;}
+.rm-insight-panel {border-left:3px solid #4b9184;padding:15px 20px;
+ background:#fff;border-radius:0 11px 11px 0;margin-bottom:21px;}
+#codep-personal-insights h4 {font-size:1.06rem;line-height:1.45;font-weight:770;
+ color:#175951;margin:0 0 10px;}
+.rm-insight-panel p {margin:8px 0;}
+.rm-insight-domains {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:14px;margin:0 0 20px;}
+.rm-insight-domain {border:1px solid #d6e7e1;background:#fff;border-radius:13px;
+ padding:19px;min-width:0;}
+.rm-insight-domain p {margin:0;}
+.rm-insight-steps {background:#edf5f2;border:1px solid #d5e6df;
+ border-radius:14px;padding:21px 25px;}
+.rm-insight-steps ol {margin:9px 0 14px;padding-left:24px;}
+.rm-insight-steps li {padding-left:3px;margin:0 0 9px;}
+.rm-insight-note {font-size:.88rem!important;line-height:1.65!important;
+ color:#4f6864!important;margin:12px 0 0!important;}
+@media(max-width:920px){.rm-insight-domains {grid-template-columns:1fr;}}
+@media(max-width:720px) {
+ #codep-personal-insights {padding:17px 15px;}
+ .rm-insight-panel,.rm-insight-domain,.rm-insight-steps {padding:15px;}
+ .rm-insight-lead,.rm-insight-panel p,.rm-insight-domain p,.rm-insight-steps li {
+ text-align:left;hyphens:none;}
+}
