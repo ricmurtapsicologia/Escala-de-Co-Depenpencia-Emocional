@@ -96,6 +96,7 @@ try {
      }
    },mobile?'5':'1');
    assert.equal(await page.locator('#codep-results').isVisible(),false,'results must be hidden before a verified write');
+   assert.equal(await page.locator('#codep-personal-insights').isVisible(),false,'reflections require confirmed record');
    await page.waitForFunction(()=>!document.querySelector('#screening-submit').disabled,null,{timeout:10000});
    console.log('READY_TO_SUBMIT');
    await page.locator('#screening-submit').click();
@@ -117,6 +118,16 @@ try {
    await page.locator('#codep-results[data-results-ready="true"]').waitFor({state:'visible',timeout:7000});
    assert.equal(await page.locator('#depGauge svg').count(),1);
    assert.equal(await page.locator('#codepGauge svg').count(),1);
+   assert.equal(await page.locator('#codep-personal-insights[data-insights-ready="true"]').isVisible(),true);
+   const insights=await page.locator('#codep-personal-insights').innerText();
+   assert.match(insights,/Como essas respostas podem aparecer na sua vida/);
+   assert.match(insights,/No trabalho, se for pertinente/);
+   assert.match(insights,/Na vida conjugal ou afetiva, se aplicável/);
+   assert.match(insights,/O que fazer a partir de agora/);
+   assert.match(insights,/não consequências identificadas pelo questionário/i);
+   if(mobile)assert.match(insights,/Você assinalou concordância em afirmações/);
+   else assert.match(insights,/Você não marcou/);
+   assert.equal(await page.locator('#codep-personal-insights .rm-insight-domain').count(),3);
    const resultCards=await page.locator('.codep-results-card').count();
    assert.equal(resultCards,2);
    const narrative=await page.evaluate(()=>{
