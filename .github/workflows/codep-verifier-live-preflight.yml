@@ -1,0 +1,55 @@
+name: Clinical verifier live GET and browser CORS preflight
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/codep-verifier-live-preflight.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock playwright-core@1.55.1
+      - name: Read-only verifier and browser compatibility
+        env:
+          VERIFY_URL: https://script.google.com/macros/s/AKfycbwnMJkbCxBSQMiwDfB9wOMxEyzQqQdEQtC9nrgovxSa3n-AWiF_RzcqdxkH_3sKt7Y/exec
+        run: |
+          python3 - <<'PY'
+          import urllib.request,json,os
+          url=os.environ['VERIFY_URL']
+          try:
+            with urllib.request.urlopen(url,timeout=25) as resp:
+              raw=resp.read(12000)
+              print('BACKEND_HTTP='+str(resp.status))
+              try:
+                obj=json.loads(raw)
+                print('BACKEND_READINESS='+json.dumps({k:obj.get(k) for k in ('status','configured','protocol','version')}))
+              except Exception as e:
+                print('BACKEND_IS_JSON=false')
+                print('BACKEND_BODY_TYPE='+('HTML' if raw.lstrip().startswith(b'<') else 'OTHER'))
+          except Exception as e: print('BACKEND_READ_ERROR='+str(e)[:400])
+          PY
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright-core';
+          const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          const page=await browser.newPage();
+          page.on('console',msg=>{if(msg.type()==='error')console.log('BROWSER_CONSOLE_ERROR='+msg.text().slice(0,260))});
+          try{
+            await page.goto('https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/',{waitUntil:'domcontentloaded',timeout:40000});
+            const status=await page.evaluate(async url=>{
+              const abort=new AbortController();
+              const kill=setTimeout(()=>abort.abort(),13000);
+              try {
+                const resp=await fetch(url,{method:'GET',cache:'no-store',credentials:'omit',signal:abort.signal});
+                let json=null;try{json=await resp.json()}catch(e){}
+                return {readable:true,http:resp.status,success:resp.ok,configured:json?.configured===true,protocol:json?.protocol||null,status:json?.status||null}
+              }catch(e){return {readable:false,error:String(e).slice(0,240)}}finally{clearTimeout(kill)}
+            },process.env.VERIFY_URL);
+            console.log('BROWSER_FETCH_RESULT='+JSON.stringify(status));
+          }finally{await browser.close()}
+          JS
