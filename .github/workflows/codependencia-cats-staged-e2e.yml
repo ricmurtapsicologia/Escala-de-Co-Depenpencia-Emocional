@@ -10,8 +10,10 @@ on:
       - 'assets/codependencia-cats-bridge-v1.js'
       - 'assets/codependencia-persistence-config-v1.js'
       - 'assets/codependencia-results-v1.js'
+      - 'assets/codependencia-insights-v4.js'
       - 'assets/codependencia-results-v1.css'
       - 'tests/codependencia-results.test.mjs'
+      - 'tests/codependencia-insights.test.mjs'
       - 'tests/codependencia-negative-e2e.mjs'
       - 'scripts/qa-codependencia.py'
       - 'tests/codependencia-cats-staged-e2e.mjs'
@@ -30,6 +32,7 @@ jobs:
           node-version: '22'
       - run: npm install --no-save --no-package-lock playwright-core@1.55.1
       - run: node tests/codependencia-results.test.mjs
+      - run: node tests/codependencia-insights.test.mjs
       - run: python3 scripts/qa-codependencia.py
       - run: |
           (cd .. && python3 -m http.server 8123 --bind 127.0.0.1 > /tmp/codep-http.log 2>&1) &
