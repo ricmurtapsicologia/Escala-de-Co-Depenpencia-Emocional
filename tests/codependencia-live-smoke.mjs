@@ -50,6 +50,18 @@ try {
     console.log(JSON.stringify({mode:mobile?'mobile':'desktop',status:'PASS',http:resp.status(),...result,afterFill:fill,postCount:posts}));
     await context.close();
   }
+  const formUrl='https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform';
+  const gctx=await browser.newContext();
+  try{
+    const gpage=await gctx.newPage();
+    const gr=await gpage.goto(formUrl,{waitUntil:'domcontentloaded',timeout:45000});
+    await gpage.waitForTimeout(3000);
+    const gt=(await gpage.title()).slice(0,120);
+    const text=(await gpage.locator('body').innerText()).slice(0,1500);
+    const usable=gr.status()===200 && (/Autonomia, limites e cuidado|Nome completo|Eu sinto que preciso/.test(text));
+    console.log(JSON.stringify({mode:'google-form-native',http:gr.status(),title:gt,usable,hasName:/Nome completo/.test(text),hasFirstQuestion:/Eu sinto que preciso/.test(text),bodyIntro:text.slice(0,180)}));
+    assert.ok(usable,'Canonical public Google Form must be publicly accessible before offering fallback');
+  } finally {await gctx.close()}
   const noJsContext=await browser.newContext({javaScriptEnabled:false});
   const p=await noJsContext.newPage();await p.goto(target,{waitUntil:'domcontentloaded',timeout:45000});
   assert.equal(await p.locator('button#screening-submit').isDisabled(),true);
