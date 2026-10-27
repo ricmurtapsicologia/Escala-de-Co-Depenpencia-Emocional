@@ -43,7 +43,7 @@ jobs:
               .slice(0,22).map(([k,a])=>({key:k,score:a.score,title:a.title,
                 value:a.displayValue||null,items:a.details?.items?.length||0}));
             console.log('LIGHTHOUSE_'+device.toUpperCase()+'_ISSUES='+JSON.stringify(issues));
-            for(const key of ['errors-in-console','inspector-issues','third-party-cookies','layout-shift-elements','cls-culprits-insight','forced-reflow-insight','largest-contentful-paint-element']) {
+            for(const key of ['color-contrast','errors-in-console','inspector-issues','third-party-cookies','layout-shift-elements','cls-culprits-insight','forced-reflow-insight','largest-contentful-paint-element']) {
               const a=r.audits[key];
               if(a?.details?.items?.length) console.log('DETAIL_'+device+'_'+key+'='+JSON.stringify(a.details.items).slice(0,9000));
             }
