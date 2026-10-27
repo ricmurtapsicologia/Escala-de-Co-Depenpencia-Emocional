@@ -32,6 +32,11 @@ try {
     assert.equal(result.formMethod,'post');
     assert.equal(result.buttonInitiallyDisabled,true);
     assert.equal(result.shell,true,'public design shell should initialize');
+    const fallback = await page.locator('#rm-canonical-form-link');
+    assert.equal(await fallback.count(),1,'live public page must expose canonical Google Forms contingency link');
+    assert.equal(await fallback.getAttribute('href'),
+      'https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform');
+    assert.equal(await fallback.getAttribute('rel'),'noopener noreferrer');
     assert.ok(result.documentWidth<=result.viewportWidth+2,'horizontal overflow');
     const fill=await page.evaluate(()=>{
       for(const [i,s] of [...document.querySelectorAll('#scaleForm select[name^="q"]')].entries()){
@@ -59,7 +64,7 @@ try {
     const gt=(await gpage.title()).slice(0,120);
     const text=await gpage.locator('body').innerText();
     const usable=gr.status()===200 && /Autonomia, limites e cuidado nas relações/.test(text) && /Nome completo/.test(text) && /40\. Eu me preocupo mais com os problemas dos outros/.test(text);
-    console.log(JSON.stringify({mode:'google-form-native',http:gr.status(),title:gt,usable,hasName:/Nome completo/.test(text),hasFirstQuestion:/Eu sinto que preciso/.test(text),hasLastQuestion:/40\\. Eu me preocupo mais/.test(text),bodyIntro:text.slice(0,180)}));
+    console.log(JSON.stringify({mode:'google-form-native',http:gr.status(),title:gt,usable,hasName:/Nome completo/.test(text),hasFirstQuestion:/Eu sinto que preciso/.test(text),hasLastQuestion:/40\. Eu me preocupo mais/.test(text),bodyIntro:text.slice(0,180)}));
     assert.ok(usable,'Canonical public Google Form must be publicly accessible before offering fallback');
   } finally {await gctx.close()}
   const noJsContext=await browser.newContext({javaScriptEnabled:false});
