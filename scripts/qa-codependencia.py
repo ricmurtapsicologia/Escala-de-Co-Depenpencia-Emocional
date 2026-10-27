@@ -43,9 +43,9 @@ check("20 — dois velocímetros", 'id:\'depGauge\'' in results and 'id:\'codepG
 check("21 — valores brutos 20 a 100", 'value-20)/80' in results and 'slice(0,20)' in results and 'slice(20)' in results)
 check("22 — sem cortes fabricados", not re.search(r'score\s*(?:<=|>=|<|>)\s*(?:39|40|59|60|79|80)',results))
 check("23 — sem diagnóstico de escore", 'não possui' not in results or 'sem diagnóstico' in results.lower() or 'sem diagnóstico' in html.lower())
-check("24 — texto descritivo", 'selectedStatements' in results and 'não estabelece uma classificação clínica' in results)
+check("24 — texto descritivo", 'selectedStatements' in results and 'Um próximo passo possível' in results and 'pontos de corte validados' in html)
 check("25 — acessibilidade dos gráficos", "'aria-label':title+" in results and 'role:\'img\'' in results)
-check("26 — layout responsivo", '@media (max-width:740px)' in css)
+check("26 — layout responsivo", '@media (max-width:740px)' in css and 'codependencia-experience-v3.css' in html)
 check("27 — redução de movimento", 'prefers-reduced-motion:reduce' in css)
 check("28 — sem XSS por resposta", 'textContent=text' in results and 'node(\'li\'' in results and 'innerHTML' not in results)
 check("29 — teste de pontuações extremas", 'all-minimum' in units and 'all-maximum' in units)
@@ -95,8 +95,8 @@ qep=[
 ("04 Hierarquia visual",'<h2 id="codep-results-title"' in html),
 ("05 Tipografia",'.codep-score-number' in css),
 ("06 Grid e editoração",checks["26 — layout responsivo"]),
-("07 Direção visual", '#159b82' in results and '#d56c52' in results),
-("08 Capa/hero", 'data-rm-hero-source' in html),
+("07 Direção visual", '#63c6af' in results and '#6474a8' in results and 'rm-clinical-hero' in html),
+("08 Capa/hero", 'rm-clinical-hero' in html and 'rm-onboarding' in html and 'rm-splash-screen' in html),
 ("09 UX",checks["10 — fallback Forms"] and checks["12 — prevenção de duplicidade"]),
 ("10 Experiência pedagógica",True), # N/A — rastreio, não curso
 ("11 Metodologia/formulário",checks["18 — validação de completude"]),
