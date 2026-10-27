@@ -56,5 +56,15 @@ try {
   assert.equal(await p.locator('select[name^="q"]').count(),40);
   console.log(JSON.stringify({mode:'no-javascript',status:'PASS',buttonDisabled:true}));
   await noJsContext.close();
+  const bridgeUrl='https://script.google.com/macros/s/AKfycbzrJuvVPBNPgMCZ-tmeCXy6LUMFBZB5vlNXSiP8aK3XBfiYh3xm4a4nq02xafnt65U/exec';
+  try {
+    const http=await browser.newContext();
+    const response=await http.request.get(bridgeUrl,{timeout:15000});
+    const body=await response.text();
+    const health=/"health"\\s*:\\s*true|&quot;health&quot;\\s*:\\s*true/.test(body);
+    const configured=/codependencia/.test(body);
+    console.log(JSON.stringify({mode:'apps-script-health',httpStatus:response.status(),healthDetected:health,codependenciaListed:configured,bodyLength:body.length}));
+    await http.close();
+  } catch(e){console.log(JSON.stringify({mode:'apps-script-health',status:'UNVERIFIED',reason:String(e.message).slice(0,160)}));}
   if(diagnostics.length) console.log('Browser script observations:',diagnostics.slice(0,12));
 } finally {await browser.close();}
