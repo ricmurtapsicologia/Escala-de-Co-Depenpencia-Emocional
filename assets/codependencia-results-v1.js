@@ -51,7 +51,7 @@
       'aria-label':title+': '+value+' pontos brutos, de 20 a 100.'});
     const defs=svg('defs');
     const gradient=svg('linearGradient',{id:hostId+'Colors',x1:'0%',x2:'100%',y1:'0%',y2:'0%'});
-    [['0%','#159b82'],['36%','#95b94b'],['66%','#eab34f'],['100%','#d56c52']].forEach(([offset,color])=>
+    [['0%','#63c6af'],['36%','#26a39f'],['68%','#4289a7'],['100%','#6474a8']].forEach(([offset,color])=>
       gradient.append(svg('stop',{offset,'stop-color':color})));
     defs.append(gradient);graphic.append(defs);
     const arc='M 24 132 A 96 96 0 0 1 216 132';
@@ -76,9 +76,9 @@
       if(values[start+k]<4)continue;
       const label=document.querySelector('label[for="q'+(start+k+1)+'"]');
       const text=(label?.textContent||'').replace(/^\s*\d+\.\s*/,'').trim();
-      if(text)statements.push(text);
+      if(text)statements.push({label:text,value:values[start+k]});
     }
-    return statements;
+    return statements.sort((a,b)=>b.value-a.value);
   }
   function createCard(config,values,score) {
     const card=node('article','codep-results-card');
@@ -87,27 +87,27 @@
     host.id=config.id;
     const desc=node('p','codep-results-explanation',config.description);
     const meaning=node('div','codep-results-meaning');
-    meaning.append(node('h4','codep-results-subtitle','O que suas respostas mostram'));
+    meaning.append(node('h4','codep-results-subtitle','O que vale explorar'));
     const agreed=selectedStatements(values,config.start);
     if(agreed.length){
       meaning.append(node('p','codep-results-context',
-        'Entre as afirmações com as quais você concordou, estão:'));
+        'Você marcou concordância em '+agreed.length+' de 20 afirmações deste bloco. Entre as situações que podem ser levadas à conversa, estão:'));
       const list=node('ul','codep-results-examples');
-      agreed.slice(0,3).forEach(item=>list.append(node('li','',item)));
+      agreed.slice(0,2).forEach(item=>list.append(node('li','',item.label)));
       meaning.append(list);
-      if(agreed.length>3)meaning.append(node('p','codep-results-context',
-        'Outras '+(agreed.length-3)+' afirmações também receberam concordância.'));
     }else{
       meaning.append(node('p','codep-results-context',
-        'Você não selecionou “Concordo” ou “Concordo Totalmente” nas afirmações desta dimensão.'));
+        'Nesta dimensão, você não assinalou concordância com as afirmações apresentadas. Isso também é uma informação para compreender seu momento.'));
     }
     meaning.append(node('p','codep-results-context',config.meaning));
     meaning.append(node('h4','codep-results-subtitle','Para refletir'));
     const prompts=node('ul','codep-results-examples');
     config.reflection.forEach(question=>prompts.append(node('li','',question)));
     meaning.append(prompts);
-    meaning.append(node('p','codep-results-context',
-      'Esta devolutiva organiza o que foi respondido e não estabelece uma classificação clínica.'));
+    const next=node('div','rm-patient-nextstep');
+    next.append(node('strong','','Um próximo passo possível'));
+    next.append(node('p','','Escolha uma situação recente que tenha relação com alguma dessas afirmações. O que você sentiu, precisou e gostaria de fazer diferente?'));
+    meaning.append(next);
     card.append(head,host,desc,meaning);
     gaugeHostQueue.push([host.id,score,config.heading]);
     return card;
