@@ -50,6 +50,26 @@ try {
    await page.waitForFunction(()=>document.documentElement.dataset.codepVerifiedCollector==='true',null,{timeout:10000});
    console.log('ACTIVATED');
    assert.equal(await page.locator('#scaleForm').isVisible(),true);
+   for(const id of ['fullName','birthDate','date']) {
+     const label=page.locator('#scaleForm label[for="'+id+'"]');
+     assert.equal(await label.isVisible(),true,'identification field must have visible label: '+id);
+   }
+   const visual=await page.evaluate(()=>{
+     const select=document.querySelector('#q1');
+     const anchor=document.querySelector('#rm-canonical-form-link');
+     const title=document.querySelector('#rm-fallback-title');
+     return {
+       firstSelectBorder:getComputedStyle(select).borderTopColor,
+       officialLinkBackground:getComputedStyle(anchor).backgroundColor,
+       officialLinkHeight:anchor.getBoundingClientRect().height,
+       titleVisible:!!title?.getClientRects().length,
+       horizontalOverflow:document.documentElement.scrollWidth>innerWidth+2
+     };
+   });
+   assert.notEqual(visual.firstSelectBorder,'rgb(172, 84, 67)','unanswered select cannot be styled as an error');
+   assert.ok(visual.titleVisible,'title must remain visible');
+   assert.ok(!visual.horizontalOverflow,'no horizontal overflow');
+   assert.ok(visual.officialLinkHeight>=40,'official Forms fallback remains accessible');
    assert.equal(await page.locator('#rm-native-google-form').isVisible(),false);
    await page.locator('#fullName').fill('TESTE E2E NÃO PACIENTE CATS');
    await page.locator('#birthDate').fill('2000-01-01');
