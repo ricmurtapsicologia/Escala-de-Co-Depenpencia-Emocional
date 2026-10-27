@@ -6,6 +6,9 @@ on:
       - 'index.html'
       - 'assets/codependencia-cats-bridge-v1.js'
       - 'assets/codependencia-persistence-config-v1.js'
+      - 'assets/codependencia-results-v1.js'
+      - 'assets/codependencia-results-v1.css'
+      - 'tests/codependencia-results.test.mjs'
       - 'tests/codependencia-cats-staged-e2e.mjs'
       - '.github/workflows/codependencia-cats-staged-e2e.yml'
   workflow_dispatch:
@@ -21,6 +24,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save --no-package-lock playwright-core@1.55.1
+      - run: node tests/codependencia-results.test.mjs
       - run: |
           (cd .. && python3 -m http.server 8123 --bind 127.0.0.1 > /tmp/codep-http.log 2>&1) &
           CODEP_SMOKE_URL="http://127.0.0.1:8123/Escala-de-Co-Depenpencia-Emocional/" CHROMIUM_PATH="$(which google-chrome)" node tests/codependencia-cats-staged-e2e.mjs
