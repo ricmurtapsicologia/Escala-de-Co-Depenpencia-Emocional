@@ -34,6 +34,7 @@
 
   let busy = false;
   let committed = false;
+  let needsReview = false;
   const fields = Array.from({length:40}, (_,i)=>form.querySelector('[name="q'+(i+1)+'"]'));
   if (fields.some(x=>!x)) return;
   const identify = () => ({
@@ -54,9 +55,9 @@
   const update = () => {
     const answered=answerLabels().filter(Boolean).length;
     progress.textContent=answered+' de 40 questões respondidas.';
-    button.disabled=busy || committed || !ready();
+    button.disabled=busy || committed || needsReview || !ready();
     button.setAttribute('aria-disabled',String(button.disabled));
-    if (!busy && !committed) setStatus(ready()
+    if (!busy && !committed && !needsReview) setStatus(ready()
       ? 'Respostas completas. Confira seus dados e envie para registro.'
       : 'Preencha a identificação e as 40 questões para habilitar o envio.');
   };
@@ -122,11 +123,12 @@
     // Crucially, iframe.load is NEVER interpreted as Sheets persistence.
     transport.submit();
     window.setTimeout(()=>transport.remove(),5000);
+    window.setTimeout(()=>iframe.remove(),60000);
   }
   form.removeAttribute('onsubmit');
   form.addEventListener('submit',async event => {
     event.preventDefault();
-    if(busy || committed || !ready()) { update(); return; }
+    if(busy || committed || needsReview || !ready()) { update(); return; }
     busy=true;button.disabled=true;button.setAttribute('aria-disabled','true');
     setStatus('Enviando e aguardando confirmação de gravação na planilha clínica...');
     try {
@@ -140,9 +142,11 @@
         setStatus('Registro confirmado na planilha. O psicólogo responsável analisará suas respostas.');
         button.textContent='Respostas registradas';
       } else {
+        needsReview=true;
         setStatus('Não foi possível confirmar a gravação. Não envie novamente antes de contatar o psicólogo.');
       }
     } catch(_) {
+      needsReview=true;
       setStatus('Ocorreu uma falha técnica. Não repita o envio antes de confirmar com o psicólogo.');
     } finally {
       busy=false;
