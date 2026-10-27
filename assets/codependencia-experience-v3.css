@@ -137,3 +137,5 @@ main.rm-screening-shell {box-sizing:border-box;max-width:1320px!important;width:
  .rm-splash {animation-duration:.01ms;animation-delay:.01ms;}
  .rm-splash.rm-splash-ready {animation-duration:.01ms;animation-delay:.01ms;}
 }
+/* Mobile uses the branded first screen itself instead of covering the reading flow. */
+@media(max-width:720px){.rm-splash{display:none!important;}}
