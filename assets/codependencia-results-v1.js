@@ -127,6 +127,14 @@
       createCard(CONFIG[1],answers,scores.codependencia)
     );
     gaugeHostQueue.forEach(args=>gauge(...args));
+    // A separate educational module may add personal reflections; never
+    // convert a frontend text failure into an unconfirmed recording.
+    try {
+      window.CODEPENDENCIA_INSIGHTS?.render(answers);
+    } catch (_) {
+      const extra=document.getElementById('codep-personal-insights');
+      if(extra)extra.hidden=true;
+    }
     area.hidden=false;
     area.setAttribute('data-results-ready','true');
     return scores;
