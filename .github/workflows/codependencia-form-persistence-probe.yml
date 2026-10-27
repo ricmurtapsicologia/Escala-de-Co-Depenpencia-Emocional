@@ -60,7 +60,7 @@ jobs:
               if(/^\d{1,2}\.\s/.test(txt) && Number(txt.split('.')[0])<=40){
                 const radios=item.locator('[role=radio]');
                 if(await radios.count()) {await radios.first().click();answered++;}
-                else if(await item.locator('[role=listbox]').count()) {await item.locator('[role=listbox]').click();await item.getByRole('option',{name:'Discordo Totalmente',exact:true}).first().click();answered++;}
+                else if(await item.locator('[role=listbox]').count()) {const box=item.locator('[role=listbox]').first();await box.click();const choice=page.locator('[role="option"][data-value="Discordo Totalmente"]:visible');if(await choice.count()) await choice.last().click();else {await page.keyboard.press('ArrowDown');await page.keyboard.press('Enter');}if((await box.innerText()).includes('Discordo Totalmente'))answered++;else diagnostics.push({item:Number(txt.split('.')[0]),selected:false,boxText:(await box.innerText()).slice(0,150)});}
                 else diagnostics.push({item:Number(txt.split('.')[0]),radio:0,inputs:await item.locator('input').count(),roles:await item.locator('[role]').evaluateAll(nodes=>nodes.map(n=>({role:n.getAttribute('role'),tag:n.tagName,aria:n.getAttribute('aria-label')})).slice(0,15)),html:(await item.innerHTML()).slice(0,900)});
               }
             }
