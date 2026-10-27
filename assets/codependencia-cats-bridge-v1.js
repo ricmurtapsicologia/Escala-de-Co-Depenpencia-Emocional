@@ -26,11 +26,19 @@
   const status = document.getElementById('rm-form-status');
   const progress = document.getElementById('rm-form-progress');
   if (!form || !button || !status || !progress || ENTRIES.questions.length!==40) return;
-
+  function enableNativeFallback() {
+    document.documentElement.dataset.codepNativeReady='true';
+    const iframe=document.getElementById('rm-native-google-form');
+    if(iframe && iframe.dataset.src && iframe.src!==iframe.dataset.src) {
+      iframe.loading='eager';
+      iframe.src=iframe.dataset.src;
+    }
+    status.textContent='Integração indisponível. Utilize o formulário oficial acima.';
+  }
   // Always fail closed: no fallback request through the legacy form.
   button.disabled = true;
   button.setAttribute('aria-disabled','true');
-  if (!validEndpoint || !window.crypto?.subtle) return;
+  if (!validEndpoint || !window.crypto?.subtle) { enableNativeFallback(); return; }
 
   let busy = false;
   let committed = false;
@@ -164,8 +172,9 @@
     }
   });
   // The old native link remains available as an explicit manual fallback.
+  status.textContent='Verificando conexão com o registro clínico...';
   backendReady().then(ok=>{
-    if(!ok) return;
+    if(!ok) { enableNativeFallback(); return; }
     const note=document.querySelector('#rm-canonical-fallback > p');
     if(note) note.textContent='Preencha o rastreio abaixo. O registro será confirmado somente após constar na planilha clínica. Se necessário, use o link do Google Forms oficial.';
     document.documentElement.dataset.codepVerifiedCollector='true';
