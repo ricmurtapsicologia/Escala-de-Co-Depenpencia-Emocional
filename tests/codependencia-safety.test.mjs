@@ -28,7 +28,8 @@ assert.match(html,/#scaleForm \{display:none !important;\}/);
 assert.match(html,/html\[data-codep-verified-collector="true"\] #scaleForm/);
 assert.match(html,/id="rm-native-google-form"/);
 assert.match(html,/embedded=true/);
-assert.match(config,/VERIFY_URL = ''/); // Backend not deployed: native Google Form stays primary.
+assert.match(config,/CODEPENDENCIA_PERSISTENCE_VERIFY_URL = 'https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec'/);
+assert.match(client,/backendReady\(\)\.then\(ok=>\{/); // Fail-closed if endpoint fails readiness check.
 assert.match(client,/document\.documentElement\.dataset\.codepVerifiedCollector='true'/);
 assert.match(client,/form\.removeAttribute\('onsubmit'\)/);
 assert.match(client,/\/formResponse/);
