@@ -61,7 +61,8 @@ try {
      return {
        firstSelectBorder:getComputedStyle(select).borderTopColor,
        officialLinkBackground:getComputedStyle(anchor).backgroundColor,
-       officialLinkHeight:anchor.getBoundingClientRect().height,
+       fallbackHidden:!anchor.getClientRects().length && document.getElementById('rm-official-fallback-hint').hidden,
+       fallbackURL:anchor.href,
        titleVisible:!!title?.getClientRects().length,
        horizontalOverflow:document.documentElement.scrollWidth>innerWidth+2
      };
@@ -69,8 +70,10 @@ try {
    assert.notEqual(visual.firstSelectBorder,'rgb(172, 84, 67)','unanswered select cannot be styled as an error');
    assert.ok(visual.titleVisible,'title must remain visible');
    assert.ok(!visual.horizontalOverflow,'no horizontal overflow');
-   assert.ok(visual.officialLinkHeight>=40,'official Forms fallback remains accessible');
+   assert.equal(visual.fallbackHidden,true,'official fallback must remain hidden when integration works');
+   assert.match(visual.fallbackURL,/docs\.google\.com\/forms\/d\/e\//);
    assert.equal(await page.locator('#rm-native-google-form').isVisible(),false);
+   assert.equal(await page.locator('#rm-official-fallback-hint').isVisible(),false);
    await page.locator('#fullName').fill('TESTE E2E NÃO PACIENTE CATS');
    await page.locator('#birthDate').fill('2000-01-01');
    await page.locator('#date').fill('2026-10-27');
@@ -116,4 +119,33 @@ try {
      noRealGoogleSubmission:true}));
    await ctx.close();
  }
+ // Contingency E2E: disabled verifier must reveal the official Google Form.
+ const ctx=await browser.newContext({viewport:{width:390,height:844}});
+ const page=await ctx.newPage();
+ let externalFormLoaded=false;
+ await page.route('**/assets/codependencia-persistence-config-v1.js*',route=>
+   route.fulfill({status:200,contentType:'application/javascript',
+     body:"window.CODEPENDENCIA_PERSISTENCE_VERIFY_URL = '"+backend+"';"}));
+ await page.route(backend,route=>route.fulfill({status:200,contentType:'application/json',
+   headers:{'access-control-allow-origin':'*'},
+   body:JSON.stringify({status:'ready',configured:false,protocol:'codependencia-persistence-v1'})}));
+ await page.route('https://docs.google.com/forms/d/e/**/viewform?embedded=true',route=>{
+   externalFormLoaded=true;
+   return route.fulfill({status:200,contentType:'text/html',
+     body:'<!doctype html><html><body><h1>Google Forms oficial</h1></body></html>'});
+ });
+ const res=await page.goto(base,{waitUntil:'domcontentloaded',timeout:35000});
+ assert.equal(res.status(),200);
+ await page.waitForFunction(()=>document.documentElement.dataset.codepNativeReady==='true',
+   null,{timeout:12000});
+ assert.equal(await page.locator('#scaleForm').isVisible(),false);
+ assert.equal(await page.locator('#rm-official-fallback-hint').isVisible(),true);
+ assert.equal(await page.locator('#rm-canonical-form-link').isVisible(),true);
+ assert.ok((await page.locator('#rm-canonical-form-link').getAttribute('href')).includes('/viewform'));
+ assert.equal(await page.locator('#rm-native-google-form').isVisible(),true);
+ await page.waitForTimeout(1000);
+ assert.ok(externalFormLoaded,'native Google Forms fallback should load on contingency');
+ console.log(JSON.stringify({scenario:'verifier-offline-native-fallback',result:'PASS',
+  linkOnlyOnFailure:true,siteFormHidden:true,officialFormLoaded:true,noRealGoogleSubmission:true}));
+ await ctx.close();
 } finally {await browser.close();}
