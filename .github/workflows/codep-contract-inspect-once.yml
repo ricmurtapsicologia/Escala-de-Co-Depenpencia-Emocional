@@ -34,6 +34,15 @@ jobs:
               for c in node:walk(c,depth+1)
             elif isinstance(node,dict):
               for c in node.values():walk(c,depth+1)
+          hits=[]
+          def sample(node,depth=0):
+            if depth>35:return
+            if isinstance(node,list):
+              if any(isinstance(c,str) and ('Eu sinto que preciso da aprovação' in c or 'Eu me preocupo mais com os problemas' in c) for c in node[:5]):
+                hits.append(str(node)[:1400])
+              for v in node:sample(v,depth+1)
+          sample(root)
+          for h in hits[:8]:print('QUESTION_STRUCTURE='+h)
           walk(root)
           print('FOUND_QUESTIONS='+str(len(found)))
           for e in found:print('QUESTION_MAPPING='+json.dumps(e,ensure_ascii=False))
