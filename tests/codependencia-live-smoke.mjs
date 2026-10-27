@@ -26,6 +26,20 @@ try {
       const btn=document.getElementById('screening-submit');
       return {total:sels.length,unanswered:sels.filter(x=>x.value==='').length,labels:sels.filter(x=>document.querySelector('label[for="'+x.id+'"]')).length,shell:!!shell,buttonInitiallyDisabled:btn.disabled,formMethod:form.method,documentWidth:document.documentElement.scrollWidth,viewportWidth:innerWidth};
     });
+    // Google Form is the only patient-facing form in this safe-degradation mode.
+    const nativeFrame = page.frameLocator('#rm-native-google-form');
+    const iframe = page.locator('#rm-native-google-form');
+    assert.equal(await iframe.count(),1,'canonical native iframe must be available');
+    assert.equal(await iframe.getAttribute('title'),'Questionário oficial de autonomia, limites e cuidado nas relações no Google Forms');
+    const frameSrc=await iframe.getAttribute('src');
+    assert.match(frameSrc,/docs\.google\.com\/forms\/d\/e\//);
+    assert.match(frameSrc,/embedded=true/);
+    assert.equal(await page.locator('#scaleForm').isVisible(),false,'legacy form must not duplicate the live clinical application');
+    assert.equal(await page.locator('#rm-canonical-form-link').isVisible(),true,'patient needs full-page fallback');
+    await nativeFrame.locator('body').waitFor({state:'visible',timeout:30000});
+    const frameContents=(await nativeFrame.locator('body').innerText({timeout:12000})).slice(0,3000);
+    assert.match(frameContents,/Autonomia, limites e cuidado nas relações/,'embedded native Form should actually load');
+    assert.match(frameContents,/Nome completo/,'embedded native Form has identity');
     assert.equal(result.total,40);
     assert.equal(result.unanswered,40);
     assert.equal(result.labels,40);
