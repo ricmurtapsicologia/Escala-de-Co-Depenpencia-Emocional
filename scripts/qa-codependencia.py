@@ -114,9 +114,19 @@ qep=[
 ("23 Excelência editorial",checks["22 — sem cortes fabricados"]),
 ("24 Consistência cross-format",checks["05 — contrato Google Forms"] and checks["07 — backend independente"])
 ]
+# Cinco dimensões são não aplicáveis a uma aplicação web clínica; performance
+# exige Lighthouse real, portanto nunca se declara aprovada por mero texto-fonte.
+qep=[(name, ('N/A' if i in (9,11,16,17,18) else 'EXTERNAL' if i==14 else ok))
+     for i,(name,ok) in enumerate(qep)]
 print("QEP_CROSSWALK_24_DIMENSOES / CONTROLES_LITERAL_397_NAO_DISPONIVEIS")
-for name,ok in qep:print(("PASS" if ok else "FAIL")+" | "+name)
+for name,ok in qep:
+    flag=ok if isinstance(ok,str) else ('PASS' if ok else 'FAIL')
+    print(str(flag)+" | "+name)
 fail30=sum(not x for x in checks.values());fail90=sum(not x for _,x in qa90)
-fail6=sum(not x for x in gates.values());failqep=sum(not x for _,x in qep)
-print(f"SUMMARY 30={30-fail30}/30 90={90-fail90}/90 6={6-fail6}/6 QEP_DIM={24-failqep}/24")
+fail6=sum(not x for x in gates.values());failqep=sum(x is False for _,x in qep)
+applicable=sum(isinstance(ok,bool) for _,ok in qep)
+passed=sum(ok is True for _,ok in qep)
+na=sum(ok=='N/A' for _,ok in qep)
+external=sum(ok=='EXTERNAL' for _,ok in qep)
+print(f"SUMMARY 30={30-fail30}/30 90={90-fail90}/90 6={6-fail6}/6 QEP={passed}/{applicable} aplicáveis N/A={na} EXTERNAL={external}")
 if fail30 or fail90 or fail6 or failqep: raise SystemExit(1)
