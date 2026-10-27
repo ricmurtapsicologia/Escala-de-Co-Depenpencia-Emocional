@@ -4,6 +4,7 @@
 <head>
 <!-- Metadados essenciais e SEO -->
 <meta charset="utf-8"/>
+<meta name="referrer" content="no-referrer"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="Rastreio clínico sobre autonomia, limites, cuidado e equilíbrio nas relações. As respostas serão integradas à avaliação pelo psicólogo responsável." name="description"/>
 <meta property="og:title" content="Codependência"/>
@@ -137,10 +138,10 @@ button { padding: 10px; font-size: 16px; }
 <main>
 <img alt="Duas mãos conectadas por um fio fino, representando vínculo, autonomia e limites" data-rm-hero-source="codependencia-v1" hidden="" src="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/heroes/codependencia.jpg?v=4.0.0"/>
 <!-- Formulário de avaliação -->
-<form id="scaleForm" method="post" action="#" onsubmit="return false;" aria-describedby="rm-form-progress rm-form-status">
+<form id="scaleForm" method="post" action="#" autocomplete="off" onsubmit="return false;" aria-describedby="rm-form-progress rm-form-status">
 <section class="patient-info" aria-label="Identificação do paciente">
 <input id="fullName" name="fullName" aria-label="Nome completo" autocomplete="name" maxlength="120" placeholder="Nome completo" required="" type="text"/>
-<input aria-label="Data de nascimento" id="birthDate" name="birthDate" required="" type="date" max="2026-10-26"/>
+<input aria-label="Data de nascimento" id="birthDate" name="birthDate" required="" type="date"/>
 <input aria-label="Data de aplicação do rastreio" id="date" placeholder="Data de aplicação do rastreio" required="" type="date"/>
 </section>
 <!-- Bloco A (Perguntas 1 a 20) -->
@@ -591,6 +592,8 @@ button { padding: 10px; font-size: 16px; }
 </select>
 </div>
 </section>
+<p class="rm-privacy-note">Os dados de identificação e as respostas, quando enviados, destinam-se à avaliação pelo psicólogo responsável. Este rastreio não produz diagnóstico automático.</p>
+<noscript><p role="alert">Ative o JavaScript para utilizar esta página. Nenhum envio é possível sem a validação técnica.</p></noscript>
 <p id="rm-form-progress" role="status" aria-live="polite">0 de 40 questões respondidas.</p>
 <p id="rm-form-status" role="status" aria-live="polite">O envio deste rastreio permanece indisponível até a validação técnica da integração clínica.</p>
 <button id="screening-submit" type="submit" disabled aria-disabled="true">Concluir rastreio</button>
