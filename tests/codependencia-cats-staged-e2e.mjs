@@ -18,12 +18,14 @@ try {
  for(const mobile of [false,true]) {
    const ctx=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1440,height:900}});
    const page=await ctx.newPage();
+   page.on('pageerror',e=>console.log('BROWSER_PAGEERROR='+String(e.message).slice(0,180)));
    let intercepted=null,verification=null,health=0;
    await page.route('**/assets/codependencia-persistence-config-v1.js*',route=>
      route.fulfill({status:200,contentType:'application/javascript',
        body:"window.CODEPENDENCIA_PERSISTENCE_VERIFY_URL = '"+backend+"';"}));
    await page.route(backend,async route=>{
      const req=route.request();
+     console.log('MOCK_VERIFIER_METHOD='+req.method());
      if(req.method()==='GET') {
        health++;
        await route.fulfill({status:200,contentType:'application/json',
@@ -39,6 +41,7 @@ try {
    });
    await page.route('https://docs.google.com/forms/d/e/**/formResponse',async route=>{
      intercepted=new URLSearchParams(route.request().postData()||'');
+     console.log('MOCK_FORM_POST_FIELD_COUNT='+[...intercepted.keys()].length);
      await route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>ok</title>'});
    });
    const r=await page.goto(base,{waitUntil:'domcontentloaded',timeout:35000});
@@ -61,7 +64,8 @@ try {
    console.log('READY_TO_SUBMIT');
    await page.locator('#screening-submit').click();
    console.log('SUBMIT_CLICKED');
-   await page.waitForFunction(()=>document.querySelector('#rm-form-status')?.textContent?.includes('Registro confirmado'),null,{timeout:12000});
+   try {await page.waitForFunction(()=>document.querySelector('#rm-form-status')?.textContent?.includes('Registro confirmado'),null,{timeout:12000});}
+   catch(e){const diag=await page.evaluate(()=>({status:document.querySelector('#rm-form-status')?.textContent,btnDisabled:document.querySelector('#screening-submit')?.disabled}));console.log('POST_TIMEOUT_STATE='+JSON.stringify({diag,hasFormPost:Boolean(intercepted),hasVerifier:Boolean(verification),health}));throw e;}
    assert.ok(intercepted,'formResponse POST must occur');
    assert.equal(health,1);
    assert.ok(verification&&verification.protocol==='codependencia-persistence-v1');
