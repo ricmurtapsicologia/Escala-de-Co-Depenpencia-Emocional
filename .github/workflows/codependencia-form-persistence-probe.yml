@@ -60,6 +60,7 @@ jobs:
               if(/^\d{1,2}\.\s/.test(txt) && Number(txt.split('.')[0])<=40){
                 const radios=item.locator('[role=radio]');
                 if(await radios.count()) {await radios.first().click();answered++;}
+                else if(await item.locator('[role=listbox]').count()) {await item.locator('[role=listbox]').click();await item.getByRole('option',{name:'Discordo Totalmente',exact:true}).first().click();answered++;}
                 else diagnostics.push({item:Number(txt.split('.')[0]),radio:0,inputs:await item.locator('input').count(),roles:await item.locator('[role]').evaluateAll(nodes=>nodes.map(n=>({role:n.getAttribute('role'),tag:n.tagName,aria:n.getAttribute('aria-label')})).slice(0,15)),html:(await item.innerHTML()).slice(0,900)});
               }
             }
