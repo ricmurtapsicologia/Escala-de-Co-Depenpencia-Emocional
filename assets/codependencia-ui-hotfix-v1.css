@@ -19,6 +19,7 @@
   margin:0 0 5px;
   max-width:75ch;
 }
+#rm-canonical-fallback .rm-intro-support[hidden] {display:none!important;}
 #rm-canonical-fallback .rm-intro-support {
   color:#456568;
   font-size:.9rem;
