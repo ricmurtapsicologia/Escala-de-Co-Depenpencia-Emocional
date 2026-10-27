@@ -9,9 +9,13 @@
   const OPTIONS = Object.freeze(['Discordo Totalmente','Discordo','Neutro','Concordo','Concordo Totalmente']);
   const CONFIG = Object.freeze([
     {id:'depGauge',heading:'Dependência emocional',start:0,end:20,
-      description:'Esta dimensão organiza respostas sobre autonomia, necessidade de aprovação, segurança nos vínculos e receio de rejeição.'},
+      description:'Esta dimensão organiza respostas sobre autonomia, necessidade de aprovação, segurança nos vínculos e receio de rejeição.',
+      meaning:'A necessidade de validação e o medo de rejeição podem influenciar escolhas nas relações, mas sua presença em respostas isoladas não define dependência emocional.',
+      reflection:['Em quais situações você consegue escolher sem buscar aprovação?', 'Quando surge o receio de desagradar, que limites gostaria de preservar?']},
     {id:'codepGauge',heading:'Codependência emocional',start:20,end:40,
-      description:'Esta dimensão organiza respostas sobre limites, autocuidado, responsabilidade pelos outros e dificuldade de dizer não.'}
+      description:'Esta dimensão organiza respostas sobre limites, autocuidado, responsabilidade pelos outros e dificuldade de dizer não.',
+      meaning:'Cuidar de pessoas próximas não é, por si só, codependência. Importa investigar quando o cuidado se torna obrigação, autossacrifício ou dificuldade de reconhecer as próprias necessidades.',
+      reflection:['Quando você ajuda alguém, consegue reconhecer o que está ao seu alcance?', 'Como costuma equilibrar o cuidado com os outros e suas próprias necessidades?']}
   ]);
   function extract(raw) {
     if (!Array.isArray(raw) || raw.length!==ITEM_COUNT) throw Error('RESULTS_INCOMPLETE_40');
@@ -97,8 +101,13 @@
       meaning.append(node('p','codep-results-context',
         'Você não selecionou “Concordo” ou “Concordo Totalmente” nas afirmações desta dimensão.'));
     }
+    meaning.append(node('p','codep-results-context',config.meaning));
+    meaning.append(node('h4','codep-results-subtitle','Para refletir'));
+    const prompts=node('ul','codep-results-examples');
+    config.reflection.forEach(question=>prompts.append(node('li','',question)));
+    meaning.append(prompts);
     meaning.append(node('p','codep-results-context',
-      'Este conjunto de respostas pode orientar uma conversa sobre necessidades, autonomia e limites, mas não estabelece uma classificação clínica.'));
+      'Esta devolutiva organiza o que foi respondido e não estabelece uma classificação clínica.'));
     card.append(head,host,desc,meaning);
     gaugeHostQueue.push([host.id,score,config.heading]);
     return card;
