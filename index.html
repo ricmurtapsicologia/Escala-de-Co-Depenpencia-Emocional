@@ -160,11 +160,38 @@ window.addEventListener('load', () => {
 <meta name="twitter:image" content="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/heroes/codependencia.jpg?v=5.0.0"/>
 <link rel="stylesheet" href="./assets/codependencia-results-v1.css?v=20261027-2"/>
 <link rel="stylesheet" href="./assets/codependencia-ui-hotfix-v1.css?v=20261027-3"/>
+<link rel="stylesheet" href="./assets/codependencia-experience-v3.css?v=20261027-4"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23176d68'/%3E%3Cpath d='M17 17h15a10 10 0 0 1 0 20H17V17ZM31 38l15 12' stroke='white' stroke-width='5' fill='none'/%3E%3C/svg%3E"/>
 </head>
 <body>
 <main class="rm-screening-shell">
 <img alt="Duas mãos conectadas por um fio fino, representando vínculo, autonomia e limites" data-rm-hero-source="codependencia-v1" hidden="" src="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/heroes/codependencia.jpg?v=4.0.0"/>
+<div id="rm-splash-screen" class="rm-splash" aria-hidden="true">
+  <div class="rm-splash-mark">RM</div>
+  <p>Reflexão e cuidado nas relações</p>
+  <span>Experiência clínica</span>
+</div>
+<header class="rm-brandbar" aria-label="Identificação da plataforma clínica">
+  <div class="rm-brand-id"><span class="rm-brand-mark" aria-hidden="true">RM</span>
+  <div><strong class="rm-brand-name">Richelmy Murta · Psicologia</strong><span class="rm-brand-caption">Autonomia, vínculos e cuidado</span></div></div>
+  <span class="rm-brand-trust">Ambiente de rastreio clínico</span>
+</header>
+<section class="rm-clinical-hero" aria-labelledby="rm-hero-title">
+  <div class="rm-hero-content">
+    <p class="rm-eyebrow">Um espaço de percepção e escolhas</p>
+    <h1 id="rm-hero-title">Como você tem vivido suas relações?</h1>
+    <p class="rm-hero-desc">Perceber o que acontece nos vínculos pode ajudar a reconhecer necessidades, cuidar dos próprios limites e conversar com mais clareza sobre o que importa.</p>
+    <div class="rm-hero-actions"><a class="rm-hero-cta" href="#scaleForm">Começar meu rastreio</a>
+    <span class="rm-hero-caption">40 afirmações · duas dimensões de reflexão</span></div>
+  </div>
+  <div class="rm-hero-art" aria-hidden="true"><div class="rm-orbit"><span class="rm-orbit-point one"></span><span class="rm-orbit-point two"></span></div>
+  <span class="rm-hero-art-label">Perceber · nomear · escolher</span></div>
+</section>
+<section class="rm-onboarding" aria-label="Como funciona o rastreio">
+  <div class="rm-onboard-step"><span class="rm-onboard-number" aria-hidden="true">01</span><div><strong>Responda com sinceridade</strong><p>Considere seu modo habitual de sentir e agir, sem procurar respostas certas ou erradas.</p></div></div>
+  <div class="rm-onboard-step"><span class="rm-onboard-number" aria-hidden="true">02</span><div><strong>Conclua com segurança</strong><p>O registro das respostas é confirmado antes da apresentação da devolutiva.</p></div></div>
+  <div class="rm-onboard-step"><span class="rm-onboard-number" aria-hidden="true">03</span><div><strong>Leve o que descobriu à conversa</strong><p>Receba pontos de reflexão; o significado clínico é construído com o psicólogo.</p></div></div>
+</section>
 <!-- Formulário de avaliação -->
 <section id="rm-canonical-fallback" class="rm-native-section" aria-labelledby="rm-fallback-title">
 <h2 id="rm-fallback-title">Escala de autonomia, limites e cuidado nas relações</h2>
@@ -640,14 +667,15 @@ window.addEventListener('load', () => {
 <p class="rm-privacy-note">Os dados de identificação e as respostas, quando enviados, destinam-se à avaliação pelo psicólogo responsável. Este rastreio não produz diagnóstico automático.</p>
 <noscript><p role="alert">Ative o JavaScript para utilizar esta página. Nenhum envio é possível sem a validação técnica.</p></noscript>
 <p id="rm-form-progress" role="status" aria-live="polite">0 de 40 questões respondidas.</p>
+<div class="rm-progress-track" aria-hidden="true"><div id="rm-progress-fill" class="rm-progress-fill"></div></div>
 <p id="rm-form-status" role="status" aria-live="polite">O envio deste rastreio permanece indisponível até a validação técnica da integração clínica.</p>
 <button id="screening-submit" type="submit" disabled aria-disabled="true">Concluir rastreio</button>
 </form>
 <section id="codep-results" aria-labelledby="codep-results-title" hidden>
   <h2 id="codep-results-title">Resultados do rastreio</h2>
-  <p class="codep-results-lede">As duas dimensões apresentam suas pontuações brutas e uma leitura descritiva das respostas. A interpretação clínica deve considerar o contexto individual.</p>
+  <p class="codep-results-lede">A seguir estão dois retratos das respostas que você registrou. Eles não definem quem você é: ajudam a perceber temas que podem merecer atenção na sua história e na conversa terapêutica.</p>
   <div id="codep-results-cards"></div>
-  <p class="codep-results-limits"><strong>Como interpretar:</strong> este questionário é um instrumento clínico estruturado em avaliação. As cores dos velocímetros são recursos visuais, não faixas de risco. Os valores não possuem pontos de corte validados para definir normalidade, intensidade ou diagnóstico. O significado das respostas deve ser discutido com o profissional responsável.</p>
+  <p class="codep-results-limits"><strong>Importante:</strong> os valores são somas descritivas das afirmações respondidas. Os gráficos não classificam intensidade, não usam pontos de corte validados e não estabelecem diagnóstico. Leve suas observações à conversa clínica.</p>
 </section>
 </main>
 <!-- Rodapé limpo e proporcional -->
@@ -657,5 +685,6 @@ window.addEventListener('load', () => {
 <script defer src="./assets/codependencia-persistence-config-v1.js?v=20261027-1"></script>
 <script defer src="./assets/codependencia-results-v1.js?v=20261027-2"></script>
 <script defer src="./assets/codependencia-cats-bridge-v1.js?v=20261027-2"></script>
+<script defer src="./assets/codependencia-experience-v3.js?v=20261027-4"></script>
 </body>
 </html>
