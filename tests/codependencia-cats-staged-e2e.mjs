@@ -54,12 +54,13 @@ try {
    await page.locator('#fullName').fill('TESTE E2E NÃO PACIENTE CATS');
    await page.locator('#birthDate').fill('2000-01-01');
    await page.locator('#date').fill('2026-10-27');
-   await page.evaluate(()=>{
+   await page.evaluate(value=>{
      for(let i=1;i<=40;i++){
        const el=document.querySelector('#q'+i);
-       el.value='1';el.dispatchEvent(new Event('change',{bubbles:true}));
+       el.value=value;el.dispatchEvent(new Event('change',{bubbles:true}));
      }
-   });
+   },mobile?'5':'1');
+   assert.equal(await page.locator('#codep-results').isVisible(),false,'results must be hidden before a verified write');
    await page.waitForFunction(()=>!document.querySelector('#screening-submit').disabled,null,{timeout:10000});
    console.log('READY_TO_SUBMIT');
    await page.locator('#screening-submit').click();
@@ -72,15 +73,26 @@ try {
    assert.equal(intercepted.get('entry.2145128820'),'TESTE E2E NÃO PACIENTE CATS');
    assert.equal(intercepted.get('entry.680549210'),'2000-01-01');
    assert.equal(intercepted.get('entry.1092281443'),'2026-10-27');
-   assert.ok(FORM_IDS.every(id=>intercepted.get('entry.'+id)==='Discordo Totalmente'));
+   assert.ok(FORM_IDS.every(id=>intercepted.get('entry.'+id)===(mobile?'Concordo Totalmente':'Discordo Totalmente')));
    const expected=crypto.createHash('sha256').update(
      ['TESTE E2E NÃO PACIENTE CATS','2000-01-01','2026-10-27',
-       ...Array(40).fill('Discordo Totalmente')].join('|')).digest('hex');
+       ...Array(40).fill(mobile?'Concordo Totalmente':'Discordo Totalmente')].join('|')).digest('hex');
    assert.equal(verification.fingerprint,expected);
    assert.equal(await page.locator('#screening-submit').isDisabled(),true);
+   await page.locator('#codep-results[data-results-ready="true"]').waitFor({state:'visible',timeout:7000});
+   assert.equal(await page.locator('#depGauge svg').count(),1);
+   assert.equal(await page.locator('#codepGauge svg').count(),1);
+   const expectedScore=mobile?'100 / 100':'20 / 100';
+   const scoreTexts=await page.locator('.codep-score-number').allInnerTexts();
+   assert.deepEqual(scoreTexts,[expectedScore,expectedScore]);
+   assert.match(await page.locator('#codep-results').innerText(),/não possuem pontos de corte validados/i);
+   if(mobile)assert.match(await page.locator('#codep-results').innerText(),/Entre as afirmações com as quais você concordou/);
+   else assert.match(await page.locator('#codep-results').innerText(),/não selecionou/);
+   const gaugeAccessibility=await page.locator('#depGauge svg').getAttribute('aria-label');
+   assert.match(gaugeAccessibility,/pont[oau]s brutos/i);
    assert.ok((await page.locator('#rm-form-status').innerText()).includes('Registro confirmado'));
    console.log(JSON.stringify({mode:mobile?'mobile':'desktop',result:'PASS',
-     questionsMapped:40,identificationMapped:3,sent:true,persistenceVerified:true,
+     questionsMapped:40,identificationMapped:3,sent:true,persistenceVerified:true,restoredGauges:2,
      noRealGoogleSubmission:true}));
    await ctx.close();
  }
