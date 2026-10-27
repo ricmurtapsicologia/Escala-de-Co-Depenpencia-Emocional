@@ -63,7 +63,8 @@ try {
     const body=await response.text();
     const health=/"health"\\s*:\\s*true|&quot;health&quot;\\s*:\\s*true/.test(body);
     const configured=/codependencia/.test(body);
-    console.log(JSON.stringify({mode:'apps-script-health',httpStatus:response.status(),healthDetected:health,codependenciaListed:configured,bodyLength:body.length}));
+    const pageTitle=(body.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/i)||[])[1]||'';
+    console.log(JSON.stringify({mode:'apps-script-health',httpStatus:response.status(),healthDetected:health,codependenciaListed:configured,bodyLength:body.length,pageTitle:pageTitle.replace(/<[^>]*>/g,'').slice(0,100)}));
     await http.close();
   } catch(e){console.log(JSON.stringify({mode:'apps-script-health',status:'UNVERIFIED',reason:String(e.message).slice(0,160)}));}
   if(diagnostics.length) console.log('Browser script observations:',diagnostics.slice(0,12));
