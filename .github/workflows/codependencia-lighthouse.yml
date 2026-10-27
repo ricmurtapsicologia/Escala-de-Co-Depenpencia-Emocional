@@ -34,6 +34,12 @@ jobs:
             const scores=Object.fromEntries(Object.entries(r.categories).map(([k,v])=>[k,Math.round(100*v.score)]));
             const metrics=Object.fromEntries(['largest-contentful-paint','cumulative-layout-shift','interaction-to-next-paint'].map(k=>[k,r.audits[k]?.displayValue||'not collected']));
             console.log('LIGHTHOUSE_'+device.toUpperCase()+'='+JSON.stringify({scores,metrics,finalUrl:r.finalDisplayedUrl}));
+            const issues=Object.entries(r.audits)
+              .filter(([k,a])=>a.score!==null && a.score < .9 && ['binary','numeric','informative'].includes(a.scoreDisplayMode))
+              .sort((x,y)=>(x[1].score||0)-(y[1].score||0))
+              .slice(0,22).map(([k,a])=>({key:k,score:a.score,title:a.title,
+                value:a.displayValue||null,items:a.details?.items?.length||0}));
+            console.log('LIGHTHOUSE_'+device.toUpperCase()+'_ISSUES='+JSON.stringify(issues));
             if(scores.accessibility<85||scores['best-practices']<85||scores.performance<65)failures.push(device);
           }
           if(failures.length)process.exitCode=1;
