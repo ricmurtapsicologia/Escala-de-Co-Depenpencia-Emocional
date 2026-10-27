@@ -1,0 +1,26 @@
+name: Codependencia Forms public contract diagnostic
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/codep-contract-inspect-once.yml']
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read only public Google Forms contract
+        run: |
+          python3 - <<'PY'
+          import re,urllib.request
+          url='https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform'
+          data=urllib.request.urlopen(url,timeout=25).read().decode('utf-8','replace')
+          ids=re.findall(r'entry\.\d+',data)
+          numeric=re.findall(r'\[\d{5,12},\[',data)
+          print('PUBLIC_FORM_HTML_BYTES='+str(len(data)))
+          print('PUBLISHED_ENTRY_KEYS='+','.join(dict.fromkeys(ids)))
+          print('NUMERIC_QUESTION_HINTS='+str(len(numeric)))
+          print('HAS_FB_PUBLIC_LOAD_DATA='+str('FB_PUBLIC_LOAD_DATA_' in data))
+          print('HAS_40th_QUESTION='+str('40. Eu me preocupo mais' in data))
+          PY
