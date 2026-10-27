@@ -58,7 +58,9 @@ jobs:
               nativeFrameHidden:!document.querySelector('#rm-native-google-form')?.getClientRects().length,
               questions:document.querySelectorAll('#scaleForm select[name^="q"]').length,
               submitInitiallyDisabled:document.querySelector('#screening-submit')?.disabled===true,
-              fallbackLink:document.querySelector('#rm-canonical-form-link')?.href?.startsWith('https://docs.google.com/forms/')
+              fallbackLink:document.querySelector('#rm-canonical-form-link')?.href?.startsWith('https://docs.google.com/forms/'),
+              fallbackHidden:document.querySelector('#rm-official-fallback-hint')?.hidden===true && !document.querySelector('#rm-canonical-form-link')?.getClientRects().length,
+              resultInitiallyHidden:document.querySelector('#codep-results')?.hidden===true
             }));
             console.log('LIVE_SITE_ACTIVATION='+JSON.stringify(ui));
             const probe=await page.evaluate(async url=>{
@@ -78,6 +80,6 @@ jobs:
             console.log('BROWSER_POST_NEGATIVE_PROBE='+JSON.stringify(probe));
             if(!probe.readable||probe.http!==200||probe.persisted||probe.reason!=='not-yet-visible')
               throw Error('CROSS_ORIGIN_NEGATIVE_PERSISTENCE_PROBE_FAILED');
-            if(!ui.active||!ui.visibleForm||!ui.nativeFrameHidden||ui.questions!==40||!ui.submitInitiallyDisabled||!ui.fallbackLink)throw Error('PUBLIC_SITE_VERIFIER_ACTIVATION_FAILED');
+            if(!ui.active||!ui.visibleForm||!ui.nativeFrameHidden||ui.questions!==40||!ui.submitInitiallyDisabled||!ui.fallbackLink||!ui.fallbackHidden||!ui.resultInitiallyHidden)throw Error('PUBLIC_SITE_VERIFIER_ACTIVATION_FAILED');
           }finally{await browser.close()}
           JS
