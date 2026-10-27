@@ -9,6 +9,7 @@ on:
       - 'assets/codependencia-results-v1.js'
       - 'assets/codependencia-results-v1.css'
       - 'tests/codependencia-results.test.mjs'
+      - 'tests/codependencia-negative-e2e.mjs'
       - 'scripts/qa-codependencia.py'
       - 'tests/codependencia-cats-staged-e2e.mjs'
       - '.github/workflows/codependencia-cats-staged-e2e.yml'
@@ -30,3 +31,4 @@ jobs:
       - run: |
           (cd .. && python3 -m http.server 8123 --bind 127.0.0.1 > /tmp/codep-http.log 2>&1) &
           CODEP_SMOKE_URL="http://127.0.0.1:8123/Escala-de-Co-Depenpencia-Emocional/" CHROMIUM_PATH="$(which google-chrome)" node tests/codependencia-cats-staged-e2e.mjs
+          CODEP_SMOKE_URL="http://127.0.0.1:8123/Escala-de-Co-Depenpencia-Emocional/" CHROMIUM_PATH="$(which google-chrome)" node tests/codependencia-negative-e2e.mjs
