@@ -51,5 +51,16 @@ jobs:
               }catch(e){return {readable:false,error:String(e).slice(0,240)}}finally{clearTimeout(kill)}
             },process.env.VERIFY_URL);
             console.log('BROWSER_FETCH_RESULT='+JSON.stringify(status));
+            await page.waitForFunction(()=>document.documentElement.dataset.codepVerifiedCollector==='true',null,{timeout:20000});
+            const ui=await page.evaluate(()=>({
+              active:document.documentElement.dataset.codepVerifiedCollector==='true',
+              visibleForm:!!document.querySelector('#scaleForm')?.getClientRects().length,
+              nativeFrameHidden:!document.querySelector('#rm-native-google-form')?.getClientRects().length,
+              questions:document.querySelectorAll('#scaleForm select[name^="q"]').length,
+              submitInitiallyDisabled:document.querySelector('#screening-submit')?.disabled===true,
+              fallbackLink:document.querySelector('#rm-canonical-form-link')?.href?.startsWith('https://docs.google.com/forms/')
+            }));
+            console.log('LIVE_SITE_ACTIVATION='+JSON.stringify(ui));
+            if(!ui.active||!ui.visibleForm||!ui.nativeFrameHidden||ui.questions!==40||!ui.submitInitiallyDisabled||!ui.fallbackLink)throw Error('PUBLIC_SITE_VERIFIER_ACTIVATION_FAILED');
           }finally{await browser.close()}
           JS
