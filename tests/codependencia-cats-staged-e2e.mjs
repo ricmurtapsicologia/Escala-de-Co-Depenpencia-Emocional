@@ -50,6 +50,18 @@ try {
    await page.waitForFunction(()=>document.documentElement.dataset.codepVerifiedCollector==='true',null,{timeout:10000});
    console.log('ACTIVATED');
    assert.equal(await page.locator('#scaleForm').isVisible(),true);
+   assert.equal(await page.locator('.rm-clinical-hero').isVisible(),true);
+   assert.equal(await page.locator('.rm-hero-cta').isVisible(),true);
+   assert.equal(await page.locator('.rm-onboard-step').count(),3);
+   await page.waitForTimeout(1300);
+   assert.equal(await page.locator('#rm-splash-screen').count(),0,'splash must self-dismiss');
+   const geometry=await page.evaluate(()=>{
+     const main=document.querySelector('main.rm-screening-shell').getBoundingClientRect();
+     const hero=document.querySelector('.rm-clinical-hero').getBoundingClientRect();
+     return {main:main.width,hero:hero.width,viewport:innerWidth};
+   });
+   assert.ok(geometry.main>=geometry.viewport*(mobile?.91:.68),'clinical page must use available reading width');
+   assert.ok(geometry.hero>=geometry.main*.89,'hero must occupy main reading width');
    for(const id of ['fullName','birthDate','date']) {
      const label=page.locator('#scaleForm label[for="'+id+'"]');
      assert.equal(await label.isVisible(),true,'identification field must have visible label: '+id);
@@ -105,12 +117,24 @@ try {
    await page.locator('#codep-results[data-results-ready="true"]').waitFor({state:'visible',timeout:7000});
    assert.equal(await page.locator('#depGauge svg').count(),1);
    assert.equal(await page.locator('#codepGauge svg').count(),1);
+   const resultCards=await page.locator('.codep-results-card').count();
+   assert.equal(resultCards,2);
+   const narrative=await page.evaluate(()=>{
+      const cards=[...document.querySelectorAll('.codep-results-card')];
+      return cards.map(card=>{
+        const cardRect=card.getBoundingClientRect();
+        const heading=card.querySelector('h3').getBoundingClientRect();
+        return {width:cardRect.width,titleWidth:heading.width,overflow:card.scrollWidth>card.clientWidth+2};
+      });
+   });
+   assert.ok(narrative.every(x=>x.width>250 && x.titleWidth>x.width*.70 && !x.overflow),
+     'professional result cards should have wide, non-overflowing narrative');
    const expectedScore=mobile?'100 / 100':'20 / 100';
    const scoreTexts=await page.locator('.codep-score-number').allInnerTexts();
    assert.deepEqual(scoreTexts,[expectedScore,expectedScore]);
-   assert.match(await page.locator('#codep-results').innerText(),/não possuem pontos de corte validados/i);
-   if(mobile)assert.match(await page.locator('#codep-results').innerText(),/Entre as afirmações com as quais você concordou/);
-   else assert.match(await page.locator('#codep-results').innerText(),/não selecionou/);
+   assert.match(await page.locator('#codep-results').innerText(),/não usam pontos de corte validados/i);
+   if(mobile)assert.match(await page.locator('#codep-results').innerText(),/Você marcou concordância em/);
+   else assert.match(await page.locator('#codep-results').innerText(),/não assinalou concordância/);
    const gaugeAccessibility=await page.locator('#depGauge svg').getAttribute('aria-label');
    assert.match(gaugeAccessibility,/pont[oau]s brutos/i);
    assert.ok((await page.locator('#rm-form-status').innerText()).includes('Registro confirmado'));
