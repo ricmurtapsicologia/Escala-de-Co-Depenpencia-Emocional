@@ -1,0 +1,77 @@
+name: One-time clinical Forms persistence probe
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/codependencia-form-persistence-probe.yml']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-package-lock playwright-core@1.55.1
+      - name: Submit synthetic, non-patient response through the native Google Form
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright-core';
+          const url='https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform';
+          const marker='TESTE TECNICO NAO PACIENTE CODEP '+process.env.GITHUB_RUN_ID;
+          const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+          try {
+            const page=await browser.newPage({viewport:{width:1440,height:1000}});
+            const resp=await page.goto(url,{waitUntil:'domcontentloaded',timeout:50000});
+            await page.waitForTimeout(2500);
+            const items=page.locator('[role="listitem"]');
+            const count=await items.count();
+            let answered=0, ident=0;
+            const diagnostics=[];
+            async function fillDate(item,y,m,d){
+              const els=await item.locator('input').all();
+              const infos=[];
+              for(const el of els) infos.push({type:await el.getAttribute('type'),aria:await el.getAttribute('aria-label'),placeholder:await el.getAttribute('placeholder')});
+              diagnostics.push({type:'date',inputDescriptors:infos});
+              if(els.length===1){
+                const ty=infos[0].type||'';
+                await els[0].fill(ty==='date'?y+'-'+m+'-'+d:d+'/'+m+'/'+y);
+              } else {
+                for(let i=0;i<els.length;i++){
+                  const label=((infos[i].aria||'')+' '+(infos[i].placeholder||'')).toLowerCase();
+                  let value=/(day|dia)/.test(label)?d:/(month|m[eê]s)/.test(label)?m:/(year|ano)/.test(label)?y:(i===0?d:i===1?m:y);
+                  await els[i].fill(value);
+                }
+              }
+            }
+            for(let i=0;i<count;i++){
+              const item=items.nth(i);
+              const txt=(await item.innerText()).trim();
+              if(/Nome completo/i.test(txt) && !ident){
+                const input=item.locator('input[type="text"], input:not([type])').first();
+                if(await input.count()){await input.fill(marker);ident++;}
+              }else if(/Data de nascimento/i.test(txt)){
+                await fillDate(item,'1990','01','01');ident++;
+              }else if(/Data de aplica[cç][aã]o/i.test(txt)){
+                await fillDate(item,'2026','10','27');ident++;
+              }
+              if(/^\d{1,2}\.\s/.test(txt) && Number(txt.split('.')[0])<=40){
+                const radios=item.locator('[role=radio]');
+                if(await radios.count()) {await radios.first().click();answered++;}
+                else diagnostics.push({item:Number(txt.split('.')[0]),radio:0,inputs:await item.locator('input').count()});
+              }
+            }
+            console.log(JSON.stringify({phase:'filled',http:resp.status(),marker,items:count,identity:ident,questions:answered,diagnostics:diagnostics.slice(0,7)}));
+            if(resp.status()!==200 || ident!==3 || answered!==40)throw Error('INCOMPLETE_FORM_NO_SUBMISSION');
+            const submit=page.getByRole('button',{name:/^(Enviar|Submit)$/i});
+            if(await submit.count()!==1)throw Error('SUBMIT_BUTTON_NOT_UNIQUE');
+            await submit.click({timeout:15000});
+            await page.waitForTimeout(5000);
+            const body=(await page.locator('body').innerText()).slice(0,2000);
+            const success=/(resposta foi registrada|resposta foi enviada|response has been recorded|Sua resposta foi enviada|Your response has been recorded)/i.test(body);
+            console.log(JSON.stringify({phase:'after-submit',success,url:page.url(),confirmationText:body.slice(0,300)}));
+            if(!success)throw Error('SUBMISSION_NOT_CONFIRMED');
+          } finally {await browser.close();}
+          JS
