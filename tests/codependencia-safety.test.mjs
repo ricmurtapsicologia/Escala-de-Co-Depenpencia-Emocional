@@ -41,7 +41,7 @@ assert.match(html,/#scaleForm \{display:block !important;\}/);
 assert.match(html,/data-codep-native-ready/);
 assert.match(html,/data-src="https:\/\/docs\.google\.com\/forms\//);
 assert.match(client,/enableNativeFallback\(\)/);
-assert.match(html,/html\[data-codep-verified-collector="true"\] #scaleForm/);
+assert.match(html,/html\[data-codep-native-ready="true"\] #scaleForm/);
 assert.match(html,/id="rm-native-google-form"/);
 assert.match(html,/embedded=true/);
 assert.match(config,/CODEPENDENCIA_PERSISTENCE_VERIFY_URL = 'https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec'/);
