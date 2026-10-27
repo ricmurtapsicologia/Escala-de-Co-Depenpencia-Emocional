@@ -35,6 +35,10 @@ assert.doesNotMatch(results,/localStorage|sessionStorage|indexedDB|fetch\(/);
 assert.match(html,/id="rm-form-status"/);
 assert.match(html,/id="rm-canonical-fallback"/);
 assert.match(html,/id="rm-canonical-form-link"/);
+assert.match(html,/id="rm-official-fallback-hint" hidden/);
+assert.match(client,/fallbackHint\.hidden=false/);
+assert.match(html,/codependencia-ui-hotfix-v1\.css\?v=/);
+
 assert.match(html,/https:\/\/docs\.google\.com\/forms\/d\/e\/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA\/viewform/);
 assert.match(html,/rel="noopener noreferrer"/);
 assert.match(html,/#scaleForm \{display:block !important;\}/);
