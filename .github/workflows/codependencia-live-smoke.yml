@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'assets/codependencia-ui-hotfix-v1.css'
       - 'assets/codependencia-results-v1.js'
       - 'assets/codependencia-results-v1.css'
       - 'assets/codependencia-cats-bridge-v1.js'
