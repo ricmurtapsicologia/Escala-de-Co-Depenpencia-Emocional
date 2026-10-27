@@ -50,6 +50,11 @@
     submitted = true;
     reconcile();
   });
+  window.addEventListener('rm:screening-submit-failed', event => {
+    if (event.detail?.instrumentId !== ID) return;
+    submitted = false;
+    reconcile();
+  });
   form.addEventListener('submit', e => {
     if (!authorized || window.RM_SCREENING_V3_CLIENT_READY !== true || countAnswered() !== 40 || !identityComplete()) {
       e.preventDefault();
