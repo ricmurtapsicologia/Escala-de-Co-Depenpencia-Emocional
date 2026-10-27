@@ -152,8 +152,9 @@ window.addEventListener('load', () => {
     s.async=true;
     document.head.appendChild(s);
   };
-  if ('requestIdleCallback' in window) requestIdleCallback(loadAnalytics,{timeout:5000});
-  else setTimeout(loadAnalytics,1500);
+  // O formulário e a confirmação clínica têm prioridade sobre métricas agregadas.
+  // Carregar a telemetria apenas depois da experiência inicial estar interativa.
+  setTimeout(loadAnalytics,8000);
 },{once:true});
 </script>
 <meta name="twitter:title" content="Autonomia e cuidado nas relações"/>
