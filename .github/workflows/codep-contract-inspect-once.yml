@@ -47,4 +47,29 @@ jobs:
           print('FOUND_QUESTIONS='+str(len(found)))
           for e in found:print('QUESTION_MAPPING='+json.dumps(e,ensure_ascii=False))
           print('UNIQUE_ENTRY_IDS='+str(len(set(i for x in found for i in x['ids']))))
+          if len(found)!=43:raise SystemExit('FORM_CONTRACT_MISMATCH')
+          fields={}
+          for n,item in enumerate(found):
+            key='entry.'+str(item['ids'][0])
+            if n==0:fields[key]='TESTE E2E CATS ADAPTACAO NAO PACIENTE 20261027'
+            elif n==1 or n==2:
+              date='2000-01-01' if n==1 else '2026-10-27'
+              fields[key]=date
+              fields[key+'_year'],fields[key+'_month'],fields[key+'_day']=date.split('-')
+            else:fields[key]='Discordo Totalmente'
+          fields.update({'fvv':'1','pageHistory':'0','submit':'Submit'})
+          import urllib.parse,urllib.error
+          target=url.replace('/viewform','/formResponse')
+          data=urllib.parse.urlencode(fields).encode()
+          req=urllib.request.Request(target,data=data,headers={'Content-Type':'application/x-www-form-urlencoded'},method='POST')
+          try:
+            with urllib.request.urlopen(req,timeout=40) as r:
+              out=r.read(35000).decode('utf-8','replace')
+              print('FORM_RESPONSE_HTTP='+str(r.status))
+              print('FORM_RESPONSE_HAS_THANKYOU='+str(any(w in out.lower() for w in ['has been recorded','resposta foi registrada','resposta foi enviada','sua resposta foi registrada'])))
+              print('FORM_RESPONSE_HAS_REQUIRED='+str(any(w in out.lower() for w in ['required question','pergunta obrigat'])))
+              print('FORM_RESPONSE_BYTES='+str(len(out)))
+          except urllib.error.HTTPError as e:
+            print('FORM_RESPONSE_HTTP_ERROR='+str(e.code))
+            raise
           PY
