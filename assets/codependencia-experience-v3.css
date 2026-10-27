@@ -51,7 +51,7 @@ main.rm-screening-shell {box-sizing:border-box;max-width:1320px!important;width:
  padding:22px 28px!important;background:#f3f8f6!important;border:1px solid #e0ebe7!important;border-radius:16px!important;}
 #rm-canonical-fallback #rm-fallback-title {font-size:clamp(1.2rem,2.25vw,1.55rem)!important;color:#174943!important;margin:0 0 7px!important;}
 #rm-canonical-fallback .rm-intro-lede {max-width:none!important;line-height:1.7!important;text-align:justify;text-justify:inter-word;hyphens:auto;}
-#rm-canonical-fallback .rm-native-note {margin-top:9px;font-size:.84rem;color:#667d7b;}
+#rm-canonical-fallback .rm-native-note {margin-top:9px;font-size:.84rem;color:#4b6965;}
 #scaleForm {max-width:none;width:100%;padding:0 3px;}
 #scaleForm .patient-info {background:#fff;border:1px solid var(--rm-v3-line);border-radius:17px;
  padding:23px 26px;margin-bottom:25px;gap:12px 20px;}
