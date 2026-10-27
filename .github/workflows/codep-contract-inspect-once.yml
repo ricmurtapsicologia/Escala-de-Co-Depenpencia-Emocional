@@ -30,7 +30,7 @@ jobs:
                 if isinstance(sub,list):
                   for item in sub:
                     if isinstance(item,list) and item and isinstance(item[0],int):ids.append(item[0])
-                if ids:found.append({'title':node[1][:63],'ids':ids,'kind':node[3]})
+                if ids or re.match(r'^\\d{1,2}\\.\\s',node[1]):found.append({'title':node[1][:63],'ids':ids,'kind':node[3],'shape':[type(v).__name__ for v in node[:7]],'field4':str(node[4])[:230]})
               for c in node:walk(c,depth+1)
             elif isinstance(node,dict):
               for c in node.values():walk(c,depth+1)
