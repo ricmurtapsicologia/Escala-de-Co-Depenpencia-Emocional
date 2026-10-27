@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
+      - 'assets/codependencia-cats-bridge-v1.js'
+      - 'assets/codependencia-persistence-config-v1.js'
       - 'tests/codependencia-live-smoke.mjs'
       - '.github/workflows/codependencia-live-smoke.yml'
   workflow_dispatch:
