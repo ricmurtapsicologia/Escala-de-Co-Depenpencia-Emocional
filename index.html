@@ -128,15 +128,15 @@ button { padding: 10px; font-size: 16px; }
   @media (prefers-reduced-motion:reduce) {button{transition:none}}
 
 /* Native Forms collection: identical canonical questions, no custom submission. */
-#scaleForm {display:none !important;}
-html[data-codep-verified-collector="true"] #scaleForm {display:block !important;}
-html[data-codep-verified-collector="true"] #rm-native-google-form {display:none !important;}
+#scaleForm {display:block !important;}
+html[data-codep-native-ready="true"] #scaleForm {display:none !important;}
+html[data-codep-native-ready="true"] #rm-native-google-form {display:block !important;}
 .rm-native-section {max-width:980px;margin:18px auto;padding:16px;border:1px solid #d1e4e0;border-radius:12px;background:#f6faf8;color:#163c37;}
 .rm-native-section h2 {font-size:clamp(1.15rem,2.8vw,1.6rem);margin:0 0 12px;}
 .rm-native-section p {line-height:1.55;}
 #rm-canonical-form-link {display:inline-block;background:#176d68;color:#fff;padding:13px 18px;border-radius:9px;text-decoration:none;min-height:44px;box-sizing:border-box;font-weight:600;}
 #rm-canonical-form-link:focus-visible {outline:3px solid #cf8931;outline-offset:3px;}
-#rm-native-google-form {display:block;width:100%;height:1120px;border:0;border-radius:8px;background:#fff;}
+#rm-native-google-form {display:none;width:100%;height:1120px;border:0;border-radius:8px;background:#fff;}
 .rm-native-note {font-size:.91rem;}
 @media (max-width:600px){.rm-native-section {padding:8px;margin:10px auto;}#rm-native-google-form {height:1100px;}}
 </style>
@@ -156,7 +156,7 @@ html[data-codep-verified-collector="true"] #rm-native-google-form {display:none 
 <h2 id="rm-fallback-title">Escala de autonomia, limites e cuidado nas relações</h2>
 <p>O preenchimento agora é realizado diretamente no Google Forms oficial. Ao selecionar <strong>Enviar</strong> no final do questionário, suas respostas serão registradas na planilha clínica vinculada. Não há necessidade de preencher duas vezes.</p>
 <p><a id="rm-canonical-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform" target="_blank" rel="noopener noreferrer">Abrir o formulário oficial em uma nova aba</a></p>
-<iframe id="rm-native-google-form" title="Questionário oficial de autonomia, limites e cuidado nas relações no Google Forms" loading="eager" referrerpolicy="no-referrer" src="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform?embedded=true"></iframe>
+<iframe id="rm-native-google-form" title="Questionário oficial de autonomia, limites e cuidado nas relações no Google Forms" loading="lazy" referrerpolicy="no-referrer" src="about:blank" data-src="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform?embedded=true"></iframe>
 <p class="rm-native-note">A avaliação das respostas é realizada pelo psicólogo responsável. Este rastreio não estabelece diagnóstico automaticamente. Se não conseguir visualizar o formulário, utilize o link acima.</p>
 </section>
 <form id="scaleForm" method="post" action="#" autocomplete="off" onsubmit="return false;" aria-describedby="rm-form-progress rm-form-status">
