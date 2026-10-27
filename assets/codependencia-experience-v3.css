@@ -122,3 +122,18 @@ main.rm-screening-shell {box-sizing:border-box;max-width:1320px!important;width:
  #rm-canonical-fallback .rm-intro-lede {text-align:left;hyphens:none;}
 }
 @media(prefers-reduced-motion:reduce) {.rm-progress-fill{transition:none;}}
+
+/* Short nonblocking branded opening; never blocks input or asks unnecessary consent. */
+.rm-splash {position:fixed;inset:0;z-index:90;background:linear-gradient(125deg,#123b3c,#1d625d);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;
+ text-align:center;pointer-events:none;animation:rmSplashExit .42s ease .9s both;}
+.rm-splash-mark {height:70px;width:70px;display:grid;place-items:center;border:1px solid #b7d9cf;
+ border-radius:22px;color:#f2fffa;font-size:1.8rem;letter-spacing:-.07em;font-weight:800;}
+.rm-splash p {font-size:1.05rem;line-height:1.4;font-weight:650;}
+.rm-splash span {font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;color:#b6dcd1;}
+.rm-splash.rm-splash-ready {animation-duration:.35s;animation-delay:.58s;}
+@keyframes rmSplashExit {from{opacity:1;visibility:visible;}to{opacity:0;visibility:hidden;}}
+@media(prefers-reduced-motion:reduce) {
+ .rm-splash {animation-duration:.01ms;animation-delay:.01ms;}
+ .rm-splash.rm-splash-ready {animation-duration:.01ms;animation-delay:.01ms;}
+}
