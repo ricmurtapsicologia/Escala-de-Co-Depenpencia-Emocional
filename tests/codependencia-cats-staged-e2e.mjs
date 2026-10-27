@@ -43,8 +43,9 @@ try {
    });
    const r=await page.goto(base,{waitUntil:'domcontentloaded',timeout:35000});
    assert.equal(r.status(),200);
-   await page.waitForFunction(()=>document.documentElement.dataset.codepVerifiedCollector==='true',
-     {timeout:15000});
+   console.log('BEFORE_ACTIVATE='+JSON.stringify(await page.evaluate(()=>({ready:document.documentElement.dataset.codepVerifiedCollector||'no',endpointConfigured:Boolean(window.CODEPENDENCIA_PERSISTENCE_VERIFY_URL),endpointText:String(window.CODEPENDENCIA_PERSISTENCE_VERIFY_URL||'').slice(0,60),cryptoSubtle:!!window.crypto?.subtle,scripts:[...document.scripts].map(x=>x.src).filter(x=>x.includes('codependencia-'))}))));
+   await page.waitForFunction(()=>document.documentElement.dataset.codepVerifiedCollector==='true',null,{timeout:10000});
+   console.log('ACTIVATED');
    assert.equal(await page.locator('#scaleForm').isVisible(),true);
    assert.equal(await page.locator('#rm-native-google-form').isVisible(),false);
    await page.locator('#fullName').fill('TESTE E2E NÃO PACIENTE CATS');
@@ -56,10 +57,11 @@ try {
        el.value='1';el.dispatchEvent(new Event('change',{bubbles:true}));
      }
    });
-   await page.waitForFunction(()=>!document.querySelector('#screening-submit').disabled);
+   await page.waitForFunction(()=>!document.querySelector('#screening-submit').disabled,null,{timeout:10000});
+   console.log('READY_TO_SUBMIT');
    await page.locator('#screening-submit').click();
-   await page.waitForFunction(()=>document.querySelector('#rm-form-status')?.textContent?.includes('Registro confirmado'),
-     {timeout:16000});
+   console.log('SUBMIT_CLICKED');
+   await page.waitForFunction(()=>document.querySelector('#rm-form-status')?.textContent?.includes('Registro confirmado'),null,{timeout:12000});
    assert.ok(intercepted,'formResponse POST must occur');
    assert.equal(health,1);
    assert.ok(verification&&verification.protocol==='codependencia-persistence-v1');
