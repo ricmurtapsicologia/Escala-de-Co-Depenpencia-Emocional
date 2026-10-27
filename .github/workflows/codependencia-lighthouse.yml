@@ -1,4 +1,5 @@
 name: Codependencia Lighthouse production
+# Final post-deployment run after local stylesheet and contrast corrections.
 on:
   push:
     branches: [main]
