@@ -141,6 +141,16 @@
         form.querySelectorAll('input,select').forEach(el=>{el.disabled=true;});
         setStatus('Registro confirmado na planilha. O psicólogo responsável analisará suas respostas.');
         button.textContent='Respostas registradas';
+        document.documentElement.dataset.codepPersisted='true';
+        try {
+          if(window.CODEPENDENCIA_RESULTS?.render) {
+            window.CODEPENDENCIA_RESULTS.render(answers.map((_,i)=>fields[i].value));
+          }
+        } catch(_) {
+          // Persistence was independently verified: a view failure must never
+          // falsify the successful receipt or trigger a duplicate submission.
+          setStatus('Registro confirmado na planilha. A visualização dos resultados está indisponível neste dispositivo.');
+        }
       } else {
         needsReview=true;
         setStatus('Não foi possível confirmar a gravação. Não envie novamente antes de contatar o psicólogo.');
