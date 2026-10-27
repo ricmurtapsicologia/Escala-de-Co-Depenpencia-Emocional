@@ -16,11 +16,26 @@ jobs:
           import re,urllib.request
           url='https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform'
           data=urllib.request.urlopen(url,timeout=25).read().decode('utf-8','replace')
-          ids=re.findall(r'entry\.\d+',data)
-          numeric=re.findall(r'\[\d{5,12},\[',data)
-          print('PUBLIC_FORM_HTML_BYTES='+str(len(data)))
-          print('PUBLISHED_ENTRY_KEYS='+','.join(dict.fromkeys(ids)))
-          print('NUMERIC_QUESTION_HINTS='+str(len(numeric)))
-          print('HAS_FB_PUBLIC_LOAD_DATA='+str('FB_PUBLIC_LOAD_DATA_' in data))
-          print('HAS_40th_QUESTION='+str('40. Eu me preocupo mais' in data))
+          import json
+          anchor=data.index('FB_PUBLIC_LOAD_DATA_')
+          start=data.index('=',anchor)+1
+          root=json.JSONDecoder().raw_decode(data[start:].lstrip())[0]
+          found=[]
+          def walk(node,depth=0):
+            if depth>35:return
+            if isinstance(node,list):
+              if len(node)>4 and isinstance(node[1],str) and (re.match(r'^\\d{1,2}\\.\\s',node[1]) or node[1] in ['Nome completo','Data de nascimento','Data de aplicação do rastreio']):
+                sub=node[4]
+                ids=[]
+                if isinstance(sub,list):
+                  for item in sub:
+                    if isinstance(item,list) and item and isinstance(item[0],int):ids.append(item[0])
+                if ids:found.append({'title':node[1][:63],'ids':ids,'kind':node[3]})
+              for c in node:walk(c,depth+1)
+            elif isinstance(node,dict):
+              for c in node.values():walk(c,depth+1)
+          walk(root)
+          print('FOUND_QUESTIONS='+str(len(found)))
+          for e in found:print('QUESTION_MAPPING='+json.dumps(e,ensure_ascii=False))
+          print('UNIQUE_ENTRY_IDS='+str(len(set(i for x in found for i in x['ids']))))
           PY
