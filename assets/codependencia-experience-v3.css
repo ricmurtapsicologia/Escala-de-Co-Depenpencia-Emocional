@@ -1,0 +1,124 @@
+/* Clinical Experience v3 • full-width, accessible, no external fonts/images.
+   Patient-facing only. Never change Forms/Sheets contract in presentation CSS. */
+:root { --rm-v3-ink:#173b3c; --rm-v3-accent:#176c66; --rm-v3-soft:#e9f3f0; --rm-v3-line:#d7e5e0; }
+body { background:radial-gradient(ellipse at 90% 4%,#e3f2ed 0%,transparent 38%),#f0f5f3; color:var(--rm-v3-ink); }
+main.rm-screening-shell {box-sizing:border-box;max-width:1320px!important;width:calc(100% - 42px)!important;
+  margin:24px auto 28px!important;padding:0 22px 32px!important;border-radius:28px!important;
+  box-shadow:0 12px 48px rgba(23,61,62,.065)!important;background:#fff!important;overflow:clip;}
+.rm-brandbar {display:flex;align-items:center;justify-content:space-between;gap:18px;padding:25px 8px 19px;
+  border-bottom:1px solid #e6eeec;}
+.rm-brand-id {display:flex;align-items:center;gap:12px;color:#173b3c;}
+.rm-brand-mark {display:grid;place-items:center;width:41px;height:41px;border-radius:12px;
+  background:#145e5b;color:#fff;font-weight:800;letter-spacing:-.07em;font-size:1rem;line-height:1;}
+.rm-brand-name {display:block;font-size:.95rem;font-weight:750;line-height:1.2;letter-spacing:.005em;}
+.rm-brand-caption {display:block;font-size:.73rem;color:#627b79;line-height:1.6;}
+.rm-brand-trust {font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#42736d;}
+.rm-clinical-hero {margin-top:22px;border-radius:25px;background:linear-gradient(122deg,#103c3d 0%,#165b57 62%,#246b61 100%);
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);overflow:hidden;min-height:350px;color:#fff;position:relative;}
+.rm-hero-content {padding:clamp(32px,5.4vw,74px) clamp(26px,5.3vw,70px);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;}
+.rm-eyebrow {font-size:.75rem;text-transform:uppercase;letter-spacing:.19em;font-weight:800;color:#afded1;margin:0 0 17px;}
+.rm-clinical-hero h1 {max-width:17ch;font-size:clamp(2rem,3.85vw,3.55rem);font-weight:750;letter-spacing:-.045em;line-height:1.09;
+  color:#fff;margin:0 0 19px;text-wrap:balance;}
+.rm-hero-desc {font-size:clamp(1rem,1.55vw,1.13rem);line-height:1.7;color:#e4f3ef;max-width:58ch;margin:0 0 27px;}
+.rm-hero-actions {display:flex;align-items:center;flex-wrap:wrap;gap:18px;}
+.rm-hero-cta {display:inline-flex;align-items:center;justify-content:center;min-height:49px;padding:12px 23px;
+  border-radius:9px;color:#134945!important;background:#fff;text-decoration:none!important;
+  font-size:.95rem;font-weight:800;box-shadow:0 8px 26px rgba(0,0,0,.12);}
+.rm-hero-cta:hover {background:#e8f5ef!important;}
+.rm-hero-cta:focus-visible,.rm-hero-actions a:focus-visible {outline:3px solid #f6d586;outline-offset:3px;}
+.rm-hero-caption {color:#bddcd5;font-size:.85rem;}
+.rm-hero-art {position:relative;isolation:isolate;display:flex;justify-content:center;align-items:center;min-height:280px;
+ background:radial-gradient(circle at 50% 43%,rgba(180,232,213,.18),transparent 70%);}
+.rm-orbit {width:min(310px,82%);aspect-ratio:1;border:1px solid rgba(213,240,228,.36);border-radius:50%;
+ display:grid;place-items:center;position:relative;box-shadow:0 0 0 28px rgba(231,255,246,.045),0 0 0 64px rgba(231,255,246,.033);}
+.rm-orbit::before {content:"";position:absolute;width:61%;height:61%;border-radius:50%;border:1px dashed rgba(218,247,232,.32);}
+.rm-orbit::after {content:"";position:absolute;inset:24%;border-radius:50%;background:radial-gradient(circle,#e8fbf3 0 5%,transparent 7%),
+ linear-gradient(140deg,rgba(174,227,204,.24),rgba(255,255,255,.03));border:1px solid rgba(235,250,243,.42);}
+.rm-orbit-point {position:absolute;border-radius:50%;z-index:1;box-shadow:0 0 0 10px rgba(247,248,225,.10);}
+.rm-orbit-point.one {height:18px;width:18px;background:#e6c28f;top:10%;left:23%;}
+.rm-orbit-point.two {height:18px;width:18px;background:#b5ead8;bottom:18%;right:13%;}
+.rm-hero-art-label {position:absolute;bottom:24px;left:0;right:0;text-align:center;letter-spacing:.08em;
+ color:#d1e8df;font-size:.76rem;text-transform:uppercase;}
+.rm-onboarding {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:23px 0 26px;
+ border:1px solid var(--rm-v3-line);border-radius:17px;background:#fbfdfc;overflow:hidden;}
+.rm-onboard-step {padding:23px 23px;display:grid;grid-template-columns:34px 1fr;gap:11px;align-items:start;}
+.rm-onboard-step + .rm-onboard-step {border-left:1px solid #e4edeb;}
+.rm-onboard-number {width:30px;height:30px;display:grid;place-items:center;border:1px solid #c8dfd8;
+ border-radius:9px;color:#17645f;font-weight:800;font-size:.78rem;}
+.rm-onboard-step strong {display:block;color:#173f40;font-size:.94rem;margin:1px 0 5px;}
+.rm-onboard-step p {color:#526c6b;font-size:.86rem;line-height:1.6;margin:0;text-wrap:pretty;}
+#rm-canonical-fallback.rm-native-section {max-width:none!important;margin:0 0 22px!important;
+ padding:22px 28px!important;background:#f3f8f6!important;border:1px solid #e0ebe7!important;border-radius:16px!important;}
+#rm-canonical-fallback #rm-fallback-title {font-size:clamp(1.2rem,2.25vw,1.55rem)!important;color:#174943!important;margin:0 0 7px!important;}
+#rm-canonical-fallback .rm-intro-lede {max-width:none!important;line-height:1.7!important;text-align:justify;text-justify:inter-word;hyphens:auto;}
+#rm-canonical-fallback .rm-native-note {margin-top:9px;font-size:.84rem;color:#667d7b;}
+#scaleForm {max-width:none;width:100%;padding:0 3px;}
+#scaleForm .patient-info {background:#fff;border:1px solid var(--rm-v3-line);border-radius:17px;
+ padding:23px 26px;margin-bottom:25px;gap:12px 20px;}
+#scaleForm .question-section {margin:0 0 27px;}
+#scaleForm .question-section h2 {padding:18px 22px;margin:0 0 12px;border-radius:13px;
+ background:#edf5f2;color:#165e59;font-size:clamp(1.1rem,2vw,1.4rem);letter-spacing:-.017em;}
+#scaleForm .question {padding:17px 19px;margin:0 0 10px;border-radius:11px;background:#fbfdfc;
+ border:1px solid #e0ebe7;border-left:3px solid #79aca0;}
+#scaleForm .question label {color:#29484b;font-size:clamp(.94rem,1.3vw,1rem);line-height:1.65;
+ margin-bottom:11px;text-align:justify;text-justify:inter-word;hyphens:auto;}
+#scaleForm .question select {height:49px;padding:11px 14px;border-radius:9px;background:#fff;border-color:#cbded8;}
+#scaleForm .question:focus-within {background:#f3f9f7;border-color:#9fccc1;}
+#scaleForm .question select:invalid {border-color:#cbded8!important;}
+#scaleForm .rm-privacy-note {color:#607a77;line-height:1.65;font-size:.9rem;}
+#rm-form-progress {font-size:.9rem;color:#1d605c;margin:20px 0 7px;}
+.rm-progress-track {height:7px;overflow:hidden;background:#e1ece8;border-radius:99px;margin:0 0 12px;}
+.rm-progress-fill {height:100%;background:linear-gradient(90deg,#21776e,#5cb49f);border-radius:99px;width:0%;transition:width .2s linear;}
+#screening-submit {display:block;margin:18px 0 8px;max-width:420px;min-height:52px;border-radius:10px;
+ background:#176c66;font-size:1rem;font-weight:750;box-shadow:none;}
+#screening-submit:disabled {opacity:.6;}
+#codep-results {max-width:none!important;margin:26px 0 12px!important;border-radius:20px;padding:clamp(19px,3vw,34px)!important;}
+#codep-results h2 {font-size:clamp(1.5rem,2.8vw,2.25rem);letter-spacing:-.025em;}
+#codep-results .codep-results-lede {text-align:justify;text-justify:inter-word;hyphens:auto;max-width:85ch;}
+#codep-results-cards {grid-template-columns:1fr!important;gap:20px!important;}
+#codep-results .codep-results-card {display:grid;grid-template-columns:minmax(195px,270px) minmax(0,1fr);
+ grid-template-areas:"title title" "gauge text" "gauge meaning";align-items:start;column-gap:clamp(24px,4vw,55px);
+ row-gap:3px;background:linear-gradient(105deg,#f1f8f5,#fff 42%);border-radius:15px;padding:clamp(19px,3vw,30px);}
+#codep-results .codep-results-card-title {grid-area:title;text-align:left;border-bottom:1px solid #dce8e3;
+ padding-bottom:11px;margin-bottom:9px;font-size:1.23rem;}
+#codep-results .codep-gauge-visual {grid-area:gauge;position:sticky;top:25px;max-width:260px;margin:7px auto;}
+#codep-results .codep-results-explanation {grid-area:text;margin:0 0 10px!important;line-height:1.8;
+ font-size:1rem;max-width:83ch;text-align:justify;text-justify:inter-word;hyphens:auto;}
+#codep-results .codep-results-meaning {grid-area:meaning;border-top:1px solid #e2ece8;padding-top:13px;}
+#codep-results .codep-results-context {max-width:83ch;font-size:.94rem;line-height:1.77;
+ text-align:justify;text-justify:inter-word;hyphens:auto;}
+#codep-results .codep-results-examples {margin:8px 0 15px;max-width:83ch;}
+#codep-results .codep-results-examples li {line-height:1.72;margin-bottom:9px;font-size:.94rem;
+ text-align:justify;text-justify:inter-word;hyphens:auto;}
+#codep-results .codep-results-limits {background:#f4f8f7;border-left-color:#648c85;color:#3b5455;}
+.rm-patient-nextstep {border:1px solid #b9ddd1;background:#f0f8f4;border-radius:13px;margin-top:16px;padding:15px 18px;}
+.rm-patient-nextstep strong {color:#185c55;font-size:.93rem;}
+.rm-patient-nextstep p {margin-top:5px!important;color:#2f5350;font-size:.94rem;line-height:1.7;}
+@media(max-width:900px){
+ .rm-clinical-hero {grid-template-columns:1fr;min-height:0;}
+ .rm-hero-art {display:none;}
+ .rm-clinical-hero h1 {max-width:22ch;}
+ .rm-onboarding {grid-template-columns:1fr;}
+ .rm-onboard-step + .rm-onboard-step {border-left:0;border-top:1px solid #e4edeb;}
+}
+@media(max-width:720px){
+ main.rm-screening-shell {width:calc(100% - 16px)!important;margin:9px auto!important;padding:0 11px 25px!important;border-radius:18px!important;}
+ .rm-brandbar {padding:17px 5px;}
+ .rm-brand-trust {display:none;}
+ .rm-clinical-hero {border-radius:17px;margin-top:12px;}
+ .rm-hero-content {padding:32px 22px;}
+ .rm-clinical-hero h1 {font-size:clamp(1.85rem,8vw,2.55rem);}
+ .rm-hero-desc {font-size:.97rem;}
+ .rm-hero-actions {gap:13px;}
+ .rm-onboard-step {padding:17px 18px;}
+ #rm-canonical-fallback.rm-native-section {padding:16px 18px!important;}
+ #scaleForm .patient-info {padding:18px 16px;}
+ #scaleForm .question {padding:14px 14px;}
+ #scaleForm .question label {text-align:left;}
+ #codep-results .codep-results-card {grid-template-columns:1fr;grid-template-areas:"title" "gauge" "text" "meaning";gap:10px;}
+ #codep-results .codep-gauge-visual {position:static;max-width:245px;}
+ #codep-results .codep-results-explanation,#codep-results .codep-results-context,
+ #codep-results .codep-results-examples li,#codep-results .codep-results-lede,
+ #rm-canonical-fallback .rm-intro-lede {text-align:left;hyphens:none;}
+}
+@media(prefers-reduced-motion:reduce) {.rm-progress-fill{transition:none;}}
