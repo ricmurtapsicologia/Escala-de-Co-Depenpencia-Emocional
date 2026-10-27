@@ -123,7 +123,7 @@ button { padding: 10px; font-size: 16px; }
 	  #rm-form-progress {font-weight:600; margin: 12px 0;}
   #rm-form-status {font-size:.94rem; margin:8px 0; color:var(--rm-ink,#17333a);}
   #scaleForm select:focus-visible, #scaleForm input:focus-visible, #screening-submit:focus-visible {outline:3px solid #176d68; outline-offset:3px;}
-  #scaleForm select:invalid {border-color:#ac5443;}
+  #scaleForm select:invalid {border-color:var(--rm-line, #d7e4e2);}
   #screening-submit:disabled {opacity:.55; cursor:not-allowed; transform:none;}
   @media (prefers-reduced-motion:reduce) {button{transition:none}}
 
@@ -159,6 +159,7 @@ window.addEventListener('load', () => {
 <meta name="twitter:title" content="Codependência"/>
 <meta name="twitter:image" content="https://ricmurtapsicologia.github.io/Inicio-de-Jornada-Terapeutica/assets/heroes/codependencia.jpg?v=5.0.0"/>
 <link rel="stylesheet" href="./assets/codependencia-results-v1.css?v=20261027-2"/>
+<link rel="stylesheet" href="./assets/codependencia-ui-hotfix-v1.css?v=20261027-3"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23176d68'/%3E%3Cpath d='M17 17h15a10 10 0 0 1 0 20H17V17ZM31 38l15 12' stroke='white' stroke-width='5' fill='none'/%3E%3C/svg%3E"/>
 </head>
 <body>
@@ -167,16 +168,26 @@ window.addEventListener('load', () => {
 <!-- Formulário de avaliação -->
 <section id="rm-canonical-fallback" class="rm-native-section" aria-labelledby="rm-fallback-title">
 <h2 id="rm-fallback-title">Escala de autonomia, limites e cuidado nas relações</h2>
-<p>Preencha o rastreio nesta página. Após selecionar <strong>Concluir rastreio</strong>, o registro será verificado na planilha clínica. Se a conexão estiver indisponível, utilize o formulário oficial no link abaixo.</p>
-<p><a id="rm-canonical-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform" target="_blank" rel="noopener noreferrer">Abrir o formulário oficial em uma nova aba</a></p>
+<p class="rm-intro-lede">Responda às 40 afirmações considerando sua experiência nas relações. Ao concluir, o registro será conferido na planilha clínica antes da apresentação dos resultados.</p>
+<p class="rm-intro-support">Dificuldade com esta página? <a id="rm-canonical-form-link" href="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform" target="_blank" rel="noopener noreferrer">Abrir o formulário oficial em outra aba</a>.</p>
 <iframe id="rm-native-google-form" title="Questionário oficial de autonomia, limites e cuidado nas relações no Google Forms" loading="lazy" referrerpolicy="no-referrer" src="about:blank" data-src="https://docs.google.com/forms/d/e/1FAIpQLSclFCONlWGL3oVZfOH-Kg_xjCVySUFO8fJr8v89dDW8SJsNJA/viewform?embedded=true"></iframe>
-<p class="rm-native-note">A avaliação das respostas é realizada pelo psicólogo responsável. Este rastreio não estabelece diagnóstico automaticamente. Se não conseguir visualizar o formulário, utilize o link acima.</p>
+<p class="rm-native-note">Este rastreio não estabelece diagnóstico; a interpretação clínica considera seu contexto individual.</p>
 </section>
 <form id="scaleForm" method="post" action="#" autocomplete="off" onsubmit="return false;" aria-describedby="rm-form-progress rm-form-status">
 <section class="patient-info" aria-label="Identificação do paciente">
-<input id="fullName" name="fullName" aria-label="Nome completo" autocomplete="name" maxlength="120" placeholder="Nome completo" required="" type="text"/>
-<input aria-label="Data de nascimento" id="birthDate" name="birthDate" required="" type="date"/>
-<input aria-label="Data de aplicação do rastreio" id="date" placeholder="Data de aplicação do rastreio" required="" type="date"/>
+<h2 class="rm-info-heading">Identificação</h2>
+<div class="rm-field rm-field-name">
+<label for="fullName">Nome completo</label>
+<input id="fullName" name="fullName" autocomplete="name" maxlength="120" placeholder="Digite seu nome completo" required="" type="text"/>
+</div>
+<div class="rm-field">
+<label for="birthDate">Data de nascimento</label>
+<input id="birthDate" name="birthDate" required="" type="date"/>
+</div>
+<div class="rm-field">
+<label for="date">Data da aplicação do rastreio</label>
+<input id="date" name="date" required="" type="date"/>
+</div>
 </section>
 <!-- Bloco A (Perguntas 1 a 20) -->
 <section class="question-section">
