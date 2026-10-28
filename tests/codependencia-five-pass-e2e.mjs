@@ -34,7 +34,7 @@ try {
    const device=mobile?'mobile':'desktop';
    const ctx=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1440,height:900},locale:'pt-BR'});
    const page=await ctx.newPage();
-   let postCount=0,verifierCount=0,received=null;
+   let postCount=0,verifierCount=0,received=null,verificationFingerprint=null;
    const pageErrors=[];
    page.on('pageerror',e=>pageErrors.push(e.message));
    await page.route('**/assets/codependencia-persistence-config-v1.js*',route=>
@@ -49,6 +49,7 @@ try {
      } else if(req.method()==='POST') {
        verifierCount++;
        const payload=JSON.parse(req.postData()||'{}');
+       verificationFingerprint=payload.fingerprint;
        await route.fulfill({status:200,contentType:'application/json',
          headers:{'access-control-allow-origin':'*'},
          body:JSON.stringify({protocol:'codependencia-persistence-v1',persisted:Boolean(received),
@@ -96,6 +97,7 @@ try {
    for(let i=0;i<40;i++)assert.equal(received.get('entry.'+ENTRY_IDS[i]),option[vector.answers[i]-1],'item '+(i+1));
    const hash=crypto.createHash('sha256').update([name.toUpperCase(),'2000-01-01','2026-10-27',
      ...vector.answers.map(n=>option[n-1])].join('|')).digest('hex');
+   assert.equal(verificationFingerprint,hash,'independent verifier must receive exact SHA-256 of 43 responses');
    const receipts=await page.evaluate(()=>({confirmed:document.documentElement.dataset.codepPersisted,
      ready:document.querySelector('#codep-personal-insights')?.dataset.insightsReady,
      progress:document.querySelector('#rm-progress-fill')?.style.width}));
@@ -113,7 +115,7 @@ try {
    assert.match(reflection,/O que fazer a partir de agora/);
    assert.match(reflection,/não consequências identificadas pelo questionário/i);
    if(vector.endorsed===0)assert.match(reflection,/não marcou/);
-   else assert.match(reflection,/concordância em afirmações/i);
+   else assert.match(reflection,/O que você pode reconhecer em si/i);
    assert.equal(await page.locator('#screening-submit').isDisabled(),true);
    const layout=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+2,
      main:document.querySelector('main.rm-screening-shell').getBoundingClientRect().width,viewport:innerWidth}));
@@ -123,7 +125,7 @@ try {
    console.log('E2E_FIVE_RESULT='+JSON.stringify({profile,device,status:'PASS',
      http:resp.status(),formsPOST:postCount,verifiedPOST:verifierCount,items:40,
      scores:vector.scores,personalInsights:true,privacy:'synthetic/intercepted',
-     hashVerified:hash.length===64,layout:true}));
+     hashVerified:verificationFingerprint===hash,layout:true}));
    passed++;
    await ctx.close();
  }
