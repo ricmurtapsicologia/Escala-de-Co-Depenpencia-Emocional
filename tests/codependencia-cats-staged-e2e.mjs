@@ -89,12 +89,22 @@ try {
    await page.locator('#fullName').fill('TESTE E2E NÃO PACIENTE CATS');
    await page.locator('#birthDate').fill('2000-01-01');
    await page.locator('#date').fill('2026-10-27');
+   // 2026-10-28 surgical QA: identify missing questions and block incomplete submit.
+   await page.locator('#q1').selectOption(mobile?'5':'1');
+   assert.equal(await page.locator('#rm-unanswered').isVisible(),true);
+   assert.match(await page.locator('#rm-unanswered-summary').innerText(),/39 questões/);
+   assert.equal(await page.locator('#rm-unanswered-list li').count(),39);
+   assert.equal(await page.locator('#q2').getAttribute('aria-invalid'),'true');
+   assert.equal(await page.locator('#screening-submit').isDisabled(),true);
+   await page.locator('#rm-go-to-unanswered').click();
+   assert.equal(await page.locator('#q2').evaluate(el=>document.activeElement===el),true);
    await page.evaluate(value=>{
      for(let i=1;i<=40;i++){
        const el=document.querySelector('#q'+i);
        el.value=value;el.dispatchEvent(new Event('change',{bubbles:true}));
      }
    },mobile?'5':'1');
+   assert.equal(await page.locator('#rm-unanswered').isVisible(),false,'full form has no unanswered questions');
    assert.equal(await page.locator('#codep-results').isVisible(),false,'results must be hidden before a verified write');
    assert.equal(await page.locator('#codep-personal-insights').isVisible(),false,'reflections require confirmed record');
    await page.waitForFunction(()=>!document.querySelector('#screening-submit').disabled,null,{timeout:10000});
