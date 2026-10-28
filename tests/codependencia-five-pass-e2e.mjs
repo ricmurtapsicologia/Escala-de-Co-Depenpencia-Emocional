@@ -103,7 +103,7 @@ try {
      progress:document.querySelector('#rm-progress-fill')?.style.width}));
    assert.equal(receipts.confirmed,'true');
    assert.equal(receipts.ready,'true');
-   assert.equal(receipts.progress,'100.0%');
+   assert.equal(Number.parseFloat(receipts.progress),100,'all 40 answers must fill the progress bar');
    const labels=await page.locator('.codep-score-number').allInnerTexts();
    assert.deepEqual(labels,vector.scores.map(n=>n+' / 100'));
    assert.equal(await page.locator('#depGauge svg').count(),1);
