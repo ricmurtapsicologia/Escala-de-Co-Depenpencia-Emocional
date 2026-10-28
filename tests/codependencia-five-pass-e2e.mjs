@@ -89,7 +89,7 @@ try {
    await page.waitForFunction(()=>document.querySelector('#rm-form-status')?.textContent?.includes('Registro confirmado na planilha'),null,{timeout:16000});
    await page.locator('#codep-results[data-results-ready="true"]').waitFor({state:'visible',timeout:7000});
    assert.equal(postCount,1,'one Forms POST only');
-   assert.equal(verifierCount,1,'one positive Sheets verification');
+   assert.ok(verifierCount>=1&&verifierCount<=5,'persistence may need repeated read-only verification, but never a duplicated Forms POST');
    assert.ok(received,'Forms post must be intercepted');
    assert.equal(received.get('entry.2145128820'),name);
    assert.equal(received.get('entry.680549210'),'2000-01-01');
