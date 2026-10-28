@@ -125,6 +125,16 @@ button { padding: 10px; font-size: 16px; }
   #scaleForm select:focus-visible, #scaleForm input:focus-visible, #screening-submit:focus-visible {outline:3px solid #176d68; outline-offset:3px;}
   #scaleForm select:invalid {border-color:var(--rm-line, #d7e4e2);}
   #screening-submit:disabled {opacity:.55; cursor:not-allowed; transform:none;}
+  #rm-unanswered[hidden]{display:none !important;}
+  #rm-unanswered{border:1px solid #bf8b40;border-radius:10px;padding:16px;margin:14px 0;background:#fff9ee;color:#563d19;}
+  #rm-unanswered-summary{font-weight:650;margin:0 0 10px;}
+  #rm-unanswered-list{padding-left:23px;margin:8px 0;max-height:250px;overflow-y:auto;}
+  #rm-unanswered-list li{padding:4px 0;}
+  #rm-unanswered-list a{color:#244e5a;text-decoration:underline;text-underline-offset:2px;}
+  #rm-unanswered #rm-go-to-unanswered{width:auto;min-height:44px;font-size:15px;margin:8px 0 0;padding:10px 14px;background:#176d68;}
+  #scaleForm .question.rm-question-pending{border-left-color:#bf8b40;background:#fff9ee;}
+  #scaleForm .question.rm-question-pending select{border-color:#bf8b40;}
+  #scaleForm .question select[aria-invalid="true"]:focus-visible{outline:3px solid #a76b2a;outline-offset:2px;}
   @media (prefers-reduced-motion:reduce) {button{transition:none}}
 
 /* Native Forms collection: identical canonical questions, no custom submission. */
@@ -669,6 +679,11 @@ window.addEventListener('load', () => {
 <noscript><p role="alert">Ative o JavaScript para utilizar esta página. Nenhum envio é possível sem a validação técnica.</p></noscript>
 <p id="rm-form-progress" role="status" aria-live="polite">0 de 40 questões respondidas.</p>
 <div class="rm-progress-track" aria-hidden="true"><div id="rm-progress-fill" class="rm-progress-fill"></div></div>
+<div id="rm-unanswered" role="status" aria-live="polite" aria-atomic="true" hidden>
+<p id="rm-unanswered-summary"></p>
+<ol id="rm-unanswered-list"></ol>
+<button type="button" id="rm-go-to-unanswered">Ir para a primeira questão pendente</button>
+</div>
 <p id="rm-form-status" role="status" aria-live="polite">O envio deste rastreio permanece indisponível até a validação técnica da integração clínica.</p>
 <button id="screening-submit" type="submit" disabled aria-disabled="true">Concluir rastreio</button>
 </form>
@@ -688,6 +703,6 @@ window.addEventListener('load', () => {
 <script defer src="./assets/codependencia-insights-v4.js?v=20261027-5"></script>
 <script defer src="./assets/codependencia-results-v1.js?v=20261027-2"></script>
 <script defer src="./assets/codependencia-cats-bridge-v1.js?v=20261027-2"></script>
-<script defer src="./assets/codependencia-experience-v3.js?v=20261027-4"></script>
+<script defer src="./assets/codependencia-experience-v3.js?v=20261028-clinical-1"></script>
 </body>
 </html>
